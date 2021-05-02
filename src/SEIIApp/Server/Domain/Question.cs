@@ -9,7 +9,7 @@ namespace SEIIApp.Server.Domain
     public class Question
     {
         [Key]
-        public int Id { get; set; }
+        public int questionId { get; set; }
         public string questionText { get; set; }
         public List<Answer> answers { get; set; }
         public DateTime creationDateTime { get; set; }
