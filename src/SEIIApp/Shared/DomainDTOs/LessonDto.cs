@@ -14,7 +14,7 @@ namespace SEIIApp.Shared.DomainDTOs
         public string title { get; set; }
         public string description { get; set; }
         public List<QuizDto> quizzes { get; set; }
-        public List<ILessonContentDto> contents { get; set; }
+        public List<LessonContenDto> contents { get; set; }
 
     }
 }

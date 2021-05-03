@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 
 
 namespace SEIIApp.Shared.DomainDTOs
 {
-    class AnswerDto
+    public class AnswerDto
     {
         public int Id { get; set; }
 

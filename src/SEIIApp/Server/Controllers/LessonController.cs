@@ -50,9 +50,9 @@ namespace SEIIApp.Server.Controllers
         /// <returns></returns>
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public ActionResult<LessonDto[]> GetAllLessons()
+        public ActionResult<LessonDto[]> GetAllLesson()
         {
-            var Lessons = LessonService.GetAllLessons();
+            var Lessons = LessonService.GetAllLesson();
             var mappedLessons = Mapper.Map<LessonDto[]>(Lessons);
             return Ok(mappedLessons);
         }

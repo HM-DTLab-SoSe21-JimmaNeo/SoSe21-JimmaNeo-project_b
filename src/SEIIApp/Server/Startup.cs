@@ -60,7 +60,7 @@ namespace SEIIApp.Server {
                 endpoints.MapFallbackToFile("index.html");
             });
 
-            TestDataGenerator.GenerateData();
+            //TestDataGenerator.GenerateData();
         }
     }
 }
