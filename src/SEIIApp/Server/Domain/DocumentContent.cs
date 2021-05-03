@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -7,9 +8,10 @@ namespace SEIIApp.Server.Domain
 {
     public class DocumentContent : ILessonContent
     {
-        public int contentId { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public string title { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public List<Lesson> lessons { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        [Key]
+        public int contentId { get; set; }
+        public string title { get; set; }
+        public List<Lesson> lessons { get; set; }
 
         public Uri location { get; set;}
     }

@@ -43,7 +43,9 @@ namespace SEIIApp.Server.DataAccess
                 lesson.lessonId = i;
                 lesson.title = i + ". Lesson title";
                 lesson.description = "Hier könnte Ihre Werbung stehen (lessons.description).";
-                lesson.contents = GenerateLessonContents(rnd.Next(1, 3), lesson);
+                //lesson.videoContents = GenerateVideoContents(rnd.Next(1, 3), lesson);
+                lesson.videoContents = GenerateVideoContents(rnd.Next(1, 2), lesson);
+                lesson.documentContents = GenerateDocumentsContents(rnd.Next(1, 2), lesson);                
                 lesson.quizzes = GenerateQuizzes(rnd.Next(1, 5));
                 lessons.Add(lesson);
                 db.Add(lesson);
@@ -51,6 +53,42 @@ namespace SEIIApp.Server.DataAccess
             return lessons;
         }
 
+        
+        private static List<VideoContent> GenerateVideoContents(int noOfVideoContent, Lesson lesson)
+        {
+            List<VideoContent> videoContents = new List<VideoContent>();
+            for(int i = 1; i <= noOfVideoContent; i++)
+            {
+                VideoContent videoContent = new VideoContent();
+                videoContent.contentId = i;
+                videoContent.title = "Videocontent numbero " + i;
+                videoContent.lessons = new List<Lesson>();
+                videoContent.lessons.Add(lesson);
+                videoContent.location = new Uri("https://www.youtube.com/watch?v=_lEzN8C5c7k");
+                videoContents.Add(videoContent);
+                db.Add(videoContent);
+            }
+            return videoContents;
+        }
+
+        private static List<DocumentContent> GenerateDocumentsContents(int noOfDocumentContent, Lesson lesson)
+        {
+            List<DocumentContent> DocumentContents = new List<DocumentContent>();
+            for (int i = 1; i <= noOfDocumentContent; i++)
+            {
+                DocumentContent DocumentContent = new DocumentContent();
+                DocumentContent.contentId = i;
+                DocumentContent.title = "Documentcontent numbero " + i;
+                DocumentContent.lessons = new List<Lesson>();
+                DocumentContent.lessons.Add(lesson);
+                DocumentContent.location = new Uri("https://www.youtube.com/watch?v=_lEzN8C5c7k");
+                DocumentContents.Add(DocumentContent);
+                db.Add(DocumentContent);
+            }
+            return DocumentContents;
+        }
+
+        /**
         private static List<ILessonContent> GenerateLessonContents(int noOfContent, Lesson lesson)
         {
             List<ILessonContent> lessonContents = new List<ILessonContent>();
@@ -70,12 +108,12 @@ namespace SEIIApp.Server.DataAccess
                 documentContent.location = new Uri("https://www.mathematik.hu-berlin.de/~baum/Skript/Analysis-BA-WS11-Summe.pdf");
                 lessonContents.Add(videoContent);
                 lessonContents.Add(documentContent);
-                db.Add(videoContent);
-                db.Add(documentContent);
+                //db.Add((ILessonContent)videoContent);
+                //b.Add((ILessonContent)documentContent);
             }
             return lessonContents;
         }
-
+        **/
         private static List<Quiz> GenerateQuizzes(int noOfQuizzes)
         {
             List<Quiz> quizzes = new List<Quiz>();
@@ -113,6 +151,7 @@ namespace SEIIApp.Server.DataAccess
             for(int i = 1; i <= noOfAnswers; i++)
             {
                 Answer answer = new Answer();
+                answer.answerId = i;
                 answer.answerText = i + ". answer of " + noOfAnswers + " answers.";
                 if (i == 1) answer.correct = true;
                 else answer.correct = false;
