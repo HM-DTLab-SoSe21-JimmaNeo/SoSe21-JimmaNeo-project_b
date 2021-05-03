@@ -16,7 +16,8 @@ namespace SEIIApp.Server.Services {
             return DatabaseContext
                 .Lessons
                 .Include(lesson => lesson.quizzes)
-                .Include(lesson => lesson.contents);
+                .Include(lesson => lesson.videoContents)
+                .Include(lesson => lesson.documentContents);
         }
 
         /// <summary>

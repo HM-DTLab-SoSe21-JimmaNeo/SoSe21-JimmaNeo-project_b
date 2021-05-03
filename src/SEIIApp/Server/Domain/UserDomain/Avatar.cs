@@ -8,6 +8,8 @@ namespace SEIIApp.Server.Domain
 {
     public class Avatar
     {
-        public Uri location { set; get; }
+        [Key]
+        public int avatarId { get; set; }
+        public Uri location { get; set; }
     }
 }
