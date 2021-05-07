@@ -15,7 +15,7 @@ namespace SEIIApp.Server.Services {
         private IQueryable<Course> GetQueryableForCourses() {
             return DatabaseContext
                 .Courses
-                .Include(course => course.lessons);
+                .Include(course => course.Lessons);
         }
 
         /// <summary>
@@ -30,7 +30,7 @@ namespace SEIIApp.Server.Services {
         /// </summary>
         public Course GetCourseWithId(int courseId) {
             return GetQueryableForCourses()
-                .Where(course => course.courseId == courseId).FirstOrDefault();
+                .Where(course => course.CourseId == courseId).FirstOrDefault();
         }
     }
 }

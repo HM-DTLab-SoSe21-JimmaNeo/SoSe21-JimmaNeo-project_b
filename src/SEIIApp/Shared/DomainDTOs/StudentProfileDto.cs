@@ -8,8 +8,8 @@ namespace SEIIApp.Shared.DomainDTOs
 {
     public class StudentProfileDto
     {
-        public string name { get; set; }
-        public string description { get; set; }
-        public int experience { get; set; }
+        public string Name { get; set; }
+        public string Description { get; set; }
+        public int Experience { get; set; }
     }
 }

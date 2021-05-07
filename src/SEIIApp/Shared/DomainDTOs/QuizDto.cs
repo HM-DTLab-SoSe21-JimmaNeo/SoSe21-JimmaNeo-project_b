@@ -1,16 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace SEIIApp.Shared.DomainDTOs
 {
     public class QuizDto
     {
-        public int quizId { get; set; }
-        public string title { get; set; }
+        public int QuizId { get; set; }
+        public string Title { get; set; }
 
-        public List<QuestionDto> questions { get; set; }
+        public List<QuestionDto> Questions { get; set; }
     }
 }

@@ -16,8 +16,8 @@ namespace SEIIApp.Server.Services
         private IQueryable<Quiz> GetQueryableForQuizzes() {
             return DatabaseContext
                 .Quizzes
-                .Include(quiz => quiz.questions)
-                    .ThenInclude(question => question.answers);
+                .Include(quiz => quiz.Questions)
+                    .ThenInclude(question => question.Answers);
         }
 
         /// <summary>
@@ -35,7 +35,7 @@ namespace SEIIApp.Server.Services
         /// <returns>Quiz with the given quizId</returns>
         public Quiz GetQuizWithId(int quizId){
             return GetQueryableForQuizzes()
-                .Where(quiz => quiz.quizId == quizId).FirstOrDefault();
+                .Where(quiz => quiz.QuizId == quizId).FirstOrDefault();
         }
     }
 }

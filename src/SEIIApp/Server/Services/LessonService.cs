@@ -15,9 +15,9 @@ namespace SEIIApp.Server.Services {
         private IQueryable<Lesson> GetQueryableForLessons() {
             return DatabaseContext
                 .Lessons
-                .Include(lesson => lesson.quizzes)
-                .Include(lesson => lesson.videoContents)
-                .Include(lesson => lesson.documentContents);
+                .Include(lesson => lesson.Quizzes)
+                .Include(lesson => lesson.VideoContents)
+                .Include(lesson => lesson.DocumentContents);
         }
 
         /// <summary>
@@ -32,7 +32,7 @@ namespace SEIIApp.Server.Services {
         /// </summary>
         public Lesson GetLessonWithId(int lessonId) {
             return GetQueryableForLessons()
-                .Where(lesson => lesson.lessonId == lessonId).FirstOrDefault();
+                .Where(lesson => lesson.LessonId == lessonId).FirstOrDefault();
         }
     }
 }

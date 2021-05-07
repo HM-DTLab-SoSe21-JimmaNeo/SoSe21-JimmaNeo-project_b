@@ -15,9 +15,9 @@ namespace SEIIApp.Server.Services
         private IQueryable<Student> GetQueryableForStudents() {
             return DatabaseContext
                 .Students
-                .Include(student => student.correctQuestions)
-                .Include(student => student.profile)
-                .Include(student => student.avatar);
+                .Include(student => student.CorrectQuestions)
+                .Include(student => student.Profile)
+                .Include(student => student.Avatar);
         }
 
         public Student[] GetAllStudents() {
@@ -25,7 +25,7 @@ namespace SEIIApp.Server.Services
         }
 
         public Student GetStudentWithId(int userId) {
-            return GetQueryableForStudents().Where(student => student.userId == userId).FirstOrDefault();
+            return GetQueryableForStudents().Where(student => student.UserId == userId).FirstOrDefault();
         }
     }
 }

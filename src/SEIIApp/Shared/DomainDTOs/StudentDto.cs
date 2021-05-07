@@ -8,9 +8,9 @@ namespace SEIIApp.Shared.DomainDTOs
 {
     public class StudentDto
     {
-        public int userId { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public StudentProfileDto profile { get; set; }
-        public AvatarDto avatar { get; set; }
-        public List<CorrectQuestionDto> correctQuestions { get; set; }
+        public int UserId { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public StudentProfileDto Profile { get; set; }
+        public AvatarDto Avatar { get; set; }
+        public List<CorrectQuestionDto> CorrectQuestions { get; set; }
     }
 }

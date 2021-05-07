@@ -8,6 +8,6 @@ namespace SEIIApp.Shared.DomainDTOs
 {
     public class AvatarDto
     {
-        public Uri location { set; get; }
+        public Uri Location { set; get; }
     }
 }
