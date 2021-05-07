@@ -6,6 +6,10 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using SEIIApp.Server.DataAccess;
 
+using Blazorise;
+using Blazorise.Bootstrap;
+using Blazorise.Icons.FontAwesome;
+
 
 namespace SEIIApp.Server {
     public class Startup {
@@ -34,6 +38,14 @@ namespace SEIIApp.Server {
             services.AddScoped<Services.LessonService>();
             services.AddScoped<Services.QuizService>();
             services.AddScoped<Services.StudentService>();
+
+            services
+                .AddBlazorise(options =>
+                {
+                    options.ChangeTextOnKeyPress = true; // optional
+                })
+                .AddBootstrapProviders()
+                .AddFontAwesomeIcons();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -58,6 +70,9 @@ namespace SEIIApp.Server {
                 endpoints.MapRazorPages();
                 endpoints.MapControllers();
                 endpoints.MapFallbackToFile("index.html");
+
+                //endpoints.MapBlazorHub();
+                //endpoints.MapFallbackToPage("/_Host");
             });
 
             //TestDataGenerator.GenerateData(db);
