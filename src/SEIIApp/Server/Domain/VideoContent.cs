@@ -8,10 +8,9 @@ namespace SEIIApp.Server.Domain
     public class VideoContent : ILessonContent
     {
         [Key]
-        public int contentId { get; set; }
-        public string title { get; set; }
-        public List<Lesson> lessons { get; set; }
-
-        public Uri location;
+        public int ContentId { get; set; }
+        public string Title { get; set; }
+        public List<Lesson> Lessons { get; set; }
+        public Uri Location { get; set; }
     }
 }

@@ -1,18 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
+
 
 namespace SEIIApp.Server.Domain
 {
     public class DocumentContent : ILessonContent
     {
         [Key]
-        public int contentId { get; set; }
-        public string title { get; set; }
-        public List<Lesson> lessons { get; set; }
-
-        public Uri location { get; set;}
+        public int ContentId { get; set; }
+        public string Title { get; set; }
+        public List<Lesson> Lessons { get; set; }
+        public Uri Location { get; set;}
     }
 }

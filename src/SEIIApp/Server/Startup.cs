@@ -75,7 +75,7 @@ namespace SEIIApp.Server {
                 //endpoints.MapFallbackToPage("/_Host");
             });
 
-            //TestDataGenerator.GenerateData(db);
+            TestDataGenerator.GenerateData(db);
         }
     }
 }

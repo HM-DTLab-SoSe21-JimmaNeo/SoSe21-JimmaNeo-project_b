@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace SEIIApp.Server.Domain
@@ -7,10 +6,11 @@ namespace SEIIApp.Server.Domain
     public class Student : IUser
     {
         [Key]
-        public int userId { get; set; }
-        public EmailAddressAttribute emailAddress { get; set; }
-        public StudentProfile profile { get; set; }
-        public Avatar avatar { get; set; }
-        public List<CorrectQuestion> correctQuestions { get; set; }
+        //ToDo: Should be a random ID
+        public int UserId { get; set; }
+        public string EmailAddress { get; set; }
+        public StudentProfile Profile { get; set; }
+        public Avatar Avatar { get; set; }
+        public List<CorrectQuestion> CorrectQuestions { get; set; }
     }
 }

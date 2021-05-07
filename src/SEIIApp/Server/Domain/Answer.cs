@@ -9,8 +9,8 @@ namespace SEIIApp.Server.Domain
     public class Answer
     {
         [Key]
-        public int answerId { get; set; }
-        public string answerText { get; set; }
-        public Boolean correct { get; set; }
+        public int AnswerId { get; set; }
+        public string AnswerText { get; set; }
+        public bool Correct { get; set; }
     }
 }

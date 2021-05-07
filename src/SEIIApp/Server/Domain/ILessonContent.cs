@@ -9,8 +9,8 @@ namespace SEIIApp.Server.Domain
     public interface ILessonContent
     {
         [Key]
-        public int contentId { get; set; }
-        public string title { get; set; }
-        public List<Lesson> lessons { get; set; }
+        public int ContentId { get; set; }
+        public string Title { get; set; }
+        public List<Lesson> Lessons { get; set; }
     }
 }
