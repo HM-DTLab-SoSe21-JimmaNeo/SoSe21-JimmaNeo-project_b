@@ -1,10 +1,13 @@
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using SEIIApp.Server.DataAccess;
+using System;
+using System.IO;
+using System.Reflection;
 
 using Blazorise;
 using Blazorise.Bootstrap;
@@ -38,6 +41,37 @@ namespace SEIIApp.Server {
             services.AddScoped<Services.LessonService>();
             services.AddScoped<Services.QuizService>();
             services.AddScoped<Services.StudentService>();
+
+            //Swagger -- OpenAPI UI
+            //Diese Zeilen fügen die Verwendung einer generierten API-Beschreibung
+            //dem Backend hinzu. Es wird aus der Dokumentation des Codes automatisch
+            //eine OpenAPI-Specification erstellt und daraus die UI.
+            services.AddSwaggerGen(options => {
+
+                //Generiert die Dokumentation für die Version 1 unserer Backend-Anwendung
+                options.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo { Title = "Backend Server API", Version = "v1" });
+
+                // Set the comments path for the Swagger JSON and UI.
+                var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+
+                //Wenn hier ein Fehler auftritt, dann aktivieren Sie in den Einstellungen des 
+                //Projektes → Rechte Maustaste auf SEIIApp.Server → Eigenschaften
+                //im Tab "Build" die Option "XML-Dokumentationsdatei" und geben dort ein:
+                //$(MSBuildProjectDirectory)\SEIIApp.Server.xml
+                options.IncludeXmlComments(xmlPath);
+
+                //Die API-UI können Sie dann aufrufen unter:
+                //https://localhost:44311/swagger
+                //wobei die URL bei Ihnen abweichend sein kann.
+            });
+            //AutoMapper
+            //https://docs.automapper.org/en/latest/Getting-started.html
+            //Der AutoMapper wird verwendet, um die Klassen, die zum Transfer der Daten
+            //bestimmt sind und die Klassen, die für das Speichern der Daten in der Datenbank
+            //bestimmt sind aufeinander zu mappen.
+            services.AddAutoMapper(typeof(Domain.DomainMapper));
+            //Diese Zeile fügt die Konfiguration des Mappers zum Mapper
 
             services
                 .AddBlazorise(options =>
@@ -73,6 +107,17 @@ namespace SEIIApp.Server {
 
                 //endpoints.MapBlazorHub();
                 //endpoints.MapFallbackToPage("/_Host");
+
+                //Swagger Part II
+                //Hier legen wir fest, dass wir die generierte API-Spezifikation als 
+                //Webseite verwenden möchten. Hier verweisen wir auch auf die 
+                //genierte Datei im OpenAPI-Format
+                app.UseSwagger();
+                app.UseSwaggerUI(options => {
+                    //Legt fest, dass die generierte Oberfläche die Version 1 unserer
+                    //generierten API verwendet
+                    options.SwaggerEndpoint("/swagger/v1/swagger.json", "API Spezifikation");
+                });
             });
 
             TestDataGenerator.GenerateData(db);

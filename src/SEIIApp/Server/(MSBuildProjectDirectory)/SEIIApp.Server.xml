@@ -1,0 +1,99 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>SEIIApp.Server</name>
+    </assembly>
+    <members>
+        <member name="M:SEIIApp.Server.Controllers.CourseController.GetCourseWithId(System.Int32)">
+            <summary>
+            Return the Course with the given id.
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SEIIApp.Server.Controllers.CourseController.GetAllCourses">
+            <summary>
+            Returns all Courses.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:SEIIApp.Server.Controllers.LessonController.GetLessonWithId(System.Int32)">
+            <summary>
+            Return the Lesson with the given id.
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SEIIApp.Server.Controllers.LessonController.GetAllLesson">
+            <summary>
+            Returns all Lessons.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:SEIIApp.Server.Controllers.QuizController.GetQuizWithId(System.Int32)">
+            <summary>
+            Return the Quiz with the given id.
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SEIIApp.Server.Controllers.QuizController.GetAllQuizzes">
+            <summary>
+            Returns all Quizs.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:SEIIApp.Server.Controllers.StudentController.GetStudentWithId(System.Int32)">
+            <summary>
+            Return the Student with the given id.
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SEIIApp.Server.Controllers.StudentController.GetAllStudentzes">
+            <summary>
+            Returns all Students.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:SEIIApp.Server.DataAccess.TestDataGenerator.GenerateData(SEIIApp.Server.DataAccess.DatabaseContext)">
+            <summary>
+            Initialize teast data for local-in-memory database.
+            </summary>
+            <param name="db">Database context</param>
+        </member>
+        <member name="M:SEIIApp.Server.Services.CourseService.GetAllCourses">
+            <summary>
+            Returns all courses.
+            </summary>
+        </member>
+        <member name="M:SEIIApp.Server.Services.CourseService.GetCourseWithId(System.Int32)">
+            <summary>
+            Returns the course with the given courseId.
+            </summary>
+        </member>
+        <member name="M:SEIIApp.Server.Services.LessonService.GetAllLesson">
+            <summary>
+            Returns all courses.
+            </summary>
+        </member>
+        <member name="M:SEIIApp.Server.Services.LessonService.GetLessonWithId(System.Int32)">
+            <summary>
+            Returns the course with the given id.
+            </summary>
+        </member>
+        <member name="M:SEIIApp.Server.Services.QuizService.GetAllQuizzes">
+            <summary>
+            Returns all quizzes.
+            </summary>
+            <returns>All quizzes</returns>
+        </member>
+        <member name="M:SEIIApp.Server.Services.QuizService.GetQuizWithId(System.Int32)">
+            <summary>
+            Returns the quiz with the given quizId.
+            </summary>
+            <param name="id">Id of the quiz</param>
+            <returns>Quiz with the given quizId</returns>
+        </member>
+    </members>
+</doc>
