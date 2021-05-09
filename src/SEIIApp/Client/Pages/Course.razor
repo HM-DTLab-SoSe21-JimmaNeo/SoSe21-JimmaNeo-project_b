@@ -1,0 +1,61 @@
+﻿@page "/{CourseId:int}"
+@page "/courses/{CourseId:int}"
+
+@using Blazorise
+@using SEIIApp.Shared.DomainDTOs
+
+@inject HttpClient Http
+@inject NavigationManager NavigationManager
+
+<div class="text-center">
+    <h3>@course.Title</h3>
+</div>
+
+<TextEdit Placeholder="Course completed: 2/"@lessonsArray.Length ReadOnly="true" class="text-center" />
+<Progress>
+    <ProgressBar Background="Background.Success" Value="2" Animated=true />
+    <ProgressBar Background="Background.Dark" Value=@lessonArray.Length Animated=true />
+</Progress>
+
+<br />
+
+@if (lessons == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    @foreach (LessonDto lesson in lessons)
+    {
+        <p class="text-center">
+            <Button Color="Color.Light" Clicked="@(() => SelectLesson(lesson.LessonId))">
+                <h4>@lesson.Title</h4>
+                @lesson.Description
+            </Button>
+        </p>
+        <br />
+    }
+}
+
+@code {
+    [Parameter]
+    public int CourseId { get; set; }
+
+    private CourseDto course;
+    private List<LessonDto> lessons;
+    private LessonDto[] lessonArray;
+
+    protected override async Task OnInitializedAsync()
+    {
+        string uri = $"api/Courses/{CourseId}";
+        course = await Http.GetFromJsonAsync<CourseDto>(uri);
+        lessons = course.Lessons;
+        lessonArray = lessons.ToArray();
+    }
+
+    private void SelectLesson(int lessonId)
+    {
+        string uri = $"/courses/{CourseId}/{lessonId}";
+        NavigationManager.NavigateTo(uri);
+    }
+}
