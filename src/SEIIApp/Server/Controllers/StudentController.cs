@@ -50,7 +50,7 @@ namespace SEIIApp.Server.Controllers
         /// <returns></returns>
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public ActionResult<StudentDto[]> GetAllStudentzes()
+        public ActionResult<StudentDto[]> GetAllStudents()
         {
             var Students = StudentService.GetAllStudents();
             var mappedStudents = Mapper.Map<StudentDto[]>(Students);

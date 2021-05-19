@@ -50,7 +50,7 @@
             <param name="id"></param>
             <returns></returns>
         </member>
-        <member name="M:SEIIApp.Server.Controllers.StudentController.GetAllStudentzes">
+        <member name="M:SEIIApp.Server.Controllers.StudentController.GetAllStudents">
             <summary>
             Returns all Students.
             </summary>
