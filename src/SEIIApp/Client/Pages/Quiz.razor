@@ -39,12 +39,17 @@
         else
         {
 
+            <h7>@(qCounter+1)/@questions.Length</h7>
 
+            <Progress>
+                <ProgressBar Background="Background.Success" Value="@progress" Animated=true />
+                <ProgressBar Background="Background.Secondary" Value="100" Animated=true />
+            </Progress>
 
+            <br /> <br />
 
-
-            <h1>Question @(qCounter+1): @questions[qCounter].Text</h1>
-
+                   <h1>Question @(qCounter+1): @questions[qCounter].Text @progress</h1>
+                   
             <br /> <br />
 
             @foreach (var answer in @questions[qCounter].answers)
@@ -76,19 +81,27 @@
     public QuizDto[] quizzes;
     public QuizDto quiz;
     public QuestionPackage[] questions;
-    public int qCounter = 0;
 
+    public int qCounter = 0;
     public bool startedQuiz = false;
+    public int progressFactor = 0;
+    public int progress = 0;
 
     protected override async Task OnInitializedAsync()
     {
         quizzes = await Http.GetFromJsonAsync<QuizDto[]>("api/Quizzes");
 
-        quiz = quizzes[QuizId];
+        foreach (QuizDto q in quizzes)
+        {
+            if (q.QuizId == QuizId)
+            {
+                quiz = q;
+            }
+        }
 
         questions = QuestionPackage.transformQuestions(quiz.Questions);
 
-
+        progressFactor = 100/questions.Length;
 
     }
 
@@ -119,9 +132,10 @@
         }
         else if (question.check.Color == "checkCorrect" || question.check.Color == "checkIncorrect")
         {
-            if (qCounter < questions.Length - 2)
+            if (qCounter < questions.Length - 1)
             {
                 qCounter++;
+                progress = progressFactor * qCounter;
             }
 
             // question.check.Text = "Check";
