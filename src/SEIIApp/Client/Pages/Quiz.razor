@@ -1,18 +1,63 @@
-﻿@page "/quiz"
+﻿
+@page "/courses/{CourseId:int}/{LessonId:int}/{QuizId:int}"
+@page "/quiz/{QuizId:int}"
+
+@using Blazorise
+@using SEIIApp.Shared.DomainDTOs
+
+@inject HttpClient Http
 
 <center>
 
-    <h1>@q1.Title</h1>
-
-    <br /> <br />
-
-    @foreach (var answer in q1.answers)
+    @if (quizzes == null)
     {
-        <p><button class="@answer.Color" @onclick="@(() => q1.anythingSelected(answer.ID) )">@answer.Text</button></p>
+        <h1>Loading Quiz...</h1>
     }
 
-    <br /> <br />
-    <button class="@q1.check.Color">Check</button>
+    else
+    {
+
+        if (!startedQuiz)
+        {
+
+            <h1>Quiz: @quiz.Title</h1>
+
+            <br /> <br />
+
+            <h4>You have done this Quiz X times</h4>
+
+            <br /> <br />
+
+            <h4>You have not successfully completed this Quiz yet</h4>
+
+            <br /> <br /> <br /> <br />
+
+            <p><button class="startQuizButton" @onclick="@(() => startQuiz())">Start Quiz</button></p>
+
+
+        }
+        else
+        {
+
+
+
+
+
+            <h1>Question @(qCounter+1): @questions[qCounter].Text</h1>
+
+            <br /> <br />
+
+            @foreach (var answer in @questions[qCounter].answers)
+            {
+                <p><button class="@answer.Color" @onclick="@(() => questions[qCounter].anythingSelected(answer) )">@answer.Text</button></p>
+            }
+
+            <br /> <br />
+            <button class="@questions[qCounter].check.Color" @onclick="@(() => checkMe(questions[qCounter]) )">@questions[qCounter].check.Text</button>
+
+        }
+
+    }
 
 </center>
 
@@ -21,97 +66,243 @@
 
 @code {
 
-    QuestionTest q1 = new QuestionTest { ID = 1, Title = "Are you impressed by my work?" };
+    [Parameter]
+    public int CourseId { get; set; }
+    [Parameter]
+    public int LessonId { get; set; }
+    [Parameter]
+    public int QuizId { get; set; }
 
-    
+    public QuizDto[] quizzes;
+    public QuizDto quiz;
+    public QuestionPackage[] questions;
+    public int qCounter = 0;
 
-    @*
-        <Question> items = Enumerable.Range(1, 10).Select(i => new Question { ID = i, Title = $"Title{i.ToString()}", Selected = false }).ToList();
-    *@
+    public bool startedQuiz = false;
 
-public class QuestionTest
-{
-    public int ID { get; set; }
-    public string Title { get; set; }
-    public Check check { get; set; } = new Check { Text = "Check" };
-    public AnswerTest[] answers { get; set; } = {
-            new AnswerTest { ID = 1, Text = "Yes"},
-            new AnswerTest { ID = 2, Text = "No"},
-            new AnswerTest { ID = 3, Text = "Maybe"}
-        };
-
-    public void anythingSelected(int i)
+    protected override async Task OnInitializedAsync()
     {
-        bool check = false;
-        AnswerTest ans = null;
+        quizzes = await Http.GetFromJsonAsync<QuizDto[]>("api/Quizzes");
 
-        foreach (var a in answers)
-        {
-            if (a.ID == i)
-            {
-                ans = a;
-            }
-        }
+        quiz = quizzes[QuizId];
 
+        questions = QuestionPackage.transformQuestions(quiz.Questions);
 
-        foreach (var a in answers)
-        {
-            if (a != ans && a.Selected)
-            {
-                a.pressed();
-            }
-        }
-
-        ans.pressed();
-
-        bool selectionTest = false;
-
-        foreach (var a in answers)
-        {
-            if (a.Selected)
-            {
-                selectionTest = true;
-            }
-        }
-
-        if (selectionTest)
-        {
-            this.check.Ready = true;
-        }
-        else
-        {
-            this.check.Ready = false;
-        }
 
 
     }
 
-}
 
-
-public class AnswerTest
-{
-    public int ID { get; set; }
-    public string Text { get; set; }
-    public bool Selected { get; set; } = false;
-    public string Color => Selected ? "selected" : "unselected";
-
-    public void pressed()
+    public void startQuiz()
     {
-        this.Selected = !Selected;
+        startedQuiz = true;
     }
+
+    public void checkMe(QuestionPackage question)
+    {
+        if (question.check.Color == "checkReady")
+        {
+            if (question.checkSelection() == "correct")
+            {
+                question.check.Text = "Correct, Continue";
+                question.check.Color = "checkCorrect";
+            }
+            else if (question.checkSelection() == "incorrect")
+            {
+                question.check.Text = "Incorrect, Continue";
+                question.check.Color = "checkIncorrect";
+            }
+            else if (question.checkSelection() == "error")
+            {
+                return;
+            }
+        }
+        else if (question.check.Color == "checkCorrect" || question.check.Color == "checkIncorrect")
+        {
+            if (qCounter < questions.Length - 2)
+            {
+                qCounter++;
+            }
+
+            // question.check.Text = "Check";
+            // question.check.Color = "checkNotReady";
+        }
+    }
+
+
+    public class QuestionPackage
+    {
+
+        public int ID { get; set; }
+        public string Text { get; set; }
+        public List<AnswerPackage> answers { get; set; }
+        public Check check { get; set; } = new Check { Text = "Check" };
+
+
+        public QuestionPackage(QuestionDto question)
+        {
+            this.ID = question.QuestionId;
+            this.Text = question.QuestionText;
+            this.answers = AnswerPackage.transformAnswers(question.Answers);
+        }
+
+
+        public static QuestionPackage[] transformQuestions(List<QuestionDto> questions)
+        {
+            List<QuestionPackage> newQuestions = new List<QuestionPackage>();
+
+            foreach (QuestionDto quest in questions)
+            {
+                newQuestions.Add(new QuestionPackage(quest));
+            }
+
+            return newQuestions.ToArray();
+        }
+
+
+        public void anythingSelected(AnswerPackage answer)
+        {
+
+            if (check.Color == "checkCorrect" || check.Color == "checkIncorrect")
+            {
+                return;
+            }
+
+            AnswerPackage ans = answer;
+
+
+            //Checks if any other answers than the clicked one are selected and unchecks them
+            foreach (var a in answers)
+            {
+                if (a != ans && a.Selected)
+                {
+                    a.pressed();
+                }
+            }
+
+            // (Un-) Selects clicked on answer
+            ans.pressed();
+
+            bool selectionTest = false;
+
+            //Checks if any answers are selected
+            foreach (var a in answers)
+            {
+                if (a.Selected)
+                {
+                    selectionTest = true;
+                }
+            }
+
+            //Set Check-Button to ready if an answer if selected
+            if (selectionTest)
+            {
+                this.check.setReady(true);
+            }
+            else
+            {
+                this.check.setReady(false);
+            }
+
+
+        }
+
+
+        public string checkSelection()
+        {
+            AnswerPackage ans = null;
+            bool selectionTest = false;
+
+            foreach (var a in answers)
+            {
+                if (a.Selected)
+                {
+                    selectionTest = true;
+                    ans = a;
+                }
+            }
+
+            if (selectionTest && ans != null)
+            {
+                if (ans.Correct)
+                {
+                    return "correct";
+                }
+                else
+                {
+                    return "incorrect";
+                }
+            }
+            else
+            {
+                return "error";
+            }
+
+        }
+    }
+
+
+    public class AnswerPackage
+    {
+        public int ID { get; set; }
+        public string Text { get; set; }
+        public bool Correct { get; set; }
+        public bool Selected { get; set; } = false;
+        public string Color => Selected ? "selected" : "unselected";
+
+        public AnswerPackage(AnswerDto answer)
+        {
+            this.ID = answer.Id;
+            this.Text = answer.AnswerText;
+            this.Correct = answer.Correct;
+        }
+
+        public void pressed()
+        {
+            this.Selected = !Selected;
+        }
+
+        public static List<AnswerPackage> transformAnswers(List<AnswerDto> answers)
+        {
+            List<AnswerPackage> newAnswers = new List<AnswerPackage>();
+
+            foreach (AnswerDto ans in answers)
+            {
+                newAnswers.Add(new AnswerPackage(ans));
+            }
+
+            return newAnswers;
+        }
+    }
+
+
+    public class Check
+    {
+        public string Text { get; set; }
+        public bool Ready { get; set; } = false;
+        public string Color { get; set; } = "checkNotReady";
+        //public string Color => Ready ? "checkReady" : "checkNotReady";
+
+
+        public void setReady(bool ready)
+        {
+            this.Ready = ready;
+
+            if (ready == true)
+            {
+                this.Color = "checkReady";
+            }
+            else if (ready == false)
+            {
+                this.Color = "checkNotReady";
+            }
+        }
+
+    }
+
+
 }
 
-public class Check
-{
-    public string Text { get; set; }
-    public bool Ready { get; set; } = false;
-    public string Color => Ready ? "checkReady" : "checkNotReady";
-
-}
-
-
-}
 
 
 
@@ -119,11 +310,19 @@ public class Check
 
 <style>
 
-    .unselected {
+    .startQuizButton {
         color: black;
+        background: lightblue;
+        border: black;
+        width: 300px;
+        height: 75px
+    }
+
+    .unselected {
+        color: white;
         background: grey;
         border: black;
-        width: 100px;
+        width: 300px;
         height: 35px
     }
 
@@ -131,7 +330,7 @@ public class Check
         color: white;
         background: blue;
         border: black;
-        width: 100px;
+        width: 300px;
         height: 35px
     }
 
@@ -150,5 +349,22 @@ public class Check
         width: 70px;
         height: 35px
     }
+
+    .checkCorrect {
+        color: white;
+        background: green;
+        border: black;
+        width: 200px;
+        height: 35px
+    }
+
+    .checkIncorrect {
+        color: white;
+        background: red;
+        border: black;
+        width: 200px;
+        height: 35px
+    }
 </style>
+
 
