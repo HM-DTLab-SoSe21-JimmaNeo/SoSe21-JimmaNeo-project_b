@@ -74,12 +74,12 @@
         </member>
         <member name="M:SEIIApp.Server.Services.LessonService.GetAllLesson">
             <summary>
-            Returns all courses.
+            Returns all lessons.
             </summary>
         </member>
         <member name="M:SEIIApp.Server.Services.LessonService.GetLessonWithId(System.Int32)">
             <summary>
-            Returns the course with the given id.
+            Returns the lesson with the given id.
             </summary>
         </member>
         <member name="M:SEIIApp.Server.Services.QuizService.GetAllQuizzes">

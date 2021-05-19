@@ -1,14 +1,8 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using SEIIApp.Server.Domain;
 using SEIIApp.Server.Services;
 using SEIIApp.Shared.DomainDTOs;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
 namespace SEIIApp.Server.Controllers
 {
 
@@ -17,13 +11,15 @@ namespace SEIIApp.Server.Controllers
     public class QuizController : ControllerBase
     {
 
-        private QuizService QuizService { get; set; }
-        private IMapper Mapper { get; set; }
+        private QuizService quizService { get; set; }
+        private IMapper mapper { get; set; }
+        private LessonService lessonService;
 
-        public QuizController(QuizService QuizService, IMapper mapper)
+        public QuizController(QuizService quizService, LessonService lessonService, IMapper mapper)
         {
-            this.QuizService = QuizService;
-            this.Mapper = mapper;
+            this.quizService = quizService;
+            this.mapper = mapper;
+            this.lessonService = lessonService;
         }
 
         /// <summary>
@@ -35,12 +31,12 @@ namespace SEIIApp.Server.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public ActionResult<Shared.DomainDTOs.QuizDto> GetQuizWithId([FromRoute] int id)
+        public ActionResult<QuizDto> GetQuizWithId([FromRoute] int id)
         {
-            var Quiz = QuizService.GetQuizWithId(id);
-            if (Quiz == null) return StatusCode(StatusCodes.Status404NotFound);
+            var quiz = quizService.GetQuizWithId(id);
+            if (quiz == null) return StatusCode(StatusCodes.Status404NotFound);
 
-            var mappedQuiz = Mapper.Map<QuizDto>(Quiz);
+            var mappedQuiz = mapper.Map<QuizDto>(quiz);
             return Ok(mappedQuiz);
         }
 
@@ -52,16 +48,21 @@ namespace SEIIApp.Server.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         public ActionResult<QuizDto[]> GetAllQuizzes()
         {
-            var Quizs = QuizService.GetAllQuizzes();
-            var mappedQuizs = Mapper.Map<QuizDto[]>(Quizs);
-            return Ok(mappedQuizs);
+            var quizzes = quizService.GetAllQuizzes();
+            var mappedQuizzes = mapper.Map<QuizDto[]>(quizzes);
+            return Ok(mappedQuizzes);
         }
 
-
-
-
-
-
-
+        [HttpGet]
+        [Route("/api/lesson/{lessonId}/quizzes/")]
+        public ActionResult<QuizDto[]> GetAllQuizzesOfLesson([FromRoute] int lessonId)
+        {
+            var lesson = lessonService.GetLessonWithId(lessonId);
+            if (lesson == null) return StatusCode(StatusCodes.Status404NotFound);
+            var quizzes = lesson.Quizzes;
+            if (quizzes == null) return StatusCode(StatusCodes.Status404NotFound);
+            var mappedQuizzes = mapper.Map<QuizDto[]>(quizzes);
+            return mappedQuizzes;
+        }
     }
 }

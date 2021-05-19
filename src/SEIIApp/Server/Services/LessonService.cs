@@ -21,14 +21,14 @@ namespace SEIIApp.Server.Services {
         }
 
         /// <summary>
-        /// Returns all courses.
+        /// Returns all lessons.
         /// </summary>
         public Lesson[] GetAllLesson() {
             return GetQueryableForLessons().ToArray();
         }
 
         /// <summary>
-        /// Returns the course with the given id.
+        /// Returns the lesson with the given id.
         /// </summary>
         public Lesson GetLessonWithId(int lessonId) {
             return GetQueryableForLessons()
