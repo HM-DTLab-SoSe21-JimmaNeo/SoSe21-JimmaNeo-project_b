@@ -8,13 +8,16 @@
 @inject NavigationManager NavigationManager
 
 <div class="text-center">
-    <h3>@lesson.Title</h3>
+    <h3>@(lesson?.Title ?? "Loading Lesson Title")</h3>
+</div>
+<div class="text-center">
+    <h4>@(lesson?.Description ?? "Loading Lesson Description")</h4>
 </div>
 
-<TextEdit Placeholder="Course completed: 2/"@quizArray.Length ReadOnly="true" class="text-center" />
+<TextEdit Placeholder="Quizzes completed: 1/1" ReadOnly="true" class="text-center" />
 <Progress>
-    <ProgressBar Background="Background.Success" Value="2" Animated=true />
-    <ProgressBar Background="Background.Dark" Value=@quizArray.Length Animated=true />
+    <ProgressBar Background="Background.Success" Value="99" Animated=true />
+    <ProgressBar Background="Background.Dark" Value="100" Animated=true />
 </Progress>
 
 <br />

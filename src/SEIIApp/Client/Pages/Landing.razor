@@ -10,10 +10,10 @@
     <h3>Courses</h3>
 </div>
 
-<TextEdit Placeholder="Experience current Level: 25/100" ReadOnly="true" class="text-center" />
+<TextEdit Placeholder="Courses completed: 2/5" ReadOnly="true" class="text-center" />
 <Progress>
-    <ProgressBar Background="Background.Success" Value="25" Animated=true />
-    <ProgressBar Background="Background.Dark" Value="75" Animated=true />
+    <ProgressBar Background="Background.Success" Value="40" Animated=true />
+    <ProgressBar Background="Background.Dark" Value="100" Animated=true />
 </Progress>
 
 <br />
@@ -27,7 +27,7 @@ else
     @foreach (CourseDto course in courses)
     {
         <p class="text-center">
-            <Button Color="Color.Light" Clicked="@(() => SelectCourse(course.CourseId))">
+            <Button Color="Color.Light" Clicked="(() => SelectCourse(course.CourseId))">
                 <h4>@course.Title</h4>
                 @course.Description
             </Button>
