@@ -18,6 +18,34 @@ namespace SEIIApp.Server.DataAccess
         {
             TestDataGenerator.db = db;
             GenerateCourses(NUMBER_OF_COURSES);
+            GenerateStudent();
+            db.SaveChanges();
+        }
+
+        private static void GenerateStudent()
+        {
+            Student student = new Student();
+            student.EmailAddress = "test@test.test";
+            student.Profile = GenerateProfile();
+            student.Avatar = GenerateAvatar();
+            student.CorrectQuestions = new List<CorrectQuestion>();
+            db.Students.Add(student);
+        }
+
+        private static StudentProfile GenerateProfile()
+        {
+            StudentProfile profile = new StudentProfile();
+            profile.Name = "Simon";
+            profile.Description = "Beschreibung des Typen";
+            profile.Experience = 0;
+            return profile;
+        }
+
+        private static Avatar GenerateAvatar()
+        {
+            Avatar avatar = new Avatar();
+            avatar.Location = new Uri("https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.1zoom.me%2Fde%2Fwallpaper%2F289597%2Fz1051.2%2F&psig=AOvVaw1i4G9Tf1i2cHTcjYTuOlHE&ust=1621521382934000&source=images&cd=vfe&ved=0CAIQjRxqFwoTCMjomIL81fACFQAAAAAdAAAAABAJ");
+            return avatar;
         }
 
         private static void GenerateCourses(int noOfCourses)
@@ -31,7 +59,6 @@ namespace SEIIApp.Server.DataAccess
                 course.Lessons = GenerateLessons(rnd.Next(2, 15));
                 db.Courses.Add(course);
             }
-            db.SaveChanges();
         }
 
         private static List<Lesson> GenerateLessons(int noOfLessons)
