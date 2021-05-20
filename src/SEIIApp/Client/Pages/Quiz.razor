@@ -52,7 +52,7 @@
 
                 <br /> <br />
 
-                <h1>Question @(qCounter + 1): @questions[qCounter].Text @progress</h1>
+                <h1>Question @(qCounter + 1): @questions[qCounter].Text [progress: @(progress)]</h1>
 
                 <br /> <br />
 
@@ -106,7 +106,7 @@
                     }
                 }
 
-                <br /> <br /> <br /> <br />
+                <br /> <br />
 
                 <p><button class="startQuizButton" @onclick="@(() => returnToLesson())">Return to Lesson</button></p>
 
@@ -189,12 +189,34 @@
                 question.check.Text = "Correct, Continue";
                 question.check.Color = "checkCorrect";
                 results[qCounter] = true;
+
+                foreach (AnswerPackage ans in questions[qCounter].answers)
+                {
+                    if (ans.Correct)
+                    {
+                        ans.Color = "correctAnswer";
+                    }
+                }
+
             }
             else if (question.checkSelection() == "incorrect")
             {
                 question.check.Text = "Incorrect, Continue";
                 question.check.Color = "checkIncorrect";
                 results[qCounter] = false;
+
+                foreach (AnswerPackage ans in questions[qCounter].answers)
+                {
+                    if (ans.Selected)
+                    {
+                        ans.Color = "wrongAnswer";
+                    }
+
+                    if (ans.Correct)
+                    {
+                        ans.Color = "correctAnswerWouldHaveBeen";
+                    }
+                }
 
             }
             else if (question.checkSelection() == "error")
@@ -338,7 +360,9 @@
         public string Text { get; set; }
         public bool Correct { get; set; }
         public bool Selected { get; set; } = false;
-        public string Color => Selected ? "selected" : "unselected";
+        public string Color { get; set; } = "unselected";
+
+        //public string Color => Selected ? "selected" : "unselected";
 
         public AnswerPackage(AnswerDto answer)
         {
@@ -350,6 +374,16 @@
         public void pressed()
         {
             this.Selected = !Selected;
+
+            if (this.Selected)
+            {
+                this.Color = "selected";
+            }
+            else
+            {
+                this.Color = "unselected";
+            }
+
         }
 
         public static List<AnswerPackage> transformAnswers(List<AnswerDto> answers)
@@ -424,6 +458,55 @@
         height: 35px
     }
 
+    .correctAnswer {
+        color: black;
+        background: lightgreen;
+        opacity: 0.8;
+        border: black;
+        width: 300px;
+        height: 35px;
+    }
+
+    .wrongAnswer {
+        color: white;
+        background: red;
+        opacity: 0.8;
+        border: black;
+        width: 300px;
+        height: 35px;
+    }
+
+    .correctAnswerWouldHaveBeen {
+        color: black;
+        background: lightgreen;
+        opacity: 0.8;
+        border: black;
+        width: 300px;
+        height: 35px;
+        animation-name: blink;
+        animation-duration: 0.5s;
+        animation-iteration-count: 2;
+    }
+
+    @@keyframes blink {
+        0% {
+            color: white;
+            background: grey;
+            opacity: 1.0;
+        }
+        50% {
+            color: black;
+            background: lightgreen;
+            opacity 0.8;
+        }
+        100% {
+            color: white;
+            background: grey;
+            opacity: 1.0;
+        }
+    }
+
+
     .checkReady {
         color: white;
         background: lightgreen;
@@ -455,6 +538,7 @@
         width: 200px;
         height: 35px
     }
+
 </style>
 
 
