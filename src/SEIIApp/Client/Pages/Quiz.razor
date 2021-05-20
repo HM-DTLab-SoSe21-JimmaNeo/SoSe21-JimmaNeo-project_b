@@ -142,7 +142,10 @@
 
     public int qCounter = 0;
     public bool startedQuiz = false;
+
+    //value by which the progress bar increases
     public int progressFactor = 0;
+    //current progress of progress bar
     public int progress = 0;
 
     public bool[] results;
@@ -180,6 +183,7 @@
         NavigationManager.NavigateTo(uri);
     }
 
+    //Interaction with Check Button
     public void checkMe(QuestionPackage question)
     {
         if (question.check.Color == "checkReady")
@@ -190,7 +194,7 @@
                 question.check.Color = "checkCorrect";
                 results[qCounter] = true;
 
-                foreach (AnswerPackage ans in questions[qCounter].answers)
+                foreach (AnswerPackage ans in question.answers)
                 {
                     if (ans.Correct)
                     {
@@ -205,7 +209,7 @@
                 question.check.Color = "checkIncorrect";
                 results[qCounter] = false;
 
-                foreach (AnswerPackage ans in questions[qCounter].answers)
+                foreach (AnswerPackage ans in question.answers)
                 {
                     if (ans.Selected)
                     {
@@ -236,8 +240,6 @@
                 finishedQuiz = true;
             }
 
-            // question.check.Text = "Check";
-            // question.check.Color = "checkNotReady";
         }
     }
 
