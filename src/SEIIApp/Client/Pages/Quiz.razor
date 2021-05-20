@@ -6,6 +6,7 @@
 @using SEIIApp.Shared.DomainDTOs
 
 @inject HttpClient Http
+@inject NavigationManager NavigationManager
 
 <center>
 
@@ -39,26 +40,83 @@
         else
         {
 
-            <h7>@(qCounter+1)/@questions.Length</h7>
-
-            <Progress>
-                <ProgressBar Background="Background.Success" Value="@progress" Animated=true />
-                <ProgressBar Background="Background.Secondary" Value="100" Animated=true />
-            </Progress>
-
-            <br /> <br />
-
-                   <h1>Question @(qCounter+1): @questions[qCounter].Text @progress</h1>
-                   
-            <br /> <br />
-
-            @foreach (var answer in @questions[qCounter].answers)
+            if (!finishedQuiz)
             {
-                <p><button class="@answer.Color" @onclick="@(() => questions[qCounter].anythingSelected(answer) )">@answer.Text</button></p>
+
+                <h7>@(qCounter + 1)/@questions.Length</h7>
+
+                <Progress>
+                    <ProgressBar Background="Background.Success" Value="@progress" Animated=true />
+                    <ProgressBar Background="Background.Secondary" Value="100" Animated=true />
+                </Progress>
+
+                <br /> <br />
+
+                <h1>Question @(qCounter + 1): @questions[qCounter].Text @progress</h1>
+
+                <br /> <br />
+
+                @foreach (var answer in @questions[qCounter].answers)
+                {
+                    <p><button class="@answer.Color" @onclick="@(() => questions[qCounter].anythingSelected(answer) )">@answer.Text</button></p>
+                }
+
+                <br /> <br />
+                <button class="@questions[qCounter].check.Color" @onclick="@(() => checkMe(questions[qCounter]) )">@questions[qCounter].check.Text</button>
+
+            }
+            else
+            {
+                <h1>Your Results for Quiz: @quiz.Title</h1>
+
+                <br /> <br />
+
+                bool everythingCorrect = true;
+
+                foreach (bool b in results)
+                {
+                    if (b == false)
+                    {
+                        everythingCorrect = false;
+                    }
+                }
+
+                if (everythingCorrect)
+                {
+                    <h2> Congratulations! You have successfully completed this Quiz.</h2>
+                }
+                else
+                {
+                    <h2>You didn't successfully complete this Quiz. Try better next time.</h2>
+                }
+
+                <br /> <br />
+
+                for (int i = 0; i < results.Length; i++)
+                {
+                    if (results[i] == true)
+                    {
+                        <h5>Question @(i): Correct</h5>
+                        <br /> <br />
+                    }
+                    else
+                    {
+                        <h5>Question @(i): Incorrect</h5>
+                        <br /> <br />
+                    }
+                }
+
+                <br /> <br /> <br /> <br />
+
+                <p><button class="startQuizButton" @onclick="@(() => returnToLesson())">Return to Lesson</button></p>
+
             }
 
-            <br /> <br />
-            <button class="@questions[qCounter].check.Color" @onclick="@(() => checkMe(questions[qCounter]) )">@questions[qCounter].check.Text</button>
+
+
+
+
+
 
         }
 
@@ -87,6 +145,9 @@
     public int progressFactor = 0;
     public int progress = 0;
 
+    public bool[] results;
+    public bool finishedQuiz = false;
+
     protected override async Task OnInitializedAsync()
     {
         quizzes = await Http.GetFromJsonAsync<QuizDto[]>("api/Quizzes");
@@ -101,7 +162,9 @@
 
         questions = QuestionPackage.transformQuestions(quiz.Questions);
 
-        progressFactor = 100/questions.Length;
+        progressFactor = 100 / questions.Length;
+
+        results = new bool[questions.Length];
 
     }
 
@@ -109,6 +172,12 @@
     public void startQuiz()
     {
         startedQuiz = true;
+    }
+
+    public void returnToLesson()
+    {
+        string uri = $"courses/{CourseId}/{LessonId}";
+        NavigationManager.NavigateTo(uri);
     }
 
     public void checkMe(QuestionPackage question)
@@ -119,11 +188,14 @@
             {
                 question.check.Text = "Correct, Continue";
                 question.check.Color = "checkCorrect";
+                results[qCounter] = true;
             }
             else if (question.checkSelection() == "incorrect")
             {
                 question.check.Text = "Incorrect, Continue";
                 question.check.Color = "checkIncorrect";
+                results[qCounter] = false;
+
             }
             else if (question.checkSelection() == "error")
             {
@@ -136,6 +208,10 @@
             {
                 qCounter++;
                 progress = progressFactor * qCounter;
+            }
+            else if (qCounter == questions.Length - 1)
+            {
+                finishedQuiz = true;
             }
 
             // question.check.Text = "Check";
