@@ -17,13 +17,13 @@ namespace SEIIApp.Server.Controllers
     public class StudentController : ControllerBase
     {
 
-        private StudentService StudentService { get; set; }
-        private IMapper Mapper { get; set; }
+        private StudentService studentService { get; set; }
+        private IMapper mapper { get; set; }
 
-        public StudentController(StudentService StudentService, IMapper mapper)
+        public StudentController(StudentService studentService, IMapper mapper)
         {
-            this.StudentService = StudentService;
-            this.Mapper = mapper;
+            this.studentService = studentService;
+            this.mapper = mapper;
         }
 
         /// <summary>
@@ -37,10 +37,10 @@ namespace SEIIApp.Server.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public ActionResult<Shared.DomainDTOs.StudentDto> GetStudentWithId([FromRoute] int id)
         {
-            var Student = StudentService.GetStudentWithId(id);
-            if (Student == null) return StatusCode(StatusCodes.Status404NotFound);
+            var student = studentService.GetStudentWithId(id);
+            if (student == null) return StatusCode(StatusCodes.Status404NotFound);
 
-            var mappedStudent = Mapper.Map<StudentDto>(Student);
+            var mappedStudent = mapper.Map<StudentDto>(student);
             return Ok(mappedStudent);
         }
 
@@ -52,8 +52,8 @@ namespace SEIIApp.Server.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         public ActionResult<StudentDto[]> GetAllStudents()
         {
-            var Students = StudentService.GetAllStudents();
-            var mappedStudents = Mapper.Map<StudentDto[]>(Students);
+            var students = studentService.GetAllStudents();
+            var mappedStudents = mapper.Map<StudentDto[]>(students);
             return Ok(mappedStudents);
         }
 

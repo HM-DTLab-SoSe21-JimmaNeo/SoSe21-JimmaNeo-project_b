@@ -12,13 +12,13 @@ namespace SEIIApp.Server.Controllers
     public class LessonController : ControllerBase
     {
 
-        private LessonService LessonService { get; set; }
-        private IMapper Mapper { get; set; }
+        private LessonService lessonService { get; set; }
+        private IMapper mapper { get; set; }
 
-        public LessonController(LessonService LessonService, IMapper mapper)
+        public LessonController(LessonService lessonService, IMapper mapper)
         {
-            this.LessonService = LessonService;
-            this.Mapper = mapper;
+            this.lessonService = lessonService;
+            this.mapper = mapper;
         }
 
         /// <summary>
@@ -32,10 +32,10 @@ namespace SEIIApp.Server.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public ActionResult<Shared.DomainDTOs.LessonDto> GetLessonWithId([FromRoute] int id)
         {
-            var Lesson = LessonService.GetLessonWithId(id);
-            if (Lesson == null) return StatusCode(StatusCodes.Status404NotFound);
+            var lesson = lessonService.GetLessonWithId(id);
+            if (lesson == null) return StatusCode(StatusCodes.Status404NotFound);
 
-            var mappedLesson = Mapper.Map<LessonDto>(Lesson);
+            var mappedLesson = mapper.Map<LessonDto>(lesson);
             return Ok(mappedLesson);
         }
 
@@ -47,8 +47,8 @@ namespace SEIIApp.Server.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         public ActionResult<LessonDto[]> GetAllLesson()
         {
-            var Lessons = LessonService.GetAllLesson();
-            var mappedLessons = Mapper.Map<LessonDto[]>(Lessons);
+            var lessons = lessonService.GetAllLesson();
+            var mappedLessons = mapper.Map<LessonDto[]>(lessons);
             return Ok(mappedLessons);
         }
 

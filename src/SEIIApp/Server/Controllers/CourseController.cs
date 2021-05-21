@@ -12,13 +12,13 @@ namespace SEIIApp.Server.Controllers
     public class CourseController : ControllerBase
     {
 
-        private CourseService CourseService { get; set; }
-        private IMapper Mapper { get; set; }
+        private CourseService courseService { get; set; }
+        private IMapper mapper { get; set; }
 
         public CourseController(CourseService CourseService, IMapper mapper)
         {
-            this.CourseService = CourseService;
-            this.Mapper = mapper;
+            this.courseService = CourseService;
+            this.mapper = mapper;
         }
 
         /// <summary>
@@ -32,10 +32,10 @@ namespace SEIIApp.Server.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public ActionResult<Shared.DomainDTOs.CourseDto> GetCourseWithId([FromRoute] int id)
         {
-            var course = CourseService.GetCourseWithId(id);
+            var course = courseService.GetCourseWithId(id);
             if (course == null) return StatusCode(StatusCodes.Status404NotFound);
 
-            var mappedCourse = Mapper.Map<CourseDto>(course);
+            var mappedCourse = mapper.Map<CourseDto>(course);
             return Ok(mappedCourse);
         }
 
@@ -47,8 +47,8 @@ namespace SEIIApp.Server.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         public ActionResult<CourseDto[]> GetAllCourses()
         {
-            var courses = CourseService.GetAllCourses();
-            var mappedCourses = Mapper.Map<CourseDto[]>(courses);
+            var courses = courseService.GetAllCourses();
+            var mappedCourses = mapper.Map<CourseDto[]>(courses);
             return Ok(mappedCourses);
         }
     }
