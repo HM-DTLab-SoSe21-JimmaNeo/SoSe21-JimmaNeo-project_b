@@ -1,6 +1,11 @@
 ﻿@page "/profile"
+@page "/profile/{StudentId:int}"
 
 @using Blazorise
+@using SEIIApp.Shared.DomainDTOs
+
+@inject HttpClient Http
+@inject NavigationManager NavigationManager
 
 
 <div class="text-center">
@@ -20,11 +25,54 @@
     <ProgressBar Background="Background.Dark" Value="75" Animated=true />
 </Progress>
 
-<div class="text-center">
-    <Figure Size="FigureSize.Is512x512" class="text-center">
-        <FigureImage Source=@picturePath AlternateText="256x256" class="text-center" />
-    </Figure>
-</div>
+
+
+
+<Container Fluid="true">
+    <div class="avatarContainer">
+        <div style="        top: 0px;
+        left: 0px;
+        width: 0px;
+        height: 0px;
+        z-index: 3">
+            <img src="/images/avatar.png" />
+        </div>
+        @if (glasses)
+        {
+            <div style="        top: 100px;
+        left: 0px;
+        width: 0px;
+        height: 0px;
+        z-index: 3">
+                <img src="/images/glasses.png" />
+            </div>
+        }
+        @if (hat)
+        {
+            <div style="        top: -100px;
+        left: 0px;
+        width: 0px;
+        height: 0px;
+        z-index: 3">
+                <img src="/images/hat.png" />
+            </div>
+        }
+        @if (mask)
+        {
+            <div style="        top: 150px;
+        left: -50px;
+        width: 0px;
+        height: 0px;
+        z-index: 3">
+                <img src="/images/mask.png" />
+            </div>
+        }
+
+    </div>
+</Container>
+
+
+
 
 
 
@@ -32,132 +80,87 @@
 <Container Fluid="true">
     <Row>
         <Column ColumnSize="ColumnSize.Is2" class="text-center">
-            <Button class="text-center" Clicked="@OnButtonClicked">
-                <img src="https://opengameart.org/sites/default/files/styles/medium/public/axe2.png" width="60" />
+            <Button class="text-center" Clicked="@Glassesclicked">
+                <img src="/images/glasses.svg" width="60" />
             </Button>
         </Column>
         <Column ColumnSize="ColumnSize.Is2" class="text-center">
-            <Button class="text-center">
-                <img src="https://opengameart.org/sites/default/files/styles/medium/public/axe2.png" width="60" />
+            <Button class="text-center" Clicked="@Hatclicked">
+                <img src="/images/hat.png" width="60" />
             </Button>
         </Column>
         <Column ColumnSize="ColumnSize.Is2" class="text-center">
-            <Button class="text-center">
-                <img src="https://opengameart.org/sites/default/files/styles/medium/public/axe2.png" width="60" />
-            </Button>
-        </Column>
-        <Column ColumnSize="ColumnSize.Is2" class="text-center">
-            <Button class="text-center">
-                <img src="https://opengameart.org/sites/default/files/styles/medium/public/axe2.png" width="60" />
-            </Button>
-        </Column>
-        <Column ColumnSize="ColumnSize.Is2" class="text-center">
-            <button class="btn btn-default">
-                <img src="https://opengameart.org/sites/default/files/styles/medium/public/axe2.png" width="60" />
-            </button>
-        </Column>
-        <Column ColumnSize="ColumnSize.Is2" class="text-center">
-            <Button class="text-center">
-                <img src="https://opengameart.org/sites/default/files/styles/medium/public/axe2.png" width="60" />
-            </Button>
-        </Column>
-    </Row>
-    <Row>
-        <Column ColumnSize="ColumnSize.Is2" class="text-center">
-            <Button class="text-center">
-                <img src="https://opengameart.org/sites/default/files/styles/medium/public/axe2.png" width="60" />
-            </Button>
-        </Column>
-        <Column ColumnSize="ColumnSize.Is2" class="text-center">
-            <Button class="text-center">
-                <img src="https://opengameart.org/sites/default/files/styles/medium/public/axe2.png" width="60" />
-            </Button>
-        </Column>
-        <Column ColumnSize="ColumnSize.Is2" class="text-center">
-            <Button class="text-center">
-                <img src="https://opengameart.org/sites/default/files/styles/medium/public/axe2.png" width="60" />
-            </Button>
-        </Column>
-        <Column ColumnSize="ColumnSize.Is2" class="text-center">
-            <Button class="text-center">
-                <img src="https://opengameart.org/sites/default/files/styles/medium/public/axe2.png" width="60" />
-            </Button>
-        </Column>
-        <Column ColumnSize="ColumnSize.Is2" class="text-center">
-            <Button class="text-center">
-                <img src="https://opengameart.org/sites/default/files/styles/medium/public/axe2.png" width="60" />
-            </Button>
-        </Column>
-        <Column ColumnSize="ColumnSize.Is2" class="text-center">
-            <Button class="text-center">
-                <img src="https://opengameart.org/sites/default/files/styles/medium/public/axe2.png" width="60" />
-            </Button>
-        </Column>
-    </Row>
-    <Row>
-        <Column ColumnSize="ColumnSize.Is2" class="text-center">
-            <Button class="text-center">
-                <img src="https://opengameart.org/sites/default/files/styles/medium/public/axe2.png" width="60" />
-            </Button>
-        </Column>
-        <Column ColumnSize="ColumnSize.Is2" class="text-center">
-            <Button class="text-center">
-                <img src="https://opengameart.org/sites/default/files/styles/medium/public/axe2.png" width="60" />
-            </Button>
-        </Column>
-        <Column ColumnSize="ColumnSize.Is2" class="text-center">
-            <Button class="text-center">
-                <img src="https://opengameart.org/sites/default/files/styles/medium/public/axe2.png" width="60" />
-            </Button>
-        </Column>
-        <Column ColumnSize="ColumnSize.Is2" class="text-center">
-            <button class="btn btn-default">
-                <img src="https://opengameart.org/sites/default/files/styles/medium/public/axe2.png" width="60" />
-            </button>
-        </Column>
-        <Column ColumnSize="ColumnSize.Is2" class="text-center">
-            <Button class="text-center">
-                <img src="https://opengameart.org/sites/default/files/styles/medium/public/axe2.png" width="60" />
-            </Button>
-        </Column>
-        <Column ColumnSize="ColumnSize.Is2" class="text-center">
-            <Button class="text-center">
-                <img src="https://opengameart.org/sites/default/files/styles/medium/public/axe2.png" width="60" />
+            <Button class="text-center" Clicked="@Maskclicked">
+                <img src="/images/mask.png" width="60" />
             </Button>
         </Column>
     </Row>
 </Container>
 
 
-
 @code{
+    [Parameter]
+    public int StudentId { get; set; }
 
-    string picturePath = "/images/91-512.png";
-    int temp = 0;
+    public bool glasses = false;
+    public bool hat = false;
+    public bool mask = false;
 
-    void OnButtonClicked()
+    public StudentDto student;
+
+    protected override async Task OnInitializedAsync()
     {
-        Console.WriteLine("Hello world!");
+        student = await Http.GetFromJsonAsync<StudentDto>("api/Students/");
 
-        ChangePicture();
+
     }
 
-
-    void ChangePicture()
+    void Glassesclicked()
     {
-
-        if (temp == 0)
+        if (!glasses)
         {
-            picturePath = "/images/91-512 - Kopie.png";
-            temp = 2;
-            Console.WriteLine(temp);
+            glasses = true;
         }
-        else if (temp == 2)
+        else if (glasses)
         {
-            picturePath = "/images/91-512.png";
-            temp = 0;
-            Console.WriteLine(temp);
+            glasses = false;
+        }
+    }
+
+    void Hatclicked()
+    {
+        if (!hat)
+        {
+            hat = true;
+        }
+        else if (hat)
+        {
+            hat = false;
+        }
+    }
+
+    void Maskclicked()
+    {
+        if (!mask)
+        {
+            mask = true;
+        }
+        else if (mask)
+        {
+            mask = false;
         }
     }
 }
+
+<style>
+    .avatarContainer {
+        width: 300px;
+        height: 420px;
+        position: relative
+    }
+
+        .avatarContainer div {
+            position: absolute
+        }
+</style>
 
