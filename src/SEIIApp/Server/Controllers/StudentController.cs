@@ -57,11 +57,24 @@ namespace SEIIApp.Server.Controllers
             return Ok(mappedStudents);
         }
 
-
-
-
-
-
-
+        /// Adds or updates a quiz definition.
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        [HttpPut]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public ActionResult<StudentDto> AddOrUpdateQuiz([FromBody] StudentDto model)
+        {
+            if (ModelState.IsValid)
+            {
+                var mappedModel = mapper.Map<Student>(model);
+                mappedModel = studentService.UpdateStudent(mappedModel);
+                
+                model = mapper.Map<StudentDto>(mappedModel);
+                return Ok(model);
+            }
+            return BadRequest(ModelState);
+        }
     }
 }

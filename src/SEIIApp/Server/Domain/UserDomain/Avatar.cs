@@ -1,4 +1,4 @@
-﻿using System;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace SEIIApp.Server.Domain
@@ -7,6 +7,7 @@ namespace SEIIApp.Server.Domain
     {
         [Key]
         public int AvatarId { get; set; }
-        public Uri Location { get; set; }
+        public string Location { get; set; }
+        public List<AvatarItem> UsedItems { get; set; }
     }
 }

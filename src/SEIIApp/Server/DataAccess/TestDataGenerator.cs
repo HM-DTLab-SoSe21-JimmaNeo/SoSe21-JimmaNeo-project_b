@@ -19,7 +19,20 @@ namespace SEIIApp.Server.DataAccess
             TestDataGenerator.db = db;
             GenerateCourses(NUMBER_OF_COURSES);
             GenerateStudent();
+            GenerateItems();
             db.SaveChanges();
+        }
+
+        private static void GenerateItems()
+        {
+            string[] sources = {"images/glasses.png", "/images/hat.png", "/images/mask.png" };
+            foreach(string source in sources)
+            {
+                AvatarItem item = new AvatarItem();
+                item.Source = source;
+                db.Add(item);
+            }
+
         }
 
         private static void GenerateStudent()
@@ -44,7 +57,7 @@ namespace SEIIApp.Server.DataAccess
         private static Avatar GenerateAvatar()
         {
             Avatar avatar = new Avatar();
-            avatar.Location = new Uri("https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.1zoom.me%2Fde%2Fwallpaper%2F289597%2Fz1051.2%2F&psig=AOvVaw1i4G9Tf1i2cHTcjYTuOlHE&ust=1621521382934000&source=images&cd=vfe&ved=0CAIQjRxqFwoTCMjomIL81fACFQAAAAAdAAAAABAJ");
+            avatar.Location = "/images/avatar.png";
             return avatar;
         }
 

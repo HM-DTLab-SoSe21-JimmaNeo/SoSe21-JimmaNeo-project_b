@@ -56,11 +56,17 @@
             </summary>
             <returns></returns>
         </member>
+        <!-- Badly formed XML comment ignored for member "M:SEIIApp.Server.Controllers.StudentController.AddOrUpdateQuiz(SEIIApp.Shared.DomainDTOs.StudentDto)" -->
         <member name="M:SEIIApp.Server.DataAccess.TestDataGenerator.GenerateData(SEIIApp.Server.DataAccess.DatabaseContext)">
             <summary>
             Initialize teast data for local-in-memory database.
             </summary>
             <param name="db">Database context</param>
+        </member>
+        <member name="M:SEIIApp.Server.Services.AvatarItemService.GetAllAvatarItems">
+            <summary>
+            Returns all items.
+            </summary>
         </member>
         <member name="M:SEIIApp.Server.Services.CourseService.GetAllCourses">
             <summary>
