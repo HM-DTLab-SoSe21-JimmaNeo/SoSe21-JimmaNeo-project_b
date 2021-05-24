@@ -47,12 +47,12 @@
 
                 <Progress>
                     <ProgressBar Background="Background.Success" Value="@progress" Animated=true />
-                    <ProgressBar Background="Background.Secondary" Value="100" Animated=true />
+                    <ProgressBar Background="Background.Secondary" Value=@(100 - progress) Animated=true />
                 </Progress>
 
                 <br /> <br />
 
-                <h1>Question @(qCounter + 1): @questions[qCounter].Text [progress: @(progress)]</h1>
+                <h1>Question @(qCounter + 1): @questions[qCounter].Text</h1>
 
                 <br /> <br />
 
@@ -177,6 +177,12 @@
         startedQuiz = true;
     }
 
+    public void finishQuiz()
+    {
+        finishedQuiz = true;
+    }
+
+
     public void returnToLesson()
     {
         string uri = $"courses/{CourseId}/{LessonId}";
@@ -184,7 +190,7 @@
     }
 
     //Interaction with Check Button
-    public void checkMe(QuestionPackage question)
+    public async void checkMe(QuestionPackage question)
     {
         if (question.check.Color == "checkReady")
         {
@@ -233,11 +239,20 @@
             if (qCounter < questions.Length - 1)
             {
                 qCounter++;
-                progress = progressFactor * qCounter;
+                progress += progressFactor;
+
             }
             else if (qCounter == questions.Length - 1)
             {
-                finishedQuiz = true;
+                progress = 100;
+
+                Task.Delay(1500).ContinueWith(t =>
+                {
+                    finishQuiz();
+
+                    StateHasChanged();
+                });
+
             }
 
         }
