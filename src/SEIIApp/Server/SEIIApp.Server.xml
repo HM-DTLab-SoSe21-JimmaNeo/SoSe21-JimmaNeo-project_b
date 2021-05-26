@@ -56,7 +56,7 @@
             </summary>
             <returns></returns>
         </member>
-        <!-- Badly formed XML comment ignored for member "M:SEIIApp.Server.Controllers.StudentController.AddOrUpdateQuiz(SEIIApp.Shared.DomainDTOs.StudentDto)" -->
+        <!-- Badly formed XML comment ignored for member "M:SEIIApp.Server.Controllers.StudentController.UpdateStudent(SEIIApp.Shared.DomainDTOs.StudentDto)" -->
         <member name="M:SEIIApp.Server.DataAccess.TestDataGenerator.GenerateData(SEIIApp.Server.DataAccess.DatabaseContext)">
             <summary>
             Initialize teast data for local-in-memory database.

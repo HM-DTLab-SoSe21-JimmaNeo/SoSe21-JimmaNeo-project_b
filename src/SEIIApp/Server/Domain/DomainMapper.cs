@@ -43,10 +43,11 @@ namespace SEIIApp.Server.Domain
             CreateMap<StudentProfile, StudentProfileDto>();
             CreateMap<StudentProfileDto, StudentProfile>();
 
+            CreateMap<CorrectQuestion, CorrectQuestionDto>();
+            CreateMap<CorrectQuestionDto, CorrectQuestion>();
 
-
-
-
+            CreateMap<AvatarItem, AvatarItemDto>();
+            CreateMap<AvatarItemDto, AvatarItem>();
         }
 
     }

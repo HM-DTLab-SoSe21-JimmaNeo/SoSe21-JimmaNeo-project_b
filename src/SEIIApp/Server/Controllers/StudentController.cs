@@ -35,7 +35,7 @@ namespace SEIIApp.Server.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public ActionResult<Shared.DomainDTOs.StudentDto> GetStudentWithId([FromRoute] int id)
+        public ActionResult<StudentDto> GetStudentWithId([FromRoute] int id)
         {
             var student = studentService.GetStudentWithId(id);
             if (student == null) return StatusCode(StatusCodes.Status404NotFound);
@@ -57,14 +57,14 @@ namespace SEIIApp.Server.Controllers
             return Ok(mappedStudents);
         }
 
-        /// Adds or updates a quiz definition.
+        /// Updates a student
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
         [HttpPut]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public ActionResult<StudentDto> AddOrUpdateQuiz([FromBody] StudentDto model)
+        public ActionResult<StudentDto> UpdateStudent([FromBody] StudentDto model)
         {
             if (ModelState.IsValid)
             {
