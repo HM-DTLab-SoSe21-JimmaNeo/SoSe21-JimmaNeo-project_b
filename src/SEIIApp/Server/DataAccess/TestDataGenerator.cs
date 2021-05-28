@@ -20,7 +20,6 @@ namespace SEIIApp.Server.DataAccess
             GenerateCourses(NUMBER_OF_COURSES);
             GenerateStudent();
             GenerateItems();
-            GenerateAvatar();
             db.SaveChanges();
         }
 
