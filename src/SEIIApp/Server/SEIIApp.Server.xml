@@ -4,6 +4,12 @@
         <name>SEIIApp.Server</name>
     </assembly>
     <members>
+        <member name="M:SEIIApp.Server.Controllers.AvatarItemController.GetAllAvatarItems">
+            <summary>
+            Return all AvatarItems.
+            </summary>
+            <returns></returns>
+        </member>
         <member name="M:SEIIApp.Server.Controllers.CourseController.GetCourseWithId(System.Int32)">
             <summary>
             Return the Course with the given id.

@@ -7,15 +7,15 @@ using AutoMapper;
 namespace SEIIApp.Server.Services
 {
     public class StudentService {
-        private DatabaseContext DatabaseContext { get; set; }
-        IMapper Mapper { get; set; }
+        private DatabaseContext databaseContext { get; set; }
+        IMapper mapper { get; set; }
         public StudentService(DatabaseContext db, IMapper mapper) {
-            this.DatabaseContext = db;
-            this.Mapper = mapper;
+            this.databaseContext = db;
+            this.mapper = mapper;
         }
 
         private IQueryable<Student> GetQueryableForStudents() {
-            return DatabaseContext
+            return databaseContext
                 .Students
                 .Include(student => student.CorrectQuestions)
                 .Include(student => student.Profile)
@@ -34,9 +34,9 @@ namespace SEIIApp.Server.Services
         public Student UpdateStudent(Student student)
         {
             var toUpdateStudent = GetStudentWithId(student.UserId);
-            Mapper.Map(student, toUpdateStudent);
-            DatabaseContext.Students.Update(toUpdateStudent);
-            DatabaseContext.SaveChanges();
+            mapper.Map(student, toUpdateStudent);
+            databaseContext.Students.Update(toUpdateStudent);
+            databaseContext.SaveChanges();
             return toUpdateStudent;
         }
     }
