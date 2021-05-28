@@ -7,32 +7,27 @@
 .header a {
     color: white;
     padding: 12px;
-    text-decoration: none;
-    font-size: 18px;
-    line-height: 25px;
-    border-radius: 4px;
 }
 
 .header a.logo {
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 25px;
-    font-weight: bold;
+    flex-basis: 10%;
 }
 
-.header a:hover {
-    background-color: #6FD600;
-    color: white;
+.header-right {
+    float: right;
 }
 
-.header a.active {
-    background-color: #6FD700;
-    color: white;
-}
 .header-left {
     float: left;
 }
-.header-right {
-    float: right;
+
+.header a.active {
+    background-color: #aefa9a;
+}
+
+.header a:hover {
+    background-color: #aefa9a;
 }
