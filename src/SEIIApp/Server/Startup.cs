@@ -12,7 +12,8 @@ using System.Reflection;
 using Blazorise;
 using Blazorise.Bootstrap;
 using Blazorise.Icons.FontAwesome;
-
+using SEIIApp.Server.Services;
+using System.Linq;
 
 namespace SEIIApp.Server {
     public class Startup {
@@ -102,6 +103,42 @@ namespace SEIIApp.Server {
             });
 
             TestDataGenerator.GenerateData(db);
+
+
+            //***************************************************************
+            //***************************************************************
+
+            //Helper function
+            //Do something in in isolated database context scope
+            void DoInIsolatedScopeWithStudentService(Action<StudentService> action) {
+                //create db scope
+                using (var scope = app.ApplicationServices.CreateScope()) {
+                    var service = scope.ServiceProvider.GetRequiredService<StudentService>();
+                    action(service);
+                }//dispose scope
+            }
+
+            DoInIsolatedScopeWithStudentService(ss => {
+                var student = ss.GetAllStudents().First();
+                student.CorrectQuestions.Add(new Domain.CorrectQuestion() {
+                    QuestionsId = 1,
+                    SolveDateTime = DateTime.Now
+                });
+                ss.UpdateStudent(student);
+            });
+
+            DoInIsolatedScopeWithStudentService(ss => {
+                var student = ss.GetAllStudents().First();
+                student.CorrectQuestions.Add(new Domain.CorrectQuestion() {
+                    QuestionsId = 1,
+                    SolveDateTime = DateTime.Now
+                });
+                ss.UpdateStudent(student);
+            });
+
+
+
+
         }
     }
 }

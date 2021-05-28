@@ -34,8 +34,10 @@ namespace SEIIApp.Server.Services
         public Student UpdateStudent(Student student)
         {
             var toUpdateStudent = GetStudentWithId(student.UserId);
-            mapper.Map(student, toUpdateStudent);
-            databaseContext.Students.Update(toUpdateStudent);
+            if (toUpdateStudent != student) {
+                mapper.Map(student, toUpdateStudent);
+                databaseContext.Students.Update(toUpdateStudent);
+            }
             databaseContext.SaveChanges();
             return toUpdateStudent;
         }
