@@ -41,6 +41,7 @@ namespace SEIIApp.Server {
             services.AddScoped<Services.LessonService>();
             services.AddScoped<Services.QuizService>();
             services.AddScoped<Services.StudentService>();
+            services.AddScoped<Services.AvatarService>();
             services.AddScoped<Services.AvatarItemService>();
 
             services.AddSwaggerGen(options => {
