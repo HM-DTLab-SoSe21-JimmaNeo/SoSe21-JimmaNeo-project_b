@@ -4,6 +4,19 @@
         <name>SEIIApp.Server</name>
     </assembly>
     <members>
+        <member name="M:SEIIApp.Server.Controllers.AvatarController.GetAvatarWithId(System.Int32)">
+            <summary>
+            Return the Avatar with the given id.
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SEIIApp.Server.Controllers.AvatarController.GetAllAvatars">
+            <summary>
+            Returns all Avatars.
+            </summary>
+            <returns></returns>
+        </member>
         <member name="M:SEIIApp.Server.Controllers.AvatarItemController.GetAllAvatarItems">
             <summary>
             Return all AvatarItems.
