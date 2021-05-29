@@ -213,12 +213,7 @@
 */
                     student.CorrectQuestions.Add(newCorrect);
                     expStatus = "ExpVisible";
-
                     await Http.PutAsJsonAsync<StudentDto>("api/Students", student);
-                    var test = await Http.GetFromJsonAsync<StudentDto>($"api/Students/{1}");
-                    Console.WriteLine("CorrectQuestions: ");
-                    test.CorrectQuestions.ForEach(i => Console.Write("{0}\t", i));
-
                 }
 
                 foreach (AnswerPackage ans in question.answers)

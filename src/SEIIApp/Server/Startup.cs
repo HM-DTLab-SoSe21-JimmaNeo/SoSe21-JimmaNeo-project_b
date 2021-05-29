@@ -43,6 +43,7 @@ namespace SEIIApp.Server {
             services.AddScoped<Services.QuizService>();
             services.AddScoped<Services.StudentService>();
             services.AddScoped<Services.AvatarItemService>();
+            services.AddScoped<Services.CorrectQuestionService>();
 
             services.AddSwaggerGen(options => {
 
@@ -104,7 +105,7 @@ namespace SEIIApp.Server {
 
             TestDataGenerator.GenerateData(db);
 
-
+            /*
             //***************************************************************
             //***************************************************************
 
@@ -135,10 +136,7 @@ namespace SEIIApp.Server {
                 });
                 ss.UpdateStudent(student);
             });
-
-
-
-
+            */
         }
     }
 }
