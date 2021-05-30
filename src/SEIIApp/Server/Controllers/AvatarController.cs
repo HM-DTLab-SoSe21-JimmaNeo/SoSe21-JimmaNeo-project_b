@@ -4,14 +4,12 @@ using Microsoft.AspNetCore.Mvc;
 using SEIIApp.Server.Domain;
 using SEIIApp.Server.Services;
 using SEIIApp.Shared.DomainDTOs;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace SEIIApp.Server.Controllers
 {
-
+    /// <summary>
+    /// Controller for avatars.
+    /// </summary>
     [ApiController]
     [Route("api/Avatars")]
     public class AvatarController : ControllerBase
@@ -20,17 +18,22 @@ namespace SEIIApp.Server.Controllers
         private AvatarService avatarService { get; set; }
         private IMapper mapper { get; set; }
 
-        public AvatarController(AvatarService AvatarService, IMapper mapper)
+        /// <summary>
+        /// Constructor.
+        /// </summary>
+        /// <param name="avatarService"></param>
+        /// <param name="mapper"></param>
+        public AvatarController(AvatarService avatarService, IMapper mapper)
         {
-            this.avatarService = AvatarService;
+            this.avatarService = avatarService;
             this.mapper = mapper;
         }
 
         /// <summary>
-        /// Return the Avatar with the given id.
+        /// Return the Avatar with the given UserId of a student.
         /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
+        /// <param name="id">UserId of the student</param>
+        /// <returns>The avatar of the specific student</returns>
         [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -45,17 +48,23 @@ namespace SEIIApp.Server.Controllers
         }
 
         /// <summary>
-        /// Returns all Avatars.
+        /// Update a avatar of specific student.
         /// </summary>
-        /// <returns></returns>
-        [HttpGet]
+        /// <param name="id">UserId of the student</param>
+        /// <param name="avatar">To update avatar</param>
+        /// <returns>Updated avatar</returns>
+        [HttpPut("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public ActionResult<AvatarDto[]> GetAllAvatars()
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public ActionResult<AvatarDto[]> UpdateAvatar([FromRoute] int id, [FromBody] AvatarDto avatar)
         {
-            var Avatars = avatarService.GetAllAvatars();
-            var mappedAvatars = mapper.Map<AvatarDto[]>(Avatars);
-            return Ok(mappedAvatars);
+            if(ModelState.IsValid)
+            {
+                var mappedAvatar = mapper.Map<Avatar>(avatar);
+                var mappedAvatarDto = mapper.Map<AvatarDto>(avatarService.UpdateAvatar(id, mappedAvatar));
+                return Ok(mappedAvatarDto);
+            }
+            return BadRequest(ModelState);
         }
-
     }
 }

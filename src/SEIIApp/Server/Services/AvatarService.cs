@@ -2,37 +2,65 @@
 using SEIIApp.Server.Domain;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
-using AutoMapper;
 
 namespace SEIIApp.Server.Services
 {
+    /// <summary>
+    /// Service for avatars.
+    /// </summary>
     public class AvatarService
     {
-        private DatabaseContext DatabaseContext { get; set; }
-        IMapper Mapper { get; set; }
-        public AvatarService(DatabaseContext db, IMapper mapper)
+        private DatabaseContext databaseContext { get; set; }
+   
+        /// <summary>
+        /// Constructor.
+        /// </summary>
+        /// <param name="db"></param>
+        public AvatarService(DatabaseContext db)
         {
-            this.DatabaseContext = db;
-            this.Mapper = mapper;
+            this.databaseContext = db;
         }
 
         private IQueryable<Avatar> GetQueryableForAvatars()
         {
-            return DatabaseContext
+            return databaseContext
                 .Avatars
                 .Include(avatar => avatar.UsedItems);
         }
 
-        public Avatar[] GetAllAvatars()
+        private IQueryable<Student> GetQueryableForStudents()
         {
-            return GetQueryableForAvatars().ToArray();
+            return databaseContext
+                .Students
+                .Include(student => student.Avatar)
+                .ThenInclude(avatar => avatar.UsedItems);
         }
 
-        public Avatar GetAvatarWithId(int avatarId)
+        /// <summary>
+        /// Get the avatar of a specific student.
+        /// </summary>
+        /// <param name="userId">UserId of the specific student</param>
+        /// <returns>The avatar of the specific student</returns>
+        public Avatar GetAvatarWithId(int userId)
         {
-            return GetQueryableForAvatars().Where(avatar => avatar.AvatarId == avatarId).FirstOrDefault();
+            return (Avatar)(from student in GetQueryableForStudents()
+                            where student.UserId == userId
+                            select student.Avatar);
         }
 
-       
+        /// <summary>
+        /// Update the avatar of a specific student.
+        /// </summary>
+        /// <param name="userId">UserId of the specific student</param>
+        /// <param name="avatar">The new avatar</param>
+        /// <returns>The updated avatar</returns>
+        public Avatar UpdateAvatar(int userId, Avatar avatar)
+        {
+            var toUpdateStudent = GetQueryableForStudents().Where(student => student.UserId == userId).FirstOrDefault();
+            toUpdateStudent.Avatar = avatar;
+            databaseContext.Students.Update(toUpdateStudent);
+            databaseContext.SaveChanges();
+            return toUpdateStudent.Avatar;
+        }       
     }
 }

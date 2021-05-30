@@ -4,18 +4,32 @@
         <name>SEIIApp.Server</name>
     </assembly>
     <members>
+        <member name="T:SEIIApp.Server.Controllers.AvatarController">
+            <summary>
+            Controller for avatars.
+            </summary>
+        </member>
+        <member name="M:SEIIApp.Server.Controllers.AvatarController.#ctor(SEIIApp.Server.Services.AvatarService,AutoMapper.IMapper)">
+            <summary>
+            Constructor.
+            </summary>
+            <param name="avatarService"></param>
+            <param name="mapper"></param>
+        </member>
         <member name="M:SEIIApp.Server.Controllers.AvatarController.GetAvatarWithId(System.Int32)">
             <summary>
-            Return the Avatar with the given id.
+            Return the Avatar with the given UserId of a student.
             </summary>
-            <param name="id"></param>
-            <returns></returns>
+            <param name="id">UserId of the student</param>
+            <returns>The avatar of the specific student</returns>
         </member>
-        <member name="M:SEIIApp.Server.Controllers.AvatarController.GetAllAvatars">
+        <member name="M:SEIIApp.Server.Controllers.AvatarController.UpdateAvatar(System.Int32,SEIIApp.Shared.DomainDTOs.AvatarDto)">
             <summary>
-            Returns all Avatars.
+            Update a avatar of specific student.
             </summary>
-            <returns></returns>
+            <param name="id">UserId of the student</param>
+            <param name="avatar">To update avatar</param>
+            <returns>Updated avatar</returns>
         </member>
         <member name="M:SEIIApp.Server.Controllers.AvatarItemController.GetAllAvatarItems">
             <summary>
@@ -133,6 +147,33 @@
             <summary>
             Returns all items.
             </summary>
+        </member>
+        <member name="T:SEIIApp.Server.Services.AvatarService">
+            <summary>
+            Service for avatars.
+            </summary>
+        </member>
+        <member name="M:SEIIApp.Server.Services.AvatarService.#ctor(SEIIApp.Server.DataAccess.DatabaseContext,AutoMapper.IMapper)">
+            <summary>
+            Constructor.
+            </summary>
+            <param name="db"></param>
+            <param name="mapper"></param>
+        </member>
+        <member name="M:SEIIApp.Server.Services.AvatarService.GetAvatarWithId(System.Int32)">
+            <summary>
+            Get the avatar of a specific student.
+            </summary>
+            <param name="userId">UserId of the specific student</param>
+            <returns>The avatar of the specific student</returns>
+        </member>
+        <member name="M:SEIIApp.Server.Services.AvatarService.UpdateAvatar(System.Int32,SEIIApp.Server.Domain.Avatar)">
+            <summary>
+            Update the avatar of a specific student.
+            </summary>
+            <param name="userId">UserId of the specific student</param>
+            <param name="avatar">The new avatar</param>
+            <returns>The updated avatar</returns>
         </member>
         <member name="T:SEIIApp.Server.Services.CorrectQuestionService">
             <summary>

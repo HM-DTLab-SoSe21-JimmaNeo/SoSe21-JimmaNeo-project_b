@@ -55,12 +55,13 @@ namespace SEIIApp.Server.Controllers
         [HttpPut("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public ActionResult<CorrectQuestion[]> AddCorrectQuestionToStudent([FromRoute] int id, [FromBody] CorrectQuestion correctQuestion)
+        public ActionResult<CorrectQuestionDto[]> AddCorrectQuestionToStudent([FromRoute] int id, [FromBody] CorrectQuestion correctQuestion)
         {
             if(ModelState.IsValid)
             {
-                var mappedCorrecQuestion = mapper.Map<CorrectQuestion>(correctQuestion);
-                return Ok(cqService.AddCorrectQuestionToStudent(id, correctQuestion));
+                var mappedCorrectQuestion = mapper.Map<CorrectQuestion>(correctQuestion);
+                var mappedCorrectQuestionDto = mapper.Map<CorrectQuestionDto[]>(cqService.AddCorrectQuestionToStudent(id, mappedCorrectQuestion));
+                return Ok(mappedCorrectQuestionDto);
             }
             return BadRequest(ModelState);
         }
