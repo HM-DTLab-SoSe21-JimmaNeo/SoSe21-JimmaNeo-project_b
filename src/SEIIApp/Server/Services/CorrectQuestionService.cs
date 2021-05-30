@@ -31,7 +31,8 @@ namespace SEIIApp.Server.Services
         {
             return databaseContext
                 .Students
-                .Include(student => student.CorrectQuestions);
+                .Include(student => student.CorrectQuestions)
+                .Include(student => student.Profile);
         }
 
         /// <summary>

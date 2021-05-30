@@ -258,11 +258,7 @@
 
                     expStatus = "ExpVisible";
 
-                    //Update Student with StudentController
-                    await Http.PutAsJsonAsync<StudentDto>($"api/Students", student);
-
-                    //Update Student with CorrectQuestionController
-                    //await Http.PutAsJsonAsync<CorrectQuestionDto>($"api/CorrectQuestions/{student.UserId}", newCorrect);
+                    await Http.PutAsJsonAsync<CorrectQuestionDto>($"api/CorrectQuestions/{student.UserId}", newCorrect);
                 }
 
 

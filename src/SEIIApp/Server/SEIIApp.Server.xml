@@ -23,6 +23,33 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="T:SEIIApp.Server.Controllers.CorrectQuestionController">
+            <summary>
+            Controller for correctQuestions.
+            </summary>
+        </member>
+        <member name="M:SEIIApp.Server.Controllers.CorrectQuestionController.#ctor(SEIIApp.Server.Services.CorrectQuestionService,AutoMapper.IMapper)">
+            <summary>
+            Constructor.
+            </summary>
+            <param name="cqService"></param>
+            <param name="mapper"></param>
+        </member>
+        <member name="M:SEIIApp.Server.Controllers.CorrectQuestionController.GetCorrectQuestionsOfStudent(System.Int32)">
+            <summary>
+            Get all correctQuestions of a student.
+            </summary>
+            <param name="id">UserId of the student</param>
+            <returns>All correctQuestions of the student</returns>
+        </member>
+        <member name="M:SEIIApp.Server.Controllers.CorrectQuestionController.AddCorrectQuestionToStudent(System.Int32,SEIIApp.Server.Domain.CorrectQuestion)">
+            <summary>
+            Add a correctQuestion to a student.
+            </summary>
+            <param name="id">UserId of the student</param>
+            <param name="correctQuestion">CorrectQuestion to add</param>
+            <returns>All correctQuestion of the student</returns>
+        </member>
         <member name="M:SEIIApp.Server.Controllers.CourseController.GetCourseWithId(System.Int32)">
             <summary>
             Return the Course with the given id.
@@ -82,10 +109,57 @@
             </summary>
             <param name="db">Database context</param>
         </member>
+        <member name="T:SEIIApp.Server.Domain.CorrectQuestion">
+            <summary>
+            Data object which represents correctly answered questions.
+            </summary>
+        </member>
+        <member name="P:SEIIApp.Server.Domain.CorrectQuestion.CorrectQuestionId">
+            <summary>
+            Id of the record.
+            </summary>
+        </member>
+        <member name="P:SEIIApp.Server.Domain.CorrectQuestion.QuestionsId">
+            <summary>
+            Reference to the correctly answered question.
+            </summary>
+        </member>
+        <member name="P:SEIIApp.Server.Domain.CorrectQuestion.SolveDateTime">
+            <summary>
+            Date time of answering the question correctly.
+            </summary>
+        </member>
         <member name="M:SEIIApp.Server.Services.AvatarItemService.GetAllAvatarItems">
             <summary>
             Returns all items.
             </summary>
+        </member>
+        <member name="T:SEIIApp.Server.Services.CorrectQuestionService">
+            <summary>
+            Service for correctQuestions.
+            </summary>
+        </member>
+        <member name="M:SEIIApp.Server.Services.CorrectQuestionService.#ctor(SEIIApp.Server.DataAccess.DatabaseContext,AutoMapper.IMapper)">
+            <summary>
+            Contstructor.
+            </summary>
+            <param name="databaseContext"></param>
+            <param name="mapper"></param>
+        </member>
+        <member name="M:SEIIApp.Server.Services.CorrectQuestionService.GetCorrectQuestionsOfStudent(System.Int32)">
+            <summary>
+            Get all correctQuestion of a student.
+            </summary>
+            <param name="userId">UserId of the student</param>
+            <returns>All correctQuestion of the student</returns>
+        </member>
+        <member name="M:SEIIApp.Server.Services.CorrectQuestionService.AddCorrectQuestionToStudent(System.Int32,SEIIApp.Server.Domain.CorrectQuestion)">
+            <summary>
+            Add a correctQuestion to a student.
+            </summary>
+            <param name="userId">UserId of the student</param>
+            <param name="correctQuestion">The correctQuestion to add</param>
+            <returns>All correctQuestion of the student</returns>
         </member>
         <member name="M:SEIIApp.Server.Services.CourseService.GetAllCourses">
             <summary>
@@ -119,6 +193,39 @@
             </summary>
             <param name="id">Id of the quiz</param>
             <returns>Quiz with the given quizId</returns>
+        </member>
+        <member name="T:SEIIApp.Server.Services.StudentService">
+            <summary>
+            Service for student.
+            </summary>
+        </member>
+        <member name="M:SEIIApp.Server.Services.StudentService.#ctor(SEIIApp.Server.DataAccess.DatabaseContext,AutoMapper.IMapper,SEIIApp.Server.Services.CorrectQuestionService)">
+            <summary>
+            Constructor.
+            </summary>
+            <param name="db"></param>
+            <param name="mapper"></param>
+            <param name="cqs"></param>
+        </member>
+        <member name="M:SEIIApp.Server.Services.StudentService.GetAllStudents">
+            <summary>
+            Gets all students.
+            </summary>
+            <returns>All students</returns>
+        </member>
+        <member name="M:SEIIApp.Server.Services.StudentService.GetStudentWithId(System.Int32)">
+            <summary>
+            Gets the specified student.
+            </summary>
+            <param name="userId"></param>
+            <returns>Specified Student</returns>
+        </member>
+        <member name="M:SEIIApp.Server.Services.StudentService.UpdateStudent(SEIIApp.Server.Domain.Student)">
+            <summary>
+            Updates given student.
+            </summary>
+            <param name="student">To update student</param>
+            <returns>Updated student</returns>
         </member>
     </members>
 </doc>
