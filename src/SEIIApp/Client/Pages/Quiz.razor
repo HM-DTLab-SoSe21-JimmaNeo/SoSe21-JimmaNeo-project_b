@@ -7,97 +7,134 @@
 @inject HttpClient Http
 @inject NavigationManager NavigationManager
 
+
 <center>
 
     @if (quizzes == null)
     {
-<h1>Loading Quiz...</h1> }
+        <h1>Loading Quiz...</h1>
+    }
 
-            else
+    else
+    {
+
+        if (!startedQuiz)
+        {
+
+            <h1>Quiz: @quiz.Title</h1>
+
+            <br /> <br />
+
+            <h4>You have done this Quiz X times</h4>
+
+            <br /> <br />
+
+            <h4>You have not successfully completed this Quiz yet</h4>
+
+            <br /> <br /> <br /> <br />
+
+            <p><button class="startQuizButton" @onclick="@(() => startQuiz())">Start Quiz</button></p>
+
+
+        }
+        else
+        {
+
+            if (!finishedQuiz)
             {
 
-                if (!startedQuiz)
+                <h7>@(qCounter + 1)/@questions.Length</h7>
+
+                <Progress>
+                    <ProgressBar Background="Background.Success" Value="@progress" Animated=true />
+                    <ProgressBar Background="Background.Secondary" Value=@(100 - progress) Animated=true />
+                </Progress>
+
+                <br /> <br />
+
+                <h1>Question @(qCounter + 1): @questions[qCounter].Text     corr:@student.CorrectQuestions.Count     exp:@student.Profile.Experience</h1>
+
+                <br /> <br />
+
+            
+
+
+                       <center>
+                           <ul class="list">
+
+                               @foreach (var answer in @questions[qCounter].answers)
+                               {
+
+                                   <li class="list-item">
+                                       <div class="list-content">
+                                           <button class="@answer.Color" @onclick="@(() => questions[qCounter].anythingSelected(answer) )">@answer.Text</button>
+                                       </div>
+                                   </li>
+
+                               }
+
+                           </ul>
+
+                       </center>
+
+
+
+
+                <button class="@questions[qCounter].check.Color" @onclick="@(() => checkMe(questions[qCounter]) )">@questions[qCounter].check.Text</button>
+
+                <br /> <br />
+
+                <h7 class="@expStatus">You have just earned 10 EXP</h7>
+
+                <br /> <br /> <br /> <br />
+
+            }
+            else
+            {
+                <h1>Your Results for Quiz: @quiz.Title</h1>
+
+                <br /> <br />
+
+                bool everythingCorrect = true;
+
+                foreach (bool b in results)
                 {
+                    if (b == false)
+                    {
+                        everythingCorrect = false;
+                    }
+                }
 
-<h1>Quiz: @quiz.Title</h1>
+                if (everythingCorrect)
+                {
+                    <h2> Congratulations! You have successfully completed this Quiz.</h2>
+                }
+                else
+                {
+                    <h2>You didn't successfully complete this Quiz. Try better next time.</h2>
+                }
 
-                    <br /> <br />
+                <br /> <br />
 
-                                        <h4>You have done this Quiz X times</h4>
+                for (int i = 0; i < results.Length; i++)
+                {
+                    if (results[i] == true)
+                    {
+                        <h5>Question @(i+1): Correct</h5>
+                        <br /> <br />
+                    }
+                    else
+                    {
+                        <h5>Question @(i+1): Incorrect</h5>
+                        <br /> <br />
+                    }
+                }
 
-                                                            <br /> <br />
+                <br /> <br />
 
-                                                                                <h4>You have not successfully completed this Quiz yet</h4>
+                <p><button class="startQuizButton" @onclick="@(() => returnToLesson())">Return to Lesson</button></p>
 
-                                                                                                    <br /> <br /> <br /> <br />
-
-                                                                                                                        <p><button class="startQuizButton" @onclick="@(() => startQuiz())">Start Quiz</button></p> }
-                                                                                                                                        else
-                                                                                                                                        {
-
-                                                                                                                                            if (!finishedQuiz)
-                                                                                                                                            {
-
-                                                                                                                        <h7>@(qCounter + 1)/@questions.Length</h7>
-
-                                                                                                                                                <Progress>
-                                                                                                                                                    <ProgressBar Background="Background.Success" Value="@progress" Animated=true />
-                                                                                                                                                    <ProgressBar Background="Background.Secondary" Value=@(100 - progress) Animated=true />
-                                                                                                                                                </Progress>
-
-                                                                                                                                                                        <br /> <br />
-
-                                                                                                                                                                                                <h1>Question @(qCounter + 1): @questions[qCounter].Text     corr:@student.CorrectQuestions.Count     exp:@student.Profile.Experience</h1>
-
-                                                                                                                                                                                                                        <br /> <br />
-
-                                                                                                                                                                                                                                                @foreach (var answer in @questions[qCounter].answers)
-                                                                                                                                                                                                                                                {
-                                                                                                                                                                                                                        <p><button class="@answer.Color" @onclick="@(() => questions[qCounter].anythingSelected(answer) )">@answer.Text</button></p>}
-
-                                                                                                                                                                                                                                                                        <br /> <br />
-
-                                                                                                                                                                                                                                                                                                <button class="@questions[qCounter].check.Color" @onclick="@(() => checkMe(questions[qCounter]) )">@questions[qCounter].check.Text</button>
-
-                                                                                                                                                                                                                                                                                                                        <br /> <br />
-
-                                                                                                                                                                                                                                                                                                                                                <h7 class="@expStatus">You have just earned 10 EXP</h7> }
-                                                                                                                                                                                                                                                                                                                                                                    else
-                                                                                                                                                                                                                                                                                                                                                                    {
-                                                                                                                                                                                                                                                                                                                                                <h1>Your Results for Quiz: @quiz.Title</h1>
-
-                                                                                                                                                                                                                                                                                                                                                                        <br /> <br /> bool everythingCorrect = true;
-
-                                                                                                                                                                                                                                                                                                                                                                                                foreach (bool b in results)
-                                                                                                                                                                                                                                                                                                                                                                                                {
-                                                                                                                                                                                                                                                                                                                                                                                                    if (b == false)
-                                                                                                                                                                                                                                                                                                                                                                                                    {
-                                                                                                                                                                                                                                                                                                                                                                                                        everythingCorrect = false;
-                                                                                                                                                                                                                                                                                                                                                                                                    }
-                                                                                                                                                                                                                                                                                                                                                                                                }
-
-                                                                                                                                                                                                                                                                                                                                                                                                if (everythingCorrect)
-                                                                                                                                                                                                                                                                                                                                                                                                {
-                                                                                                                                                                                                                                                                                                                                                                        <h2> Congratulations! You have successfully completed this Quiz.</h2> }
-                                                                                                                                                                                                                                                                                                                                                                                                else
-                                                                                                                                                                                                                                                                                                                                                                                                {
-                                                                                                                                                                                                                                                                                                                                                                        <h2>You didn't successfully complete this Quiz. Try better next time.</h2> }
-
-                                                                                                                                                                                                                                                                                                                                                                        <br /> <br /> for (int i = 0; i < results.Length; i++)
-                                                                                                                                                                                                                                                                                                                                                                                                {
-                                                                                                                                                                                                                                                                                                                                                                                                    if (results[i] == true)
-                                                                                                                                                                                                                                                                                                                                                                                                    {
-                                                                                                                                                                                                                                                                                                                                                                        <h5>Question @(i+1): Correct</h5>
-                                                                                                                                                                                                                                                                                                                                                                                                        <br /> <br /> }
-                                                                                                                                                                                                                                                                                                                                                                                                                                    else
-                                                                                                                                                                                                                                                                                                                                                                                                                                    {
-                                                                                                                                                                                                                                                                                                                                                                                                        <h5>Question @(i+1): Incorrect</h5>
-                                                                                                                                                                                                                                                                                                                                                                                                                                        <br /> <br /> }
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                }
-
-                                                                                                                                                                                                                                                                                                                                                                                                                                        <br /> <br />
-
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                <p><button class="startQuizButton" @onclick="@(() => returnToLesson())">Return to Lesson</button></p>}
+            }
 
 
 
@@ -105,9 +142,9 @@
 
 
 
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                }
+        }
 
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                            }
+    }
 
 </center>
 
@@ -192,6 +229,15 @@
                 question.check.Color = "checkCorrect";
                 results[qCounter] = true;
 
+                //Sets color of correct answer to green
+                foreach (AnswerPackage ans in question.answers)
+                {
+                    if (ans.Correct)
+                    {
+                        ans.Color = "correctAnswer";
+                    }
+                }
+
                 //ToDo: Change /////////////////////////////////////////////////////
 
                 bool studentAlreadyAnsweredCorrectly = false;
@@ -208,21 +254,19 @@
                 {
                     CorrectQuestionDto newCorrect = new CorrectQuestionDto();
                     newCorrect.QuestionsId = question.ID;
-                    /*newCorrect.SolveDateTime = DateTime.Now;
-                    student.Profile.Experience += 10;
-*/
                     student.CorrectQuestions.Add(newCorrect);
+
                     expStatus = "ExpVisible";
-                    await Http.PutAsJsonAsync<StudentDto>("api/Students", student);
+
+                    //Update Student with StudentController
+                    await Http.PutAsJsonAsync<StudentDto>($"api/Students", student);
+
+                    //Update Student with CorrectQuestionController
+                    //await Http.PutAsJsonAsync<CorrectQuestionDto>($"api/CorrectQuestions/{student.UserId}", newCorrect);
                 }
 
-                foreach (AnswerPackage ans in question.answers)
-                {
-                    if (ans.Correct)
-                    {
-                        ans.Color = "correctAnswer";
-                    }
-                }
+
+
 
             }
             else if (question.checkSelection() == "incorrect")
@@ -467,7 +511,6 @@
 
 
 
-
 <style>
 
     .startQuizButton {
@@ -478,47 +521,61 @@
         height: 75px
     }
 
+    .answerTable {
+        width: 70%;
+        max-height: 70px;
+        table-layout: fixed;
+        border-collapse: collapse;
+        background-color: white;
+    }
+
+
     .unselected {
-    color: white;
-    background: grey;
-    border: black;
-    width: 300px;
-    height: 35px
+        color: white;
+        background: grey;
+        border: black;
+        width: 100%;
+        height: 100%;
+        min-height: 50px;
     }
 
     .selected {
-    color: white;
-    background: blue;
-    border: black;
-    width: 300px;
-    height: 35px
+        color: white;
+        background: blue;
+        border: black;
+        width: 100%;
+        height: 100%;
+        min-height: 50px;
     }
 
     .correctAnswer {
-    color: black;
-    background: lightgreen;
-    opacity: 0.8;
-    border: black;
-    width: 300px;
-    height: 35px;
+        color: black;
+        background: lightgreen;
+        opacity: 0.8;
+        border: black;
+        width: 100%;
+        height: 100%;
+        min-height: 50px;
     }
 
     .wrongAnswer {
-    color: white;
-    background: red;
-    opacity: 0.8;
-    border: black;
-    width: 300px;
-    height: 35px;
+        color: white;
+        background: red;
+        opacity: 0.8;
+        border: black;
+        width: 100%;
+        height: 100%;
+        min-height: 50px;
     }
 
     .correctAnswerWouldHaveBeen {
-    color: black;
-    background: lightgreen;
-    opacity: 0.8;
-    border: black;
-    width: 300px;
-    height: 35px;
+        color: black;
+        background: lightgreen;
+        opacity: 0.8;
+        border: black;
+        width: 100%;
+        height: 100%;
+        min-height: 50px;
         animation-name: blink;
         animation-duration: 0.5s;
         animation-iteration-count: 2;
@@ -526,63 +583,89 @@
 
     @@keyframes blink {
         0% {
-        color: white;
-        background: grey;
-        opacity: 1.0;
+            color: white;
+            background: grey;
+            opacity: 1.0;
         }
 
         50% {
-        color: black;
-        background: lightgreen;
+            color: black;
+            background: lightgreen;
             opacity 0.8;
         }
 
         100% {
-        color: white;
-        background: grey;
-        opacity: 1.0;
+            color: white;
+            background: grey;
+            opacity: 1.0;
         }
     }
 
 
     .checkReady {
-    color: white;
-    background: lightgreen;
-    border: black;
-    width: 70px;
-    height: 35px
+        color: white;
+        background: lightgreen;
+        border: black;
+        width: 100px;
+        height: 50px
     }
 
     .checkNotReady {
-    color: white;
-    background: lightgrey;
-    border: black;
-    width: 70px;
-    height: 35px
+        color: white;
+        background: lightgrey;
+        border: black;
+        width: 100px;
+        height: 50px
     }
 
     .checkCorrect {
-    color: white;
-    background: green;
-    border: black;
-    width: 200px;
-    height: 35px
+        color: white;
+        background: green;
+        border: black;
+        width: 200px;
+        height: 50px
     }
 
     .checkIncorrect {
-    color: white;
-    background: red;
-    border: black;
-    width: 200px;
-    height: 35px
+        color: white;
+        background: red;
+        border: black;
+        width: 200px;
+        height: 50px
     }
 
     .ExpInvisible {
-    visibility: hidden;
+        visibility: hidden;
     }
 
     .ExpVisible {
-    color: green;
-    visibility: visible;
+        color: green;
+        visibility: visible;
     }
+
+
+    .list {
+        display: grid;
+        overflow: hidden;
+        grid-template-columns: 1fr, 1fr;
+        grid-auto-rows: 1fr;
+        grid-column-gap: 5px;
+        grid-row-gap: 5px;
+        max-width: 500px;
+        list-style-type: none; /* Remove bullets */
+        padding: 0; /* Remove padding */
+        margin: 0; /* Remove margins */
+    }
+
+    .list-item {
+        background-color: #ccc;
+        display: flex;
+        margin-bottom: 20px;
+        width: 100%;
+    }
+
+    .list-content {
+        width: 100%;
+    }
+
 </style>
