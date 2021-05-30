@@ -52,7 +52,7 @@
 
                 <br /> <br />
 
-                <h1>Question @(qCounter + 1): @questions[qCounter].Text     corr:@student.CorrectQuestions.Count     exp:@student.Profile.Experience</h1>
+                <h1>Question @(qCounter + 1): @questions[qCounter].Text</h1>
 
                 <br /> <br />
 
@@ -129,8 +129,6 @@
                         <br /> <br />
                     }
                 }
-
-                <br /> <br />
 
                 <p><button class="startQuizButton" @onclick="@(() => returnToLesson())">Return to Lesson</button></p>
 
@@ -304,7 +302,7 @@
             {
                 progress = 100;
 
-                Task.Delay(1500).ContinueWith(t =>
+                Task.Delay(1000).ContinueWith(t =>
                 {
                     finishQuiz();
 
