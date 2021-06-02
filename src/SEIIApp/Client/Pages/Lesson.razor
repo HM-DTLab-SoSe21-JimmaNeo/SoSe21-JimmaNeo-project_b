@@ -21,7 +21,51 @@
 </Progress>
 
 <br />
+<div class="text-center">
+    <h5>Documents</h5>
+</div>
+@if (documents == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    @foreach (DocumentContentDto document in documents)
+    {
+        <p class="text-center">
+            <Button Color="Color.Light" Clicked="@(() => SelectUri(document.Location))">
+                <h4>@document.Title</h4>
+            </Button>
+        </p>
+        <br />
+    }
+}
 
+<br />
+<div class="text-center">
+    <h5>Videos</h5>
+</div>
+@if (videos == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    @foreach (VideoContentDto video in videos)
+    {
+        <p class="text-center">
+            <Button Color="Color.Light" Clicked="@(() => SelectUri(video.Location))">
+                <h4>@video.Title</h4>
+            </Button>
+        </p>
+        <br />
+    }
+}
+
+<br />
+<div class="text-center">
+    <h5>Quizzes</h5>
+</div>
 @if (quizzes == null)
 {
     <p><em>Loading...</em></p>
@@ -46,6 +90,8 @@ else
     public int LessonId { get; set; }
 
     private LessonDto lesson;
+    private List<DocumentContentDto> documents;
+    private List<VideoContentDto> videos;
     private List<QuizDto> quizzes;
     private QuizDto[] quizArray;
 
@@ -53,6 +99,8 @@ else
     {
         string uri = $"api/Lessons/{LessonId}";
         lesson = await Http.GetFromJsonAsync<LessonDto>(uri);
+        documents = lesson.DocumentContents;
+        videos = lesson.VideoContents;
         quizzes = lesson.Quizzes;
         quizArray = quizzes.ToArray();
     }
@@ -61,5 +109,11 @@ else
     {
         string uri = $"courses/{CourseId}/{LessonId}/{quizId}";
         NavigationManager.NavigateTo(uri);
+    }
+
+    private void SelectUri(Uri uri)
+    {
+        string stringUri = uri.ToString();
+        NavigationManager.NavigateTo(stringUri);
     }
 }
