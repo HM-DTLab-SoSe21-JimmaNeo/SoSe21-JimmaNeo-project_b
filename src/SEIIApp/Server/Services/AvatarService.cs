@@ -43,9 +43,9 @@ namespace SEIIApp.Server.Services
         /// <returns>The avatar of the specific student</returns>
         public Avatar GetAvatarWithId(int userId)
         {
-            return (Avatar)(from student in GetQueryableForStudents()
+            return (from student in GetQueryableForStudents()
                             where student.UserId == userId
-                            select student.Avatar);
+                            select student.Avatar).FirstOrDefault();
         }
 
         /// <summary>

@@ -153,12 +153,11 @@
             Service for avatars.
             </summary>
         </member>
-        <member name="M:SEIIApp.Server.Services.AvatarService.#ctor(SEIIApp.Server.DataAccess.DatabaseContext,AutoMapper.IMapper)">
+        <member name="M:SEIIApp.Server.Services.AvatarService.#ctor(SEIIApp.Server.DataAccess.DatabaseContext)">
             <summary>
             Constructor.
             </summary>
             <param name="db"></param>
-            <param name="mapper"></param>
         </member>
         <member name="M:SEIIApp.Server.Services.AvatarService.GetAvatarWithId(System.Int32)">
             <summary>
