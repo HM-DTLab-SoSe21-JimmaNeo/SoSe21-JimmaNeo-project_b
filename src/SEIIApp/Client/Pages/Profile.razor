@@ -1,5 +1,4 @@
 ﻿@page "/profile"
-@page "/profile/{StudentId:int}"
 
 @using Blazorise
 @using SEIIApp.Shared.DomainDTOs
@@ -7,160 +6,149 @@
 @inject HttpClient Http
 @inject NavigationManager NavigationManager
 
+<center>
+    @if (student == null)
+    {
+        <div class="text-center">
+            <h1>Loading</h1>
+        </div>
+    }
 
-<div class="text-center">
-    <h3>Profile</h3>
-</div>
+    else if (profile != null && student != null)
+    {
+        <Container Fluid="true">
+            <Alert Color="Color.Primary" Visible="true">
+                <TextEdit Placeholder=@("Name: " + profile.Name) ReadOnly="true" class="text-center" />
+                <TextEdit Placeholder=@("Description: " + profile.Description) ReadOnly="true" class="text-center" />
+            </Alert>
+        </Container>
 
-<Container Fluid="true">
-    <Alert Color="Color.Primary" Visible="true">
-        <TextEdit Placeholder="Level 2" ReadOnly="true" class="text-center" />
-    </Alert>
-</Container>
-
-
-<TextEdit Placeholder="Experience current Level: 25/100" ReadOnly="true" class="text-center" />
-<Progress>
-    <ProgressBar Background="Background.Success" Value="25" Animated=true />
-    <ProgressBar Background="Background.Dark" Value="75" Animated=true />
-</Progress>
-
-
-
-
+        if (avatar != null)
+        {
 <Container Fluid="true">
     <div class="avatarContainer">
-        <div style="        top: 0px;
-        left: 0px;
-        width: 0px;
-        height: 0px;
-        z-index: 3">
-            <img src="/images/avatar.png" />
+        <div style=" z-index: 1">
+            <img src=@avatar.Location />
         </div>
-        @if (glasses)
-        {
-            <div style="        top: 100px;
-        left: 0px;
-        width: 0px;
-        height: 0px;
-        z-index: 3">
-                <img src="/images/glasses.png" />
-            </div>
-        }
-        @if (hat)
-        {
-            <div style="        top: -100px;
-        left: 0px;
-        width: 0px;
-        height: 0px;
-        z-index: 3">
-                <img src="/images/hat.png" />
-            </div>
-        }
-        @if (mask)
-        {
-            <div style="        top: 150px;
-        left: -50px;
-        width: 0px;
-        height: 0px;
-        z-index: 3">
-                <img src="/images/mask.png" />
-            </div>
-        }
 
+        @if (equiptItems.Count > 0)
+        {
+            for (int i = 0; i < equiptItems.Count; i++)
+            {
+                <div style=" z-index: 3">
+                    <img src=@equiptItems[i].Source/>
+                </div>
+            }
+
+        }
     </div>
+
 </Container>
 
+            @if (allItems != null)
+            {
+                <Container Fluid="true">
+                    <Row>
+                        <Column ColumnSize="ColumnSize.Is3" class="text-center">
+                        </Column>
+                        <Column ColumnSize="ColumnSize.Is2" class="text-center">
+                            <Button class="text-center" @onclick="@(() => clickGlass(0) )">
+                                <img src="/images/glasses_button.png" width="60" />
+                            </Button>
+                        </Column>
+                        <Column ColumnSize="ColumnSize.Is2" class="text-center">
+                            <Button class="text-center" @onclick="@(() => clickGlass(1) )">
+                                <img src="/images/hat_button.png" width="60" />
+                            </Button>
+                        </Column>
+                        <Column ColumnSize="ColumnSize.Is2" class="text-center">
+                            <Button class="text-center" @onclick="@(() => clickGlass(2) )">
+                                <img src="/images/mask_button.png" width="60" />
+                            </Button>
+                        </Column>
+                        <Column ColumnSize="ColumnSize.Is3" class="text-center">
+                        </Column>
+                    </Row>
+                </Container>
+            }
+        }
+    }
 
-
-
-
-
-
-<Container Fluid="true">
-    <Row>
-        <Column ColumnSize="ColumnSize.Is2" class="text-center">
-            <Button class="text-center" Clicked="@Glassesclicked">
-                <img src="/images/glasses.svg" width="60" />
-            </Button>
-        </Column>
-        <Column ColumnSize="ColumnSize.Is2" class="text-center">
-            <Button class="text-center" Clicked="@Hatclicked">
-                <img src="/images/hat.png" width="60" />
-            </Button>
-        </Column>
-        <Column ColumnSize="ColumnSize.Is2" class="text-center">
-            <Button class="text-center" Clicked="@Maskclicked">
-                <img src="/images/mask.png" width="60" />
-            </Button>
-        </Column>
-    </Row>
-</Container>
+</center>
 
 
 @code{
-    [Parameter]
-    public int StudentId { get; set; }
+    public int UserId = 1;
 
-    public bool glasses = false;
-    public bool hat = false;
-    public bool mask = false;
-
+    public StudentDto[] students;
     public StudentDto student;
+    public StudentProfileDto profile;
+    public AvatarDto avatar;
+    public AvatarItemDto[] allItems;
+    public List<AvatarItemDto> equiptItems;
+
+    public int xp;
 
     protected override async Task OnInitializedAsync()
     {
-        student = await Http.GetFromJsonAsync<StudentDto>("api/Students/");
+        //string uri = $"api/Students/{UserId}";
+        student = await Http.GetFromJsonAsync<StudentDto>("api/Students/1");
+        allItems = await Http.GetFromJsonAsync<AvatarItemDto[]>("api/AvatarItems");
+
+        profile = student.Profile;
+
+        avatar = student.Avatar;
+
+        equiptItems = avatar.UsedItems;
+
+        xp = student.Profile.Experience;
 
 
     }
 
-    void Glassesclicked()
+
+    async void clickGlass(int id)
     {
-        if (!glasses)
+        if (equiptItems.Count > 0 && equiptItems.Contains(allItems[id]))
         {
-            glasses = true;
+            equiptItems.Remove(allItems[id]);
+            avatar.UsedItems = equiptItems;
+            //await Http.PutAsJsonAsync<AvatarDto>($"api/Avatars/{student.UserId}", avatar);
         }
-        else if (glasses)
+        else if (equiptItems.Count > 0 && !equiptItems.Contains(allItems[id]))
         {
-            glasses = false;
+            equiptItems.Add(allItems[id]);
+            avatar.UsedItems = equiptItems;
+            //await Http.PutAsJsonAsync<AvatarDto>($"api/Avatars/{student.UserId}", avatar);
         }
+
+        else if (equiptItems.Count == 0)
+        {
+            equiptItems.Add(allItems[id]);
+            avatar.UsedItems = equiptItems;
+            //await Http.PutAsJsonAsync<AvatarDto>($"api/Avatars/{student.UserId}", avatar);
+        }
+
     }
 
-    void Hatclicked()
-    {
-        if (!hat)
-        {
-            hat = true;
-        }
-        else if (hat)
-        {
-            hat = false;
-        }
-    }
-
-    void Maskclicked()
-    {
-        if (!mask)
-        {
-            mask = true;
-        }
-        else if (mask)
-        {
-            mask = false;
-        }
-    }
 }
+
 
 <style>
     .avatarContainer {
         width: 300px;
-        height: 420px;
-        position: relative
+        height: 450px;
+        position: relative;
+        overflow: visible
+
     }
 
         .avatarContainer div {
-            position: absolute
+            width: auto;
+            height: auto;
+            position: absolute;
+            overflow: visible;
+            object-fit: cover;
         }
 </style>
 
