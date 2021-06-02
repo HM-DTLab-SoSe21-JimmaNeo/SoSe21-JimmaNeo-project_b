@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 namespace SEIIApp.Shared.DomainDTOs
 {
     public class AvatarDto {     
-        public int AvatarId { get; set; }
         public string Location { set; get; }
         public List<AvatarItemDto> UsedItems { get; set; }
     }
