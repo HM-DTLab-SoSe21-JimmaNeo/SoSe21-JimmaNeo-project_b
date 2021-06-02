@@ -8,6 +8,7 @@ namespace SEIIApp.Shared.DomainDTOs
         public string Title { get; set; }
         public string Description { get; set; }
         public List<QuizDto> Quizzes { get; set; }
-        public List<LessonContenDto> Contents { get; set; }
+        public List<VideoContentDto> VideoContents { get; set; }
+        public List<DocumentContentDto> DocumentContents { get; set; }
     }
 }

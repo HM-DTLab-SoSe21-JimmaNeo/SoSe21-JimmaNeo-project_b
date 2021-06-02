@@ -10,7 +10,6 @@ namespace SEIIApp.Shared.DomainDTOs
     {
         public int ContentId { get; set; }
         public string Title { get; set; }
-        public List<LessonDto> Lessons { get; set; }
         public Uri Location { get; set; }
     }
 }
