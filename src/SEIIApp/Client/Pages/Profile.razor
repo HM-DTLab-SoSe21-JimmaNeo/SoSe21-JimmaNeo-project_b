@@ -36,8 +36,17 @@
                     {
                         for (int i = 0; i < equiptItems.Count; i++)
                         {
+                            string source = "not found";
+                            for (int j = 0; j < allItems.Length; j++)
+                            {
+                                if (equiptItems[i].AvatarItemId == allItems[j].ItemId)
+                                {
+                                    source = allItems[j].Source;
+                                    break;
+                                }
+                            }
                             <div style=" z-index: 3">
-                                <img src=@equiptItems[i].Source />
+                                <img src=@source />
                             </div>
                         }
 
@@ -55,9 +64,9 @@
                         @for (int i = 0; i < allItems.Length; i++)
                         {
                             string locationItem = allItems[i].SourceButton;
-                            int iteration = i;
+                            int itemId = allItems[i].ItemId;
                             <Column ColumnSize="ColumnSize.Is2" class="text-center">
-                                <Button class="text-center" @onclick="@(() => clickItemButton(iteration) )">
+                                <Button class="text-center" @onclick="@(() => clickItemButton(itemId) )">
                                     <img src=@locationItem width="60" />
                                 </Button>
                             </Column>
@@ -81,7 +90,7 @@
     public StudentProfileDto profile;
     public AvatarDto avatar;
     public AvatarItemDto[] allItems;
-    public List<AvatarItemDto> equiptItems;
+    public List<EquippedItemDto> equiptItems;
 
     public int xp;
 
@@ -105,13 +114,23 @@
 
     async void clickItemButton(int id)
     {
-        if (equiptItems.Contains(allItems[id]))
+        Boolean contains = false;
+
+        for (int i = 0; i < equiptItems.Count; i++)
         {
-            equiptItems.Remove(allItems[id]);
+            if (equiptItems[i].AvatarItemId == id)
+            {
+                equiptItems.RemoveAt(i);
+                contains = true;
+                break;
+            }
         }
-        else
+
+        if (!contains)
         {
-            equiptItems.Add(allItems[id]);
+            EquippedItemDto newItem = new EquippedItemDto();
+            newItem.AvatarItemId = id;
+            equiptItems.Add(newItem);
         }
         avatar.UsedItems = equiptItems;
         await Http.PutAsJsonAsync<AvatarDto>($"api/Avatars/{student.UserId}", avatar);
