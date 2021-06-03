@@ -1,9 +1,5 @@
 ﻿using AutoMapper;
 using SEIIApp.Shared.DomainDTOs;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace SEIIApp.Server.Domain
 {
@@ -49,12 +45,15 @@ namespace SEIIApp.Server.Domain
             CreateMap<AvatarItem, AvatarItemDto>();
             CreateMap<AvatarItemDto, AvatarItem>();
 
+            CreateMap<EquippedItem, EquippedItemDto>();
+            CreateMap<EquippedItemDto, EquippedItem>();
+
             CreateMap<Student, Student>();
             CreateMap<Avatar, Avatar>();
             CreateMap<AvatarItem, AvatarItem>();
             CreateMap<StudentProfile, StudentProfile>();
             CreateMap<CorrectQuestion, CorrectQuestion>();
-
+            CreateMap<EquippedItem, EquippedItem>();
         }
 
     }

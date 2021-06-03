@@ -8,6 +8,6 @@ namespace SEIIApp.Shared.DomainDTOs
 {
     public class AvatarDto {     
         public string Location { set; get; }
-        public List<AvatarItemDto> UsedItems { get; set; }
+        public List<EquippedItemDto> UsedItems { get; set; }
     }
 }
