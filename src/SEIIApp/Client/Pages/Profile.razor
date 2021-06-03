@@ -14,36 +14,37 @@
         </div>
     }
 
-    else if (profile != null && student != null)
+    else if (profile != null)
     {
         <Container Fluid="true">
             <Alert Color="Color.Primary" Visible="true">
                 <TextEdit Placeholder=@("Name: " + profile.Name) ReadOnly="true" class="text-center" />
                 <TextEdit Placeholder=@("Description: " + profile.Description) ReadOnly="true" class="text-center" />
+                <TextEdit Placeholder=@("Experience: " + xp) ReadOnly="true" class="text-center" />
             </Alert>
         </Container>
 
         if (avatar != null)
         {
-<Container Fluid="true">
-    <div class="avatarContainer">
-        <div style=" z-index: 1">
-            <img src=@avatar.Location />
-        </div>
+            <Container Fluid="true">
+                <div class="avatarContainer">
+                    <div style=" z-index: 1">
+                        <img src=@avatar.Location />
+                    </div>
 
-        @if (equiptItems.Count > 0)
-        {
-            for (int i = 0; i < equiptItems.Count; i++)
-            {
-                <div style=" z-index: 3">
-                    <img src=@equiptItems[i].Source/>
+                    @if (equiptItems.Count > 0)
+                    {
+                        for (int i = 0; i < equiptItems.Count; i++)
+                        {
+                            <div style=" z-index: 3">
+                                <img src=@equiptItems[i].Source />
+                            </div>
+                        }
+
+                    }
                 </div>
-            }
 
-        }
-    </div>
-
-</Container>
+            </Container>
 
             @if (allItems != null)
             {
@@ -51,21 +52,16 @@
                     <Row>
                         <Column ColumnSize="ColumnSize.Is3" class="text-center">
                         </Column>
-                        <Column ColumnSize="ColumnSize.Is2" class="text-center">
-                            <Button class="text-center" @onclick="@(() => clickGlass(0) )">
-                                <img src="/images/glasses_button.png" width="60" />
-                            </Button>
-                        </Column>
-                        <Column ColumnSize="ColumnSize.Is2" class="text-center">
-                            <Button class="text-center" @onclick="@(() => clickGlass(1) )">
-                                <img src="/images/hat_button.png" width="60" />
-                            </Button>
-                        </Column>
-                        <Column ColumnSize="ColumnSize.Is2" class="text-center">
-                            <Button class="text-center" @onclick="@(() => clickGlass(2) )">
-                                <img src="/images/mask_button.png" width="60" />
-                            </Button>
-                        </Column>
+                        @for (int i = 0; i < allItems.Length; i++)
+                        {
+                            string locationItem = allItems[i].SourceButton;
+                            int iteration = i;
+                            <Column ColumnSize="ColumnSize.Is2" class="text-center">
+                                <Button class="text-center" @onclick="@(() => clickItemButton(iteration) )">
+                                    <img src=@locationItem width="60" />
+                                </Button>
+                            </Column>
+                        }
                         <Column ColumnSize="ColumnSize.Is3" class="text-center">
                         </Column>
                     </Row>
@@ -107,30 +103,19 @@
     }
 
 
-    async void clickGlass(int id)
+    async void clickItemButton(int id)
     {
-        if (equiptItems.Count > 0 && equiptItems.Contains(allItems[id]))
+        if (equiptItems.Contains(allItems[id]))
         {
             equiptItems.Remove(allItems[id]);
-            avatar.UsedItems = equiptItems;
-            //await Http.PutAsJsonAsync<AvatarDto>($"api/Avatars/{student.UserId}", avatar);
         }
-        else if (equiptItems.Count > 0 && !equiptItems.Contains(allItems[id]))
+        else
         {
             equiptItems.Add(allItems[id]);
-            avatar.UsedItems = equiptItems;
-            //await Http.PutAsJsonAsync<AvatarDto>($"api/Avatars/{student.UserId}", avatar);
         }
-
-        else if (equiptItems.Count == 0)
-        {
-            equiptItems.Add(allItems[id]);
-            avatar.UsedItems = equiptItems;
-            //await Http.PutAsJsonAsync<AvatarDto>($"api/Avatars/{student.UserId}", avatar);
-        }
-
+        avatar.UsedItems = equiptItems;
+        await Http.PutAsJsonAsync<AvatarDto>($"api/Avatars/{student.UserId}", avatar);
     }
-
 }
 
 
