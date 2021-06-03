@@ -26,13 +26,14 @@ namespace SEIIApp.Server.DataAccess
         private static void GenerateItems()
         {
             string[] sources = {"images/glasses.png", "/images/hat.png", "/images/mask.png" };
-            foreach(string source in sources)
+            string[] sourcesButtons = { "/images/glasses_button.png", "/images/hat_button.png", "/images/mask_button.png" };
+            for(int i = 0; i < sources.Length; i++)
             {
                 AvatarItem item = new AvatarItem();
-                item.Source = source;
+                item.Source = sources[i];
+                item.SourceButton = sourcesButtons[i];
                 db.Add(item);
             }
-
         }
 
         private static void GenerateStudent()

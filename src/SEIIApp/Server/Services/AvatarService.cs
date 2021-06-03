@@ -58,7 +58,7 @@ namespace SEIIApp.Server.Services
         {
             var toUpdateStudent = GetQueryableForStudents().Where(student => student.UserId == userId).FirstOrDefault();
             toUpdateStudent.Avatar = avatar;
-            databaseContext.Students.Update(toUpdateStudent);
+            databaseContext.Avatars.Update(avatar);
             databaseContext.SaveChanges();
             return toUpdateStudent.Avatar;
         }       

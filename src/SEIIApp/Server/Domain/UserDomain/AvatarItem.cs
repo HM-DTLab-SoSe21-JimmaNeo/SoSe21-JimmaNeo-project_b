@@ -7,6 +7,6 @@ namespace SEIIApp.Server.Domain
         [Key]
         public int ItemId { get; set; }
         public string Source { get; set; }
-        //position of items are style elements and should be defined in style file
+        public string SourceButton { get; set; }
     }
 }
