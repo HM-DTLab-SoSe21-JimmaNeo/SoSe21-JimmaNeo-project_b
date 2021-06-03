@@ -99,10 +99,10 @@ namespace SEIIApp.Server.DataAccess
             for(int i = 1; i <= noOfVideoContent; i++)
             {
                 VideoContent videoContent = new VideoContent();
-                videoContent.Title = "Videocontent numbero " + i;
+                videoContent.Title = "Neonatal Resuscitation - Demonstration";
                 videoContent.Lessons = new List<Lesson>();
                 videoContent.Lessons.Add(lesson);
-                videoContent.Location = new Uri("https://www.youtube.com/watch?v=_lEzN8C5c7k");
+                videoContent.Location = new Uri("https://www.youtube.com/watch?v=0WhEtCygUJM");
                 videoContents.Add(videoContent);
             }
             return videoContents;
@@ -114,10 +114,10 @@ namespace SEIIApp.Server.DataAccess
             for (int i = 1; i <= noOfDocumentContent; i++)
             {
                 DocumentContent DocumentContent = new DocumentContent();
-                DocumentContent.Title = "Documentcontent numbero " + i;
+                DocumentContent.Title = "Newborn resuscitation and support of transition of infants at birth";
                 DocumentContent.Lessons = new List<Lesson>();
                 DocumentContent.Lessons.Add(lesson);
-                DocumentContent.Location = new Uri("https://www.youtube.com/watch?v=_lEzN8C5c7k");
+                DocumentContent.Location = new Uri("https://cprguidelines.eu/assets/guidelines/RESUS-8907-NLS.pdf");
                 DocumentContents.Add(DocumentContent);
             }
             return DocumentContents;
