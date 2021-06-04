@@ -59,9 +59,7 @@ namespace SEIIApp.Server.Services
         public bool AddFinishedQuizToStudent(int userId, int courseId, int lessonId, int quizId)
         {
             var toUpdateStudent = GetQueryableForStudent(userId);
-            var finishedQuiz = new FinishedQuiz();
-            finishedQuiz.QuizId = quizId;
-            finishedQuiz.FinishedDateTime = DateTime.Now;
+            var finishedQuiz = new FinishedQuiz(quizId, DateTime.Now);
             toUpdateStudent.FinishedQuizzes.Add(finishedQuiz);
             finishSuperordinated(toUpdateStudent, courseId, lessonId);
             databaseContext.Students.Update(toUpdateStudent);
@@ -73,15 +71,11 @@ namespace SEIIApp.Server.Services
         {
             if(isLessonFinished(lessonId, toUpdateStudent.FinishedQuizzes))
             {
-                FinishedLesson finishedLesson = new FinishedLesson();
-                finishedLesson.LessonId = lessonId;
-                finishedLesson.FinishedDateTime = DateTime.Now;
+                FinishedLesson finishedLesson = new FinishedLesson(lessonId, DateTime.Now);
                 toUpdateStudent.FinishedLessons.Add(finishedLesson);
                 if (isCourseFinished(courseId, toUpdateStudent.FinishedLessons))
                 {
-                    FinishedCourse finishedCourse = new FinishedCourse();
-                    finishedCourse.CourseId = courseId;
-                    finishedCourse.FinishedDateTime = DateTime.Now;
+                    FinishedCourse finishedCourse = new FinishedCourse(courseId, DateTime.Now);
                     toUpdateStudent.FinishedCourses.Add(finishedCourse);
                 }
             }
