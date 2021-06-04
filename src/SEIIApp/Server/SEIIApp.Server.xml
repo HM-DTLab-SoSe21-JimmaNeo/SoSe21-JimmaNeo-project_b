@@ -200,14 +200,7 @@
             Service for finishedQuizzes
             </summary>
         </member>
-        <member name="M:SEIIApp.Server.Services.FinishedQuizService.AddFinishedQuizToStudent(System.Int32,SEIIApp.Server.Domain.FinishedQuiz)">
-            <summary>
-            Add a finished Quiz to a student and if the lesson or the lesson and the course is finished too add them also.
-            </summary>
-            <param name="userId"></param>
-            <param name="finishedQuiz"></param>
-            <returns></returns>
-        </member>
+        <!-- Badly formed XML comment ignored for member "M:SEIIApp.Server.Services.FinishedQuizService.AddFinishedQuizToStudent(System.Int32,System.Int32,System.Int32,System.Int32)" -->
         <member name="M:SEIIApp.Server.Services.LessonService.GetAllLesson">
             <summary>
             Returns all lessons.

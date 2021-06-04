@@ -56,18 +56,11 @@ namespace SEIIApp.Server.Controllers
         }
 
 
-        [HttpPut("{userId}/finishedQuizzes")]
+        [HttpPut("{userId}/finishQuiz/{courseId}/{lessonId}/{quizId}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public ActionResult<StudentDto> AddFinishedQuizToStudent([FromRoute] int userId, [FromBody] FinishedQuizDto model)
-        {
-            if (ModelState.IsValid)
-            {
-                var mappedFinishedQuiz = mapper.Map<FinishedQuiz>(model);
-                var mappedFinishedQuizDto = mapper.Map<FinishedQuizDto[]>(finishedQuizService.AddFinishedQuizToStudent(userId, mappedFinishedQuiz));
-                return Ok(mappedFinishedQuizDto);
-            }
-            return BadRequest(ModelState);
+        public bool AddFinishedQuizToStudent([FromRoute] int userId, [FromRoute] int courseId, [FromRoute] int lessonId, [FromRoute] int quizId)
+        {              
+                return finishedQuizService.AddFinishedQuizToStudent(userId, courseId, lessonId, quizId);
         }
     }
 }

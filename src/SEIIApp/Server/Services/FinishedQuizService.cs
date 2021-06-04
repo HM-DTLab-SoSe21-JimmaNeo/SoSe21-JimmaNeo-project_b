@@ -19,61 +19,69 @@ namespace SEIIApp.Server.Services
             this.databaseContext = databaseContext;
         }
 
-        private IQueryable<Student> GetQueryableForStudents()
+        private Student GetQueryableForStudent(int userId)
         {
             return databaseContext
                 .Students
+                .Where(student => student.UserId == userId)
                 .Include(student => student.FinishedQuizzes)
                 .Include(student => student.FinishedLessons)
-                .Include(student => student.FinishedCourses);
+                .Include(student => student.FinishedCourses)
+                .FirstOrDefault();
         }
 
-        private IQueryable<Lesson> GetQueryableForLesson()
-        {
-            return databaseContext
-                .Lessons
-                .Include(lesson => lesson.Quizzes);
-        }
-
-        private IQueryable<Course> GetQueryableForCourse()
+        private Course GetQueryableForCourse(int courseId)
         {
             return databaseContext
                 .Courses
-                .Include(course => course.Lessons);
+                .Where(course => course.CourseId == courseId)
+                .Include(course => course.Lessons)
+                .FirstOrDefault();
+        }
+
+        private Lesson GetQueryableForLesson(int lessonId)
+        {
+            return databaseContext
+                .Lessons
+                .Where(lesson => lesson.LessonId == lessonId)
+                .Include(lesson => lesson.Quizzes)
+                .FirstOrDefault();
         }
 
         /// <summary>
         /// Add a finished Quiz to a student and if the lesson or the lesson and the course is finished too add them also.
         /// </summary>
         /// <param name="userId"></param>
-        /// <param name="finishedQuiz"></param>
+        /// <param name="courseId"></param>
+        /// <param name="lessonId"></param>
+        /// <param name="quizId"></param>
         /// <returns></returns>
-        public FinishedQuiz[] AddFinishedQuizToStudent(int userId, FinishedQuiz finishedQuiz)
+        public bool AddFinishedQuizToStudent(int userId, int courseId, int lessonId, int quizId)
         {
-            var toUpdateStudent = GetQueryableForStudents()
-                .Where(student => student.UserId == userId)
-                .FirstOrDefault();
+            var toUpdateStudent = GetQueryableForStudent(userId);
+            var finishedQuiz = new FinishedQuiz();
+            finishedQuiz.QuizId = quizId;
             finishedQuiz.FinishedDateTime = DateTime.Now;
             toUpdateStudent.FinishedQuizzes.Add(finishedQuiz);
-            finishSuperordinated(toUpdateStudent, finishedQuiz);
+            finishSuperordinated(toUpdateStudent, courseId, lessonId);
             databaseContext.Students.Update(toUpdateStudent);
             databaseContext.SaveChanges();
-            return toUpdateStudent.FinishedQuizzes.ToArray();
+            return true;
         }
 
-        private void finishSuperordinated(Student toUpdateStudent, FinishedQuiz finishedQuiz)
-        {       
-            if(isLessonFinished(finishedQuiz.LessonId, toUpdateStudent.FinishedQuizzes))
+        private void finishSuperordinated(Student toUpdateStudent, int courseId, int lessonId)
+        {
+            if(isLessonFinished(lessonId, toUpdateStudent.FinishedQuizzes))
             {
                 FinishedLesson finishedLesson = new FinishedLesson();
-                finishedLesson.LessonId = finishedQuiz.LessonId;
-                finishedLesson.FinishedDateTime = finishedQuiz.FinishedDateTime;
+                finishedLesson.LessonId = lessonId;
+                finishedLesson.FinishedDateTime = DateTime.Now;
                 toUpdateStudent.FinishedLessons.Add(finishedLesson);
-                if (isCourseFinished(finishedQuiz.CourseId, toUpdateStudent.FinishedLessons))
+                if (isCourseFinished(courseId, toUpdateStudent.FinishedLessons))
                 {
                     FinishedCourse finishedCourse = new FinishedCourse();
-                    finishedCourse.CourseId = finishedQuiz.CourseId;
-                    finishedCourse.FinishedDateTime = finishedQuiz.FinishedDateTime;
+                    finishedCourse.CourseId = courseId;
+                    finishedCourse.FinishedDateTime = DateTime.Now;
                     toUpdateStudent.FinishedCourses.Add(finishedCourse);
                 }
             }
@@ -81,10 +89,7 @@ namespace SEIIApp.Server.Services
 
         private bool isLessonFinished(int lessonId, List<FinishedQuiz> allfinishedQuizzesOfStudent)
         {
-            List<Quiz> allQuizzesOfLesson = GetQueryableForLesson()
-                .Where(lesson => lesson.LessonId == lessonId)
-                .FirstOrDefault()
-                .Quizzes;
+            var allQuizzesOfLesson = GetQueryableForLesson(lessonId).Quizzes;
             for(int i = 0; i < allQuizzesOfLesson.Count; i++)
             {
                 bool quizFinishedByStudent = false;
@@ -104,10 +109,7 @@ namespace SEIIApp.Server.Services
 
         private bool isCourseFinished(int courseId, List<FinishedLesson> allFinishedLessonsOfStudent)
         {
-            List<Lesson> allLessonsOfCourse = GetQueryableForCourse()
-                .Where(course => course.CourseId == courseId)
-                .FirstOrDefault()
-                .Lessons;
+            var allLessonsOfCourse = GetQueryableForCourse(courseId).Lessons;
             for (int i = 0; i < allLessonsOfCourse.Count; i++)
             {
                 bool quizFinishedByStudent = false;

@@ -8,8 +8,6 @@ namespace SEIIApp.Server.Domain
         [Key]
         public int FinishedQuizId { get; set; }
         public int QuizId { get; set; }
-        public int LessonId { get; set; }
-        public int CourseId { get; set; }
         public DateTime FinishedDateTime {get; set; }
     }
 }
