@@ -14,11 +14,13 @@ namespace SEIIApp.Server.Controllers
     {
 
         private StudentService studentService { get; set; }
+        private FinishedQuizService finishedQuizService { get; set; }
         private IMapper mapper { get; set; }
 
-        public StudentController(StudentService studentService, IMapper mapper)
+        public StudentController(StudentService studentService, FinishedQuizService finishedQuizService, IMapper mapper)
         {
             this.studentService = studentService;
+            this.finishedQuizService = finishedQuizService;
             this.mapper = mapper;
         }
 
@@ -53,22 +55,17 @@ namespace SEIIApp.Server.Controllers
             return Ok(mappedStudents);
         }
 
-        /// Updates a student
-        /// </summary>
-        /// <param name="model"></param>
-        /// <returns></returns>
-        [HttpPut]
+
+        [HttpPut("{userId}/finishedQuizzes")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public ActionResult<StudentDto> UpdateStudent([FromBody] StudentDto model)
+        public ActionResult<StudentDto> AddFinishedQuizToStudent([FromRoute] int userId, [FromBody] FinishedQuizDto model)
         {
             if (ModelState.IsValid)
             {
-                var mappedModel = mapper.Map<Student>(model);
-                mappedModel = studentService.UpdateStudent(mappedModel);
-                
-                model = mapper.Map<StudentDto>(mappedModel);
-                return Ok(model);
+                var mappedFinishedQuiz = mapper.Map<FinishedQuiz>(model);
+                var mappedFinishedQuizDto = mapper.Map<FinishedQuizDto[]>(finishedQuizService.AddFinishedQuizToStudent(userId, mappedFinishedQuiz));
+                return Ok(mappedFinishedQuizDto);
             }
             return BadRequest(ModelState);
         }

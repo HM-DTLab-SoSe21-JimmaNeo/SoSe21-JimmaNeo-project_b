@@ -116,7 +116,6 @@
             </summary>
             <returns></returns>
         </member>
-        <!-- Badly formed XML comment ignored for member "M:SEIIApp.Server.Controllers.StudentController.UpdateStudent(SEIIApp.Shared.DomainDTOs.StudentDto)" -->
         <member name="M:SEIIApp.Server.DataAccess.TestDataGenerator.GenerateData(SEIIApp.Server.DataAccess.DatabaseContext)">
             <summary>
             Initialize teast data for local-in-memory database.
@@ -126,21 +125,6 @@
         <member name="T:SEIIApp.Server.Domain.CorrectQuestion">
             <summary>
             Data object which represents correctly answered questions.
-            </summary>
-        </member>
-        <member name="P:SEIIApp.Server.Domain.CorrectQuestion.CorrectQuestionId">
-            <summary>
-            Id of the record.
-            </summary>
-        </member>
-        <member name="P:SEIIApp.Server.Domain.CorrectQuestion.QuestionsId">
-            <summary>
-            Reference to the correctly answered question.
-            </summary>
-        </member>
-        <member name="P:SEIIApp.Server.Domain.CorrectQuestion.SolveDateTime">
-            <summary>
-            Date time of answering the question correctly.
             </summary>
         </member>
         <member name="M:SEIIApp.Server.Services.AvatarItemService.GetAllAvatarItems">
@@ -210,6 +194,19 @@
             <summary>
             Returns the course with the given courseId.
             </summary>
+        </member>
+        <member name="T:SEIIApp.Server.Services.FinishedQuizService">
+            <summary>
+            Service for finishedQuizzes
+            </summary>
+        </member>
+        <member name="M:SEIIApp.Server.Services.FinishedQuizService.AddFinishedQuizToStudent(System.Int32,SEIIApp.Server.Domain.FinishedQuiz)">
+            <summary>
+            Add a finished Quiz to a student and if the lesson or the lesson and the course is finished too add them also.
+            </summary>
+            <param name="userId"></param>
+            <param name="finishedQuiz"></param>
+            <returns></returns>
         </member>
         <member name="M:SEIIApp.Server.Services.LessonService.GetAllLesson">
             <summary>

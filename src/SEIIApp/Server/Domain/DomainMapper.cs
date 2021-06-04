@@ -48,12 +48,24 @@ namespace SEIIApp.Server.Domain
             CreateMap<EquippedItem, EquippedItemDto>();
             CreateMap<EquippedItemDto, EquippedItem>();
 
+            CreateMap<FinishedCourse, FinishedCourseDto>();
+            CreateMap<FinishedCourseDto, FinishedCourse>();
+
+            CreateMap<FinishedLesson, FinishedLessonDto>();
+            CreateMap<FinishedLessonDto, FinishedLesson>();
+
+            CreateMap<FinishedQuiz, FinishedQuizDto>();
+            CreateMap<FinishedQuizDto, FinishedQuiz>();
+
             CreateMap<Student, Student>();
             CreateMap<Avatar, Avatar>();
             CreateMap<AvatarItem, AvatarItem>();
             CreateMap<StudentProfile, StudentProfile>();
             CreateMap<CorrectQuestion, CorrectQuestion>();
             CreateMap<EquippedItem, EquippedItem>();
+            CreateMap<FinishedCourse, FinishedCourse>();
+            CreateMap<FinishedLesson, FinishedLesson>();
+            CreateMap<FinishedQuiz, FinishedQuiz>();
         }
 
     }

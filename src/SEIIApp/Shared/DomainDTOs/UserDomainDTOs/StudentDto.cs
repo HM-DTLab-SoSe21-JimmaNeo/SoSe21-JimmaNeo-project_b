@@ -12,6 +12,9 @@ namespace SEIIApp.Shared.DomainDTOs
         public string EmailAddress { get; set; }
         public StudentProfileDto Profile { get; set; }
         public AvatarDto Avatar { get; set; }
+        public List<FinishedCourseDto> FinishedCourses { get; set; }
+        public List<FinishedLessonDto> FinishedLessons { get; set; }
+        public List<FinishedQuizDto> FinishedQuizzes { get; set; }
         public List<CorrectQuestionDto> CorrectQuestions { get; set; }
     }
 }

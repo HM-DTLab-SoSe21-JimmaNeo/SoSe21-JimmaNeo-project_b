@@ -17,6 +17,9 @@ namespace SEIIApp.Server.DataAccess
         public DbSet<AvatarItem> AvatarItems { get; set; }
         public DbSet<EquippedItem> EquippedItems { get; set; }
         public DbSet<CorrectQuestion> CorrectQuestions { get; set; }
+        public DbSet<FinishedQuiz> FinishedQuizzes { get; set; }
+        public DbSet<FinishedLesson> FinishedLessons { get; set; }
+        public DbSet<FinishedCourse> FinishedCourses { get; set; }
         public DbSet<Avatar> Avatars { get; set; }
     }
 }

@@ -30,7 +30,10 @@ namespace SEIIApp.Server.Services
                 .Include(student => student.CorrectQuestions)
                 .Include(student => student.Profile)
                 .Include(student => student.Avatar)
-                .Include(student => student.Avatar.UsedItems);
+                .Include(student => student.Avatar.UsedItems)
+                .Include(student => student.FinishedCourses)
+                .Include(student => student.FinishedLessons)
+                .Include(student => student.FinishedQuizzes);
         }
 
         /// <summary>

@@ -45,6 +45,7 @@ namespace SEIIApp.Server {
             services.AddScoped<Services.AvatarService>();
             services.AddScoped<Services.AvatarItemService>();
             services.AddScoped<Services.CorrectQuestionService>();
+            services.AddScoped<Services.FinishedQuizService>();
 
             services.AddSwaggerGen(options => {
 
