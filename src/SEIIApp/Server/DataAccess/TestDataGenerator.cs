@@ -102,7 +102,7 @@ namespace SEIIApp.Server.DataAccess
                 videoContent.Title = "Neonatal Resuscitation - Demonstration";
                 videoContent.Lessons = new List<Lesson>();
                 videoContent.Lessons.Add(lesson);
-                videoContent.Location = new Uri("https://www.youtube-nocookie.com/embed/_lEzN8C5c7k");
+                videoContent.Location = new Uri("https://www.youtube.com/embed/0WhEtCygUJM");
                 videoContents.Add(videoContent);
             }
             return videoContents;
