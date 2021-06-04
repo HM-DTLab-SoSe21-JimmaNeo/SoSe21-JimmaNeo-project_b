@@ -33,8 +33,10 @@ else
     @foreach (DocumentContentDto document in documents)
     {
         <p class="text-center">
-            <Button Color="Color.Light" Clicked="@(() => SelectUri(document.Location))">
-                <h4>@document.Title</h4>
+            <Button Color="Color.Light">
+                <a href="@document.Location" target="_blank">
+                    <h4>@document.Title</h4>
+                </a>
             </Button>
         </p>
         <br />
@@ -54,9 +56,8 @@ else
     @foreach (VideoContentDto video in videos)
     {
         <p class="text-center">
-            <Button Color="Color.Light" Clicked="@(() => SelectUri(video.Location))">
-                <h4>@video.Title</h4>
-            </Button>
+            <h4>@video.Title</h4>
+            <iframe width="560" height="315" src="@video.Location" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
         </p>
         <br />
     }
