@@ -9,9 +9,10 @@
 
 <head>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="../css/StylesheetJimmaNeo.css">
 </head>
 
-<body>
 <center>
 
     @if (quizzes == null)
@@ -144,8 +145,8 @@
                                 <label for="handle@(i+1)">Question @(i+1): Correct</label>
                             </h2>
                             <div class="content">
-                                <p><strong>Question:</strong> @questions[i].Text</p>
-                                <p><strong style="color:green">Your correct answer:</strong> @correctAnswerTexts[i]</p>
+                                <p style="margin: 0 0 1em"><strong>Question:</strong> @questions[i].Text</p>
+                                <p style="margin: 0 0 1em"><strong style="color:green">Your correct answer:</strong> @correctAnswerTexts[i]</p>
                             </div>
                         </section>
                     }
@@ -159,9 +160,9 @@
                                 <label for="handle@(i+1)">Question @(i+1): Incorrect</label>
                             </h2>
                             <div class="content">
-                                <p><strong>Question:</strong> @questions[i].Text</p>
-                                <p><strong style="color:red">Your answer:</strong> @selectedAnswerTexts[i]</p>
-                                <p><strong style="color:green">Correct Answer:</strong> @correctAnswerTexts[i]</p>
+                                <p style="margin: 0 0 1em"><strong>Question:</strong> @questions[i].Text</p>
+                                <p style="margin: 0 0 1em"><strong style="color:red">Your answer:</strong> @selectedAnswerTexts[i]</p>
+                                <p style="margin: 0 0 1em"><strong style="color:green">Correct Answer:</strong> @correctAnswerTexts[i]</p>
 
                             </div>
                         </section>
@@ -183,7 +184,6 @@
     }
 
 </center>
-</body>
 
 
 
@@ -612,262 +612,3 @@
 
 
 
-
-
-<style>
-
-    .startQuizButton {
-        color: black;
-        background: lightblue;
-        border: black;
-        width: 300px;
-        height: 75px;
-        border-radius: 12px;
-    }
-
-    .answerTable {
-        width: 70%;
-        max-height: 70px;
-        table-layout: fixed;
-        border-collapse: collapse;
-        background-color: white;
-    }
-
-
-    .unselected {
-        color: white;
-        background: grey;
-        border: black;
-        width: 100%;
-        height: 100%;
-        min-height: 50px;
-        border-radius: 12px;
-    }
-
-    .selected {
-        color: white;
-        background: blue;
-        border: black;
-        width: 100%;
-        height: 100%;
-        min-height: 50px;
-        border-radius: 12px;
-    }
-
-    .correctAnswer {
-        color: black;
-        background: lightgreen;
-        opacity: 0.8;
-        border: black;
-        width: 100%;
-        height: 100%;
-        min-height: 50px;
-        border-radius: 12px;
-    }
-
-    .wrongAnswer {
-        color: white;
-        background: red;
-        opacity: 0.8;
-        border: black;
-        width: 100%;
-        height: 100%;
-        min-height: 50px;
-        border-radius: 12px;
-    }
-
-    .correctAnswerWouldHaveBeen {
-        color: black;
-        background: lightgreen;
-        opacity: 0.8;
-        border: black;
-        width: 100%;
-        height: 100%;
-        min-height: 50px;
-        border-radius: 12px;
-        animation-name: blink;
-        animation-duration: 0.5s;
-        animation-iteration-count: 2;
-    }
-
-    @@keyframes blink {
-        0% {
-            color: white;
-            background: grey;
-            opacity: 1.0;
-        }
-
-        50% {
-            color: black;
-            background: lightgreen;
-            opacity 0.8;
-        }
-
-        100% {
-            color: white;
-            background: grey;
-            opacity: 1.0;
-        }
-    }
-
-
-    .checkReady {
-        color: white;
-        background: lightgreen;
-        border: black;
-        width: 100px;
-        height: 50px;
-        border-radius: 12px;
-    }
-
-    .checkNotReady {
-        color: white;
-        background: lightgrey;
-        border: black;
-        width: 100px;
-        height: 50px;
-        border-radius: 12px;
-    }
-
-    .checkCorrect {
-        color: white;
-        background: green;
-        border: black;
-        width: 200px;
-        height: 50px;
-        border-radius: 12px;
-    }
-
-    .checkIncorrect {
-        color: white;
-        background: red;
-        border: black;
-        width: 200px;
-        height: 50px;
-        border-radius: 12px;
-    }
-
-    .ExpInvisible {
-        visibility: hidden;
-    }
-
-    .ExpVisible {
-        color: green;
-        visibility: visible;
-    }
-
-
-    .list {
-        display: grid;
-        overflow: hidden;
-        grid-template-columns: 1fr, 1fr;
-        grid-auto-rows: 1fr;
-        grid-column-gap: 5px;
-        grid-row-gap: 5px;
-        max-width: 500px;
-        list-style-type: none; /* Remove bullets */
-        padding: 0; /* Remove padding */
-        margin: 0; /* Remove margins */
-    }
-
-    .list-item {
-        background-color: white;
-        display: flex;
-        margin-bottom: 20px;
-        width: 100%;
-    }
-
-    .list-content {
-        width: 100%;
-    }
-
-
-
-    .accordion > input[type="checkbox"] {
-        position: absolute;
-        left: -100vw;
-    }
-
-    .accordion .content {
-        overflow-y: hidden;
-        height: 0;
-        transition: height 0.3s ease;
-        text-align: left;
-    }
-
-    .accordion > input[type="checkbox"]:checked ~ .content {
-        height: auto;
-        overflow: visible;
-    }
-
-    .accordion label {
-        display: block;
-        text-align: left;
-    }
-
-    .accordion {
-        margin-bottom: 1em;
-    }
-
-        .accordion > input[type="checkbox"]:checked ~ .content {
-            padding: 15px;
-            border: 1px solid #e8e8e8;
-            border-top: 0;
-        }
-
-        .accordion .handle {
-            margin: 0;
-            font-size: 1.125em;
-            line-height: 1.2em;
-        }
-
-        .accordion label {
-            color: #333;
-            cursor: pointer;
-            font-weight: normal;
-            padding: 15px;
-            background: #e8e8e8;
-        }
-
-            .accordion label:hover,
-            .accordion label:focus {
-                background: #d8d8d8;
-            }
-
-        .accordion .handle label:before {
-            font-family: "Font Awesome 5 Free";
-            content: '\f054';
-            font-weight: bold;
-            font-size: 22px;
-            display: inline-block;
-            margin-right: 10px;
-            font-size: .58em;
-            line-height: 1.556em;
-            vertical-align: middle;
-        }
-
-        .accordion > input[type="checkbox"]:checked ~ .handle label:before {
-            content: "\f078";
-        }
-
-
-
-    body {
-        
-        font: 16px/1.5em "Overpass", "Open Sans", Helvetica, sans-serif;
-        font-weight: 300;
-    }
-
-    p {
-        margin: 0 0 1em;
-    }
-
-    .accordion {
-        max-width: 65em;
-    }
-
-        .accordion p:last-child {
-            margin-bottom: 0;
-        }
-
-</style>
