@@ -1,12 +1,24 @@
 ﻿/* Shared style */
 
-body {
-    text-align: center;
-    font: 16px/1.5em "Overpass", "Open Sans", Helvetica, sans-serif;
-    font-weight: 300;
+body {   
 }
 
-p {
+p3 {   
+}
+
+h1 {
+}
+
+h2 {
+}
+
+h3 {
+}
+
+h4 {
+}
+
+h5 {
 }
 
 
@@ -197,45 +209,45 @@ p {
 
 
 
-.accordion > input[type="checkbox"] {
+.accordion-correction > input[type="checkbox"] {
     position: absolute;
     left: -100vw;
 }
 
-.accordion .content {
+.accordion-correction .content {
     overflow-y: hidden;
     height: 0;
     transition: height 0.3s ease;
     text-align: left;
 }
 
-.accordion > input[type="checkbox"]:checked ~ .content {
+.accordion-correction > input[type="checkbox"]:checked ~ .content {
     height: auto;
     overflow: visible;
 }
 
-.accordion label {
+.accordion-correction label {
     display: block;
     text-align: left;
 }
 
-.accordion {
+.accordion-correction {
     margin-bottom: 1em;
 }
 
-    .accordion > input[type="checkbox"]:checked ~ .content {
+    .accordion-correction > input[type="checkbox"]:checked ~ .content {
         padding: 15px;
         border: 1px solid #e8e8e8;
         border-top: 0;
     }
 
-    .accordion .handle {
+    .accordion-correction .handle {
         margin: 0;
         font-size: 1.125em;
         line-height: 1.2em;
     }
 
-    .accordion label {
+    .accordion-correction label {
         color: #333;
         cursor: pointer;
         font-weight: normal;
@@ -243,12 +255,12 @@ p {
         background: #e8e8e8;
     }
 
-        .accordion label:hover,
-        .accordion label:focus {
+        .accordion-correction label:hover,
+        .accordion-correction label:focus {
             background: #d8d8d8;
         }
 
-    .accordion .handle label:before {
+    .accordion-correction .handle label:before {
         font-family: "Font Awesome 5 Free";
         content: '\f054';
         font-weight: bold;
@@ -260,15 +272,22 @@ p {
         vertical-align: middle;
     }
 
-    .accordion > input[type="checkbox"]:checked ~ .handle label:before {
+    .accordion-correction > input[type="checkbox"]:checked ~ .handle label:before {
         content: "\f078";
     }
 
 
-.accordion {
+.accordion-correction {
     max-width: 65em;
 }
 
-    .accordion p:last-child {
+    .accordion-correction p:last-child {
         margin-bottom: 0;
     }
+
+
+
+.p1 {
+    text-align: left;
+    margin: 0 0 1em;
+}

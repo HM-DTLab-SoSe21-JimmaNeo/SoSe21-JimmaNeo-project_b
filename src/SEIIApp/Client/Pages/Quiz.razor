@@ -26,22 +26,22 @@
         if (!startedQuiz)
         {
 
-            <h1>Quiz: @quiz.Title</h1>
+            <h3>Quiz: @quiz.Title</h3>
 
             <br /> <br />
 
             @if (inFinishedQuizzes)
             {
-                <h4>You have already completed this Quiz successfully</h4>
+                <h5>You have already completed this Quiz successfully</h5>
             }
             else
             {
-                <h4>You have not successfully completed this Quiz yet</h4>
+                <h5>You have not successfully completed this Quiz yet</h5>
             }
 
             <br /> <br />
 
-            <h4>Number of questions: @questions.Length</h4>
+            <h5>Number of questions: @questions.Length</h5>
 
             <br /> <br />
 
@@ -139,14 +139,14 @@
                     {
 
 
-                        <section class="accordion">
+                        <section class="accordion-correction">
                             <input type="checkbox" name="collapse" id="handle@(i+1)">
                             <h2 class="handle">
                                 <label for="handle@(i+1)">Question @(i+1): Correct</label>
                             </h2>
                             <div class="content">
-                                <p style="margin: 0 0 1em"><strong>Question:</strong> @questions[i].Text</p>
-                                <p style="margin: 0 0 1em"><strong style="color:green">Your correct answer:</strong> @correctAnswerTexts[i]</p>
+                                <p class="p1"><strong>Question:</strong> @questions[i].Text</p>
+                                <p class="p1"><strong style="color:green">Your correct answer:</strong> @correctAnswerTexts[i]</p>
                             </div>
                         </section>
                     }
@@ -154,15 +154,15 @@
                     {
 
 
-                        <section class="accordion">
+                        <section class="accordion-correction">
                             <input type="checkbox" name="collapse" id="handle@(i+1)">
                             <h2 class="handle">
                                 <label for="handle@(i+1)">Question @(i+1): Incorrect</label>
                             </h2>
                             <div class="content">
-                                <p style="margin: 0 0 1em"><strong>Question:</strong> @questions[i].Text</p>
-                                <p style="margin: 0 0 1em"><strong style="color:red">Your answer:</strong> @selectedAnswerTexts[i]</p>
-                                <p style="margin: 0 0 1em"><strong style="color:green">Correct Answer:</strong> @correctAnswerTexts[i]</p>
+                                <p class="p1"><strong>Question:</strong> @questions[i].Text</p>
+                                <p class="p1"><strong style="color:red">Your answer:</strong> @selectedAnswerTexts[i]</p>
+                                <p class="p1"><strong style="color:green">Correct Answer:</strong> @correctAnswerTexts[i]</p>
 
                             </div>
                         </section>
