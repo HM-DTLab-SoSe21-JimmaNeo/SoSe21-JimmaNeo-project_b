@@ -7,19 +7,21 @@
 @inject HttpClient Http
 @inject NavigationManager NavigationManager
 
+<TextEdit Placeholder="Lessons completed: 4/11" ReadOnly="true" class="text-center" />
+<Progress>
+    <ProgressBar Background="Background.Success" Value="27" Animated=true />
+    <ProgressBar Background="Background.Dark" Value="100" Animated=true />
+</Progress>
+<br />
+<br />
+
 <div class="text-center">
     <h3>@(course?.Title ?? "Loading Course Title")</h3>
 </div>
 <div class="text-center">
     <h4>@(course?.Description ?? "Loading Course Description")</h4>
 </div>
-
-<TextEdit Placeholder="Lessons completed: 4/11" ReadOnly="true" class="text-center" />
-<Progress>
-    <ProgressBar Background="Background.Success" Value="27" Animated=true />
-    <ProgressBar Background="Background.Dark" Value="100" Animated=true />
-</Progress>
-
+<br />
 <br />
 
 @if (lessons == null)

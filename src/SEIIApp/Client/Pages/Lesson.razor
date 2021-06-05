@@ -7,22 +7,25 @@
 @inject HttpClient Http
 @inject NavigationManager NavigationManager
 
+<TextEdit Placeholder="Quizzes completed: 1/1" ReadOnly="true" class="text-center" />
+<Progress>
+    <ProgressBar Background="Background.Success" Value="99" Animated=true />
+    <ProgressBar Background="Background.Dark" Value="100" Animated=true />
+</Progress>
+<br />
+<br />
+
 <div class="text-center">
     <h3>@(lesson?.Title ?? "Loading Lesson Title")</h3>
 </div>
 <div class="text-center">
     <h4>@(lesson?.Description ?? "Loading Lesson Description")</h4>
 </div>
-
-<TextEdit Placeholder="Quizzes completed: 1/1" ReadOnly="true" class="text-center" />
-<Progress>
-    <ProgressBar Background="Background.Success" Value="99" Animated=true />
-    <ProgressBar Background="Background.Dark" Value="100" Animated=true />
-</Progress>
-
 <br />
+<br />
+
 <div class="text-center">
-    <h5>Documents</h5>
+    <h4>Documents</h4>
 </div>
 @if (documents == null)
 {
@@ -35,7 +38,7 @@ else
         <p class="text-center">
             <Button Color="Color.Light">
                 <a href="@document.Location" target="_blank">
-                    <h4>@document.Title</h4>
+                    <h5>@document.Title</h5>
                 </a>
             </Button>
         </p>
@@ -45,7 +48,7 @@ else
 
 <br />
 <div class="text-center">
-    <h5>Videos</h5>
+    <h4>Videos</h4>
 </div>
 @if (videos == null)
 {
@@ -53,19 +56,30 @@ else
 }
 else
 {
-    @foreach (VideoContentDto video in videos)
-    {
-        <p class="text-center">
-            <h4>@video.Title</h4>
-            <iframe width="560" height="315" src="@video.Location" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-        </p>
-        <br />
-    }
+    <p class="text-center">
+        <Accordion>
+            @foreach (VideoContentDto video in videos)
+            {
+                @code{bool collapseVisible = false;}
+                <Collapse Visible="@collapseVisible">
+                    <CollapseHeader>
+                        <Heading>
+                            <Button Clicked="@(()=>collapseVisible = !collapseVisible)"><h5>@video.Title</h5></Button>
+                        </Heading>
+                    </CollapseHeader>
+                    <CollapseBody>
+                        <iframe width="560" height="315" src="@video.Location" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    </CollapseBody>
+                </Collapse>
+            }
+        </Accordion>
+    </p>
+    <br />
 }
 
 <br />
 <div class="text-center">
-    <h5>Quizzes</h5>
+    <h4>Quizzes</h4>
 </div>
 @if (quizzes == null)
 {
@@ -77,7 +91,7 @@ else
     {
         <p class="text-center">
             <Button Color="Color.Light" Clicked="@(() => SelectQuiz(quiz.QuizId))">
-                <h4>@quiz.Title</h4>
+                <h5>@quiz.Title</h5>
             </Button>
         </p>
         <br />
@@ -110,11 +124,5 @@ else
     {
         string uri = $"courses/{CourseId}/{LessonId}/{quizId}";
         NavigationManager.NavigateTo(uri);
-    }
-
-    private void SelectUri(Uri uri)
-    {
-        string stringUri = uri.ToString();
-        NavigationManager.NavigateTo(stringUri);
     }
 }
