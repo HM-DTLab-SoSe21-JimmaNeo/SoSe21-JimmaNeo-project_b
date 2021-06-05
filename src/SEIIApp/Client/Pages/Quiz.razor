@@ -29,13 +29,20 @@
 
             <br /> <br />
 
-            <h4>You have done this Quiz X times</h4>
+            @if (inFinishedQuizzes)
+            {
+                <h4>You have already completed this Quiz successfully</h4>
+            }
+            else
+            {
+                <h4>You have not successfully completed this Quiz yet</h4>
+            }
 
             <br /> <br />
 
-            <h4>You have not successfully completed this Quiz yet</h4>
+            <h4>Number of questions: @questions.Length</h4>
 
-            <br /> <br /> <br /> <br />
+            <br /> <br />
 
             <p><button class="startQuizButton" @onclick="@(() => startQuiz())">Start Quiz</button></p>
 
@@ -108,6 +115,9 @@
                 if (everythingCorrect)
                 {
                     <h2> Congratulations! You have successfully completed this Quiz.</h2>
+
+                    saveFinishedQuizToStudent();
+
                 }
                 else
                 {
@@ -210,6 +220,8 @@
     public string[] selectedAnswerTexts;
     public string[] correctAnswerTexts;
 
+    public bool inFinishedQuizzes = false;
+
     //UI-status-indicators
     public bool startedQuiz = false;
     public bool finishedQuiz = false;
@@ -238,6 +250,16 @@
 
         //ToDo: Change userId to variable
         student = await Http.GetFromJsonAsync<StudentDto>($"api/Students/{1}");
+
+
+        //Check at Startup Page if already completed
+        foreach (FinishedQuizDto finquiz in student.FinishedQuizzes)
+        {
+            if (finquiz.QuizId == quiz.QuizId)
+            {
+                inFinishedQuizzes = true;
+            }
+        }
 
     }
 
@@ -362,6 +384,34 @@
                 });
 
             }
+
+        }
+    }
+
+
+    public async void saveFinishedQuizToStudent()
+    {
+
+        //Ensure that student is up-to-date (only necessary for updating finished Quizzes)
+        student = await Http.GetFromJsonAsync<StudentDto>($"api/Students/{1}");
+
+        bool alreadyFinishedQuiz = false;
+
+        foreach (FinishedQuizDto finquiz in student.FinishedQuizzes)
+        {
+            if (finquiz.QuizId == quiz.QuizId)
+            {
+                alreadyFinishedQuiz = true;
+            }
+        }
+
+        if (!alreadyFinishedQuiz)
+        {
+
+            FinishedQuizDto newFinishedQuiz = new FinishedQuizDto();
+            newFinishedQuiz.QuizId = quiz.QuizId;
+
+            await Http.PutAsJsonAsync<FinishedQuizDto>($"/api/Students/{student.UserId}/finishQuiz/{CourseId}/{LessonId}/{QuizId}", newFinishedQuiz);
 
         }
     }
@@ -558,7 +608,7 @@
 
     }
 
-  }
+}
 
 
 
