@@ -1,26 +1,10 @@
 ﻿/* Shared style */
 
-body {   
+* {
+    font-family: Comic Sans MS;
+    font-weight: bold;
+    color: #333;
 }
-
-p3 {   
-}
-
-h1 {
-}
-
-h2 {
-}
-
-h3 {
-}
-
-h4 {
-}
-
-h5 {
-}
-
 
 /* Profile specific style */
 
@@ -43,7 +27,7 @@ h5 {
 /* Quiz specific style */
 
 .startQuizButton {
-    color: black;
+    color: #333;
     background: lightblue;
     border: black;
     width: 300px;
@@ -183,7 +167,7 @@ h5 {
 }
 
 
-.list {
+.answer-list {
     display: grid;
     overflow: hidden;
     grid-template-columns: 1fr, 1fr;
@@ -196,14 +180,14 @@ h5 {
     margin: 0; /* Remove margins */
 }
 
-.list-item {
+.answer-list-item {
     background-color: white;
     display: flex;
     margin-bottom: 20px;
     width: 100%;
 }
 
-.list-content {
+.answer-list-content {
     width: 100%;
 }
 
@@ -290,4 +274,5 @@ h5 {
 .p1 {
     text-align: left;
     margin: 0 0 1em;
+    font-weight: normal;
 }

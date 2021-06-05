@@ -17,7 +17,7 @@
 
     @if (quizzes == null)
     {
-        <h1>Loading Quiz...</h1>
+        <h3>Loading Quiz...</h3>
     }
 
     else
@@ -26,22 +26,22 @@
         if (!startedQuiz)
         {
 
-            <h3>Quiz: @quiz.Title</h3>
+            <h2>Quiz: @quiz.Title</h2>
 
             <br /> <br />
 
             @if (inFinishedQuizzes)
             {
-                <h5>You have already completed this Quiz successfully</h5>
+                <h4>You have already completed this Quiz successfully</h4>
             }
             else
             {
-                <h5>You have not successfully completed this Quiz yet</h5>
+                <h4>You have not successfully completed this Quiz yet</h4>
             }
 
             <br /> <br />
 
-            <h5>Number of questions: @questions.Length</h5>
+            <h4>Number of questions: @questions.Length</h4>
 
             <br /> <br />
 
@@ -64,7 +64,7 @@
 
                 <br /> <br />
 
-                <h1>Question @(qCounter + 1): @questions[qCounter].Text</h1>
+                <h2>Question @(qCounter + 1): @questions[qCounter].Text</h2>
 
                 <br /> <br />
 
@@ -72,13 +72,13 @@
 
 
                        <center>
-                           <ul class="list">
+                           <ul class="answer-list">
 
                                @foreach (var answer in @questions[qCounter].answers)
                                {
 
-                                   <li class="list-item">
-                                       <div class="list-content">
+                                   <li class="answer-list-item">
+                                       <div class="answer-list-content">
                                            <button class="@answer.Color" @onclick="@(() => questions[qCounter].anythingSelected(answer) )">@answer.Text</button>
                                        </div>
                                    </li>
@@ -91,7 +91,7 @@
 
 
                 <p>
-                    <h7 class="@expStatus"><b>You have just earned 10 EXP</b></h7>
+                    <h6 class="@expStatus"><b style="color:green">You have just earned 10 EXP</b></h6>
                 </p>
 
                 <button class="@questions[qCounter].check.Color" @onclick="@(() => checkMe(questions[qCounter]) )">@questions[qCounter].check.Text</button>
