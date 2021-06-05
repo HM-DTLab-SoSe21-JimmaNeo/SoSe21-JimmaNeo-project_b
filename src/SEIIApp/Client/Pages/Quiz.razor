@@ -7,7 +7,11 @@
 @inject HttpClient Http
 @inject NavigationManager NavigationManager
 
+<head>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+</head>
 
+<body>
 <center>
 
     @if (quizzes == null)
@@ -35,7 +39,7 @@
 
             <p><button class="startQuizButton" @onclick="@(() => startQuiz())">Start Quiz</button></p>
 
-
+            <br /> <br />
         }
         else
         {
@@ -78,22 +82,18 @@
                        </center>
 
 
-
+                <p>
+                    <h7 class="@expStatus"><b>You have just earned 10 EXP</b></h7>
+                </p>
 
                 <button class="@questions[qCounter].check.Color" @onclick="@(() => checkMe(questions[qCounter]) )">@questions[qCounter].check.Text</button>
 
-                <br /> <br />
-
-                <h7 class="@expStatus">You have just earned 10 EXP</h7>
-
-                <br /> <br /> <br /> <br />
+                
+                <br /> <br /> 
 
             }
             else
             {
-                <h1>Your Results for Quiz: @quiz.Title</h1>
-
-                <br /> <br />
 
                 bool everythingCorrect = true;
 
@@ -116,40 +116,72 @@
 
                 <br /> <br />
 
+                <h3>Your Results for Quiz: @quiz.Title</h3>
+                <h5>Tap on an individual result to view details</h5>
+
+                <br /> <br />
+
+
                 for (int i = 0; i < results.Length; i++)
                 {
                     if (results[i] == true)
                     {
-                        <h5>Question @(i+1): Correct</h5>
-                        <br /> <br />
+
+
+                        <section class="accordion">
+                            <input type="checkbox" name="collapse" id="handle@(i+1)">
+                            <h2 class="handle">
+                                <label for="handle@(i+1)">Question @(i+1): Correct</label>
+                            </h2>
+                            <div class="content">
+                                <p><strong>Question:</strong> @questions[i].Text</p>
+                                <p><strong style="color:green">Your correct answer:</strong> @correctAnswerTexts[i]</p>
+                            </div>
+                        </section>
                     }
                     else
                     {
-                        <h5>Question @(i+1): Incorrect</h5>
-                        <br /> <br />
+
+
+                        <section class="accordion">
+                            <input type="checkbox" name="collapse" id="handle@(i+1)">
+                            <h2 class="handle">
+                                <label for="handle@(i+1)">Question @(i+1): Incorrect</label>
+                            </h2>
+                            <div class="content">
+                                <p><strong>Question:</strong> @questions[i].Text</p>
+                                <p><strong style="color:red">Your answer:</strong> @selectedAnswerTexts[i]</p>
+                                <p><strong style="color:green">Correct Answer:</strong> @correctAnswerTexts[i]</p>
+
+                            </div>
+                        </section>
                     }
                 }
 
+                <br />
+
                 <p><button class="startQuizButton" @onclick="@(() => returnToLesson())">Return to Lesson</button></p>
+
+                <br /> <br /> 
+
 
             }
 
-
-
-
-
-
-
+            
         }
 
     }
 
 </center>
+</body>
 
 
 
 
-@code { [Parameter]
+
+@code {
+
+    [Parameter]
     public int CourseId { get; set; }
     [Parameter]
     public int LessonId { get; set; }
@@ -158,22 +190,31 @@
 
     public QuizDto[] quizzes;
     public QuizDto quiz;
+
+    //Wrapped questionset of current quiz
     public QuestionPackage[] questions;
 
     public StudentDto student;
 
+    //Counter indicating the current question
     public int qCounter = 0;
 
 
-    //value by which the progress bar increases
+    //Value by which the progress bar increases
     public int progressFactor = 0;
-    //current progress of progress bar
+    //Current progress of progress bar
     public int progress = 0;
 
+    //Protocolling of users answers/results
     public bool[] results;
+    public string[] selectedAnswerTexts;
+    public string[] correctAnswerTexts;
+
+    //UI-status-indicators
     public bool startedQuiz = false;
     public bool finishedQuiz = false;
     public String expStatus = "ExpInvisible";
+
 
     protected override async Task OnInitializedAsync()
     {
@@ -192,6 +233,8 @@
         progressFactor = 100 / questions.Length;
 
         results = new bool[questions.Length];
+        selectedAnswerTexts = new string[questions.Length];
+        correctAnswerTexts = new string[questions.Length];
 
         //ToDo: Change userId to variable
         student = await Http.GetFromJsonAsync<StudentDto>($"api/Students/{1}");
@@ -209,12 +252,12 @@
         finishedQuiz = true;
     }
 
-
     public void returnToLesson()
     {
         string uri = $"courses/{CourseId}/{LessonId}";
         NavigationManager.NavigateTo(uri);
     }
+
 
     //Interaction with Check Button
     public async void checkMe(QuestionPackage question)
@@ -233,10 +276,13 @@
                     if (ans.Correct)
                     {
                         ans.Color = "correctAnswer";
+
+                        correctAnswerTexts[qCounter] = ans.Text;
+                        selectedAnswerTexts[qCounter] = ans.Text;
                     }
                 }
 
-                //ToDo: Change /////////////////////////////////////////////////////
+                //Save new correct Questions to Student's profile
 
                 bool studentAlreadyAnsweredCorrectly = false;
 
@@ -269,16 +315,20 @@
                 question.check.Color = "checkIncorrect";
                 results[qCounter] = false;
 
+                //Set Colors for wrong and correct answer buttons
                 foreach (AnswerPackage ans in question.answers)
                 {
                     if (ans.Selected)
                     {
                         ans.Color = "wrongAnswer";
+
+                        selectedAnswerTexts[qCounter] = ans.Text;
                     }
 
                     if (ans.Correct)
                     {
                         ans.Color = "correctAnswerWouldHaveBeen";
+                        correctAnswerTexts[qCounter] = ans.Text;
                     }
                 }
 
@@ -290,6 +340,7 @@
         }
         else if (question.check.Color == "checkCorrect" || question.check.Color == "checkIncorrect")
         {
+            //Hide EXP-Notification for next question
             expStatus = "ExpInvisible";
 
             if (qCounter < questions.Length - 1)
@@ -302,7 +353,8 @@
             {
                 progress = 100;
 
-                Task.Delay(1000).ContinueWith(t =>
+                //Delay process to finish progress bar animation
+                await Task.Delay(1000).ContinueWith(t =>
                 {
                     finishQuiz();
 
@@ -315,6 +367,7 @@
     }
 
 
+    //UI-compliant wrapped Question
     public class QuestionPackage
     {
 
@@ -336,6 +389,7 @@
         }
 
 
+        //Wrap QuestionDto set in UI-compliant QuestionPackage set
         public static QuestionPackage[] transformQuestions(List<QuestionDto> questions)
         {
             List<QuestionPackage> newQuestions = new List<QuestionPackage>();
@@ -349,9 +403,11 @@
         }
 
 
+        //Interaction with answer buttons (Selecting and Unselecting answers and setting Check Button to ready/not ready)
         public void anythingSelected(AnswerPackage answer)
         {
 
+            //Blocks interaction with answer buttons when the question has already been checked
             if (check.Color == "checkCorrect" || check.Color == "checkIncorrect")
             {
                 return;
@@ -359,8 +415,7 @@
 
             AnswerPackage ans = answer;
 
-
-            //Checks if any other answers than the clicked one are selected and unchecks them
+            //Check if any other answers than the clicked one are selected and unchecks them
             foreach (var a in answers)
             {
                 if (a != ans && a.Selected)
@@ -369,12 +424,12 @@
                 }
             }
 
-            // (Un-) Selects clicked on answer
+            // (Un-) Select clicked on answer
             ans.pressed();
 
             bool selectionTest = false;
 
-            //Checks if any answers are selected
+            //Check if any answers have been selected
             foreach (var a in answers)
             {
                 if (a.Selected)
@@ -383,7 +438,7 @@
                 }
             }
 
-            //Set Check-Button to ready if an answer if selected
+            //Set Check-Button to ready if an answer is selected
             if (selectionTest)
             {
                 this.check.setReady(true);
@@ -397,6 +452,7 @@
         }
 
 
+        //Check if selected answers are correct
         public string checkSelection()
         {
             AnswerPackage ans = null;
@@ -431,6 +487,7 @@
     }
 
 
+    //UI-compliant wrapped Answer
     public class AnswerPackage
     {
         public int ID { get; set; }
@@ -439,7 +496,6 @@
         public bool Selected { get; set; } = false;
         public string Color { get; set; } = "unselected";
 
-        //public string Color => Selected ? "selected" : "unselected";
 
         public AnswerPackage(AnswerDto answer)
         {
@@ -448,6 +504,7 @@
             this.Correct = answer.Correct;
         }
 
+        //Set answer button color to selected or unselected
         public void pressed()
         {
             this.Selected = !Selected;
@@ -463,6 +520,7 @@
 
         }
 
+        //Wrap AnswerDto set in UI-compliant AnswerPackage set
         public static List<AnswerPackage> transformAnswers(List<AnswerDto> answers)
         {
             List<AnswerPackage> newAnswers = new List<AnswerPackage>();
@@ -482,9 +540,8 @@
         public string Text { get; set; }
         public bool Ready { get; set; } = false;
         public string Color { get; set; } = "checkNotReady";
-        //public string Color => Ready ? "checkReady" : "checkNotReady";
 
-
+        //Set Check button to (not) ready
         public void setReady(bool ready)
         {
             this.Ready = ready;
@@ -499,7 +556,9 @@
             }
         }
 
-    } }
+    }
+
+  }
 
 
 
@@ -512,7 +571,8 @@
         background: lightblue;
         border: black;
         width: 300px;
-        height: 75px
+        height: 75px;
+        border-radius: 12px;
     }
 
     .answerTable {
@@ -531,6 +591,7 @@
         width: 100%;
         height: 100%;
         min-height: 50px;
+        border-radius: 12px;
     }
 
     .selected {
@@ -540,6 +601,7 @@
         width: 100%;
         height: 100%;
         min-height: 50px;
+        border-radius: 12px;
     }
 
     .correctAnswer {
@@ -550,6 +612,7 @@
         width: 100%;
         height: 100%;
         min-height: 50px;
+        border-radius: 12px;
     }
 
     .wrongAnswer {
@@ -560,6 +623,7 @@
         width: 100%;
         height: 100%;
         min-height: 50px;
+        border-radius: 12px;
     }
 
     .correctAnswerWouldHaveBeen {
@@ -570,6 +634,7 @@
         width: 100%;
         height: 100%;
         min-height: 50px;
+        border-radius: 12px;
         animation-name: blink;
         animation-duration: 0.5s;
         animation-iteration-count: 2;
@@ -601,7 +666,8 @@
         background: lightgreen;
         border: black;
         width: 100px;
-        height: 50px
+        height: 50px;
+        border-radius: 12px;
     }
 
     .checkNotReady {
@@ -609,7 +675,8 @@
         background: lightgrey;
         border: black;
         width: 100px;
-        height: 50px
+        height: 50px;
+        border-radius: 12px;
     }
 
     .checkCorrect {
@@ -617,7 +684,8 @@
         background: green;
         border: black;
         width: 200px;
-        height: 50px
+        height: 50px;
+        border-radius: 12px;
     }
 
     .checkIncorrect {
@@ -625,7 +693,8 @@
         background: red;
         border: black;
         width: 200px;
-        height: 50px
+        height: 50px;
+        border-radius: 12px;
     }
 
     .ExpInvisible {
@@ -652,7 +721,7 @@
     }
 
     .list-item {
-        background-color: #ccc;
+        background-color: white;
         display: flex;
         margin-bottom: 20px;
         width: 100%;
@@ -661,5 +730,94 @@
     .list-content {
         width: 100%;
     }
+
+
+
+    .accordion > input[type="checkbox"] {
+        position: absolute;
+        left: -100vw;
+    }
+
+    .accordion .content {
+        overflow-y: hidden;
+        height: 0;
+        transition: height 0.3s ease;
+        text-align: left;
+    }
+
+    .accordion > input[type="checkbox"]:checked ~ .content {
+        height: auto;
+        overflow: visible;
+    }
+
+    .accordion label {
+        display: block;
+        text-align: left;
+    }
+
+    .accordion {
+        margin-bottom: 1em;
+    }
+
+        .accordion > input[type="checkbox"]:checked ~ .content {
+            padding: 15px;
+            border: 1px solid #e8e8e8;
+            border-top: 0;
+        }
+
+        .accordion .handle {
+            margin: 0;
+            font-size: 1.125em;
+            line-height: 1.2em;
+        }
+
+        .accordion label {
+            color: #333;
+            cursor: pointer;
+            font-weight: normal;
+            padding: 15px;
+            background: #e8e8e8;
+        }
+
+            .accordion label:hover,
+            .accordion label:focus {
+                background: #d8d8d8;
+            }
+
+        .accordion .handle label:before {
+            font-family: "Font Awesome 5 Free";
+            content: '\f054';
+            font-weight: bold;
+            font-size: 22px;
+            display: inline-block;
+            margin-right: 10px;
+            font-size: .58em;
+            line-height: 1.556em;
+            vertical-align: middle;
+        }
+
+        .accordion > input[type="checkbox"]:checked ~ .handle label:before {
+            content: "\f078";
+        }
+
+
+
+    body {
+        
+        font: 16px/1.5em "Overpass", "Open Sans", Helvetica, sans-serif;
+        font-weight: 300;
+    }
+
+    p {
+        margin: 0 0 1em;
+    }
+
+    .accordion {
+        max-width: 65em;
+    }
+
+        .accordion p:last-child {
+            margin-bottom: 0;
+        }
 
 </style>
