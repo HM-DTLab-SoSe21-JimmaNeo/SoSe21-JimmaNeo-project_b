@@ -326,3 +326,57 @@
     margin: 0 0 1em;
     font-weight: normal;
 }
+
+
+.levelUpAlert {
+    background-color: lightgreen;
+    max-width: 75%;
+    border-radius: 16px;
+    animation-name: alert;
+    animation-duration: 5s;
+    animation-iteration-count: infinite;
+    border: hidden;
+    outline: 0;
+}
+
+@keyframes alert {
+    0% {
+        background-color: lightgreen;
+    }
+
+    17% {
+        background-color: yellow;
+    }
+
+    34% {
+        background-color: orange;
+    }
+
+    50% {
+        background-color: lightgreen;
+    }
+
+    67% {
+        background-color: yellow;
+    }
+
+    84% {
+        background-color: orange;
+    }
+
+    100% {
+        background-color: lightgreen;
+    }
+}
+
+.levelUpHeader {
+    font-size: 30px;
+    font-weight: bold;
+    color: black;
+}
+
+.levelUpText {
+    font-size: 18px;
+    font-weight: bold;
+    color: black;
+}

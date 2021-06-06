@@ -62,7 +62,18 @@
                     <ProgressBar Background="Background.Secondary" Value=@(100 - progress) Animated=true />
                 </Progress>
 
-                <br /> <br />
+                <br /> 
+
+                <Alert Color="Color.Success" @bind-Visible="@showLevelUp" class="levelUpAlert">
+                    <Heading Size="HeadingSize.Is4" TextColor="TextColor.Success" class="levelUpHeader">
+                        LEVEL UP
+                    </Heading>
+                    <AlertMessage class="levelUpText">
+                        Well done! You have just reached level 5
+                    </AlertMessage>
+                </Alert>
+
+                <br />
 
                 <h2>Question @(qCounter + 1): @questions[qCounter].Text</h2>
 
@@ -227,6 +238,10 @@
     public bool finishedQuiz = false;
     public String expStatus = "ExpInvisible";
 
+    //Set LevelUp Alert to showing/hidden
+    public bool showLevelUp = false;
+
+
 
     protected override async Task OnInitializedAsync()
     {
@@ -292,6 +307,7 @@
                 question.check.Color = "checkCorrect";
                 results[qCounter] = true;
 
+
                 //Sets color of correct answer to green
                 foreach (AnswerPackage ans in question.answers)
                 {
@@ -323,6 +339,13 @@
                     student.CorrectQuestions.Add(newCorrect);
 
                     expStatus = "ExpVisible";
+
+                    ////////////  Faking LevelUp   //////////////////////////////////////////////////////////////////
+                    if (questions.Length > 1 && qCounter == questions.Length - 2)
+                    {
+                        showLevelUp = true;
+                    }
+
 
                     await Http.PutAsJsonAsync<CorrectQuestionDto>($"api/CorrectQuestions/{student.UserId}", newCorrect);
                 }
@@ -364,6 +387,8 @@
         {
             //Hide EXP-Notification for next question
             expStatus = "ExpInvisible";
+            //Hide LevelUp Alert
+            showLevelUp = false;
 
             if (qCounter < questions.Length - 1)
             {
