@@ -35,6 +35,11 @@
     border-radius: 12px;
 }
 
+    .startQuizButton:focus {
+        outline: 0;
+    }
+
+
 .answerTable {
     width: 70%;
     max-height: 70px;
@@ -54,6 +59,11 @@
     border-radius: 12px;
 }
 
+    .unselected:focus {
+        outline: 0;
+    }
+
+
 .selected {
     color: white;
     background: blue;
@@ -63,6 +73,11 @@
     min-height: 50px;
     border-radius: 12px;
 }
+
+    .selected:focus {
+        outline: 0;
+    }
+
 
 .correctAnswer {
     color: black;
@@ -75,6 +90,11 @@
     border-radius: 12px;
 }
 
+    .correctAnswer:focus {
+        outline: 0;
+    }
+
+
 .wrongAnswer {
     color: white;
     background: red;
@@ -85,6 +105,11 @@
     min-height: 50px;
     border-radius: 12px;
 }
+
+    .wrongAnswer:focus {
+        outline: 0;
+    }
+
 
 .correctAnswerWouldHaveBeen {
     color: black;
@@ -99,6 +124,11 @@
     animation-duration: 0.5s;
     animation-iteration-count: 2;
 }
+
+    .correctAnswerWouldHaveBeen:focus {
+        outline: 0;
+    }
+
 
 @keyframes blink {
     0% {
@@ -130,6 +160,11 @@
     border-radius: 12px;
 }
 
+    .checkReady:focus {
+        outline: 0;
+    }
+
+
 .checkNotReady {
     color: white;
     background: lightgrey;
@@ -138,6 +173,11 @@
     height: 50px;
     border-radius: 12px;
 }
+
+    .checkNotReady:focus {
+        outline: 0;
+    }
+
 
 .checkCorrect {
     color: white;
@@ -148,6 +188,11 @@
     border-radius: 12px;
 }
 
+    .checkCorrect:focus {
+        outline: 0;
+    }
+
+
 .checkIncorrect {
     color: white;
     background: red;
@@ -156,6 +201,11 @@
     height: 50px;
     border-radius: 12px;
 }
+
+    .checkIncorrect:focus {
+        outline: 0;
+    }
+
 
 .ExpInvisible {
     visibility: hidden;
@@ -271,7 +321,7 @@
 
 
 
-.p1 {
+.pCorrection {
     text-align: left;
     margin: 0 0 1em;
     font-weight: normal;

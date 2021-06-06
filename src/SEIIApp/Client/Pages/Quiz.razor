@@ -145,8 +145,8 @@
                                 <label for="handle@(i+1)">Question @(i+1): Correct</label>
                             </h2>
                             <div class="content">
-                                <p class="p1"><strong>Question:</strong> @questions[i].Text</p>
-                                <p class="p1"><strong style="color:green">Your correct answer:</strong> @correctAnswerTexts[i]</p>
+                                <p class="pCorrection"><strong>Question:</strong> @questions[i].Text</p>
+                                <p class="pCorrection"><strong style="color:green">Your correct answer:</strong> @correctAnswerTexts[i]</p>
                             </div>
                         </section>
                     }
@@ -160,9 +160,9 @@
                                 <label for="handle@(i+1)">Question @(i+1): Incorrect</label>
                             </h2>
                             <div class="content">
-                                <p class="p1"><strong>Question:</strong> @questions[i].Text</p>
-                                <p class="p1"><strong style="color:red">Your answer:</strong> @selectedAnswerTexts[i]</p>
-                                <p class="p1"><strong style="color:green">Correct Answer:</strong> @correctAnswerTexts[i]</p>
+                                <p class="pCorrection"><strong>Question:</strong> @questions[i].Text</p>
+                                <p class="pCorrection"><strong style="color:red">Your answer:</strong> @selectedAnswerTexts[i]</p>
+                                <p class="pCorrection"><strong style="color:green">Correct Answer:</strong> @correctAnswerTexts[i]</p>
 
                             </div>
                         </section>
