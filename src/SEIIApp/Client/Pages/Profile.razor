@@ -6,6 +6,10 @@
 @inject HttpClient Http
 @inject NavigationManager NavigationManager
 
+    <head>
+        <link rel="stylesheet" href="./css/StylesheetJimmaNeo.css">
+    </head>
+
 <center>
     @if (student == null)
     {
@@ -66,7 +70,7 @@
                             string locationItem = allItems[i].SourceButton;
                             int itemId = allItems[i].ItemId;
                             <Column ColumnSize="ColumnSize.Is2" class="text-center">
-                                <Button class="text-center" @onclick="@(() => clickItemButton(itemId) )">
+                                <Button Active=@itemActivatedActive(itemId) Color="Color.Secondary" Outline="true" class="text-center" @onclick="@(() => clickItemButton(itemId) )">
                                     <img src=@locationItem width="60" />
                                 </Button>
                             </Column>
@@ -91,6 +95,7 @@
     public AvatarDto avatar;
     public AvatarItemDto[] allItems;
     public List<EquippedItemDto> equiptItems;
+
 
     public int xp;
 
@@ -135,24 +140,28 @@
         avatar.UsedItems = equiptItems;
         await Http.PutAsJsonAsync<AvatarDto>($"api/Avatars/{student.UserId}", avatar);
     }
-}
 
-
-<style>
-    .avatarContainer {
-        width: 300px;
-        height: 450px;
-        position: relative;
-        overflow: visible
-
+    Boolean itemActivatedActive(int id)
+    {
+        for (int i = 0; i < equiptItems.Count; i++)
+        {
+            if (equiptItems[i].AvatarItemId == id)
+            {
+                return true;
+            }
+        }
+        return false;
     }
 
-        .avatarContainer div {
-            width: auto;
-            height: auto;
-            position: absolute;
-            overflow: visible;
-            object-fit: cover;
+    string itemActivatedColor(int id)
+    {
+        for (int i = 0; i < equiptItems.Count; i++)
+        {
+            if (equiptItems[i].AvatarItemId == id)
+            {
+                return "Color.Success";
+            }
         }
-</style>
-
+        return "Color.Primary";
+    }
+}
