@@ -116,6 +116,12 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="M:SEIIApp.Server.DataAccess.ContentData.GenerateData(SEIIApp.Server.DataAccess.DatabaseContext)">
+            <summary>
+            Initialize data for local-in-memory database.
+            </summary>
+            <param name="db">Database context</param>
+        </member>
         <member name="M:SEIIApp.Server.DataAccess.TestDataGenerator.GenerateData(SEIIApp.Server.DataAccess.DatabaseContext)">
             <summary>
             Initialize teast data for local-in-memory database.

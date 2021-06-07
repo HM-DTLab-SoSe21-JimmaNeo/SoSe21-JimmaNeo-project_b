@@ -105,7 +105,7 @@ namespace SEIIApp.Server {
                 });
             });
 
-            TestDataGenerator.GenerateData(db);
+            ContentData.GenerateData(db);
 
             /*
             //***************************************************************
