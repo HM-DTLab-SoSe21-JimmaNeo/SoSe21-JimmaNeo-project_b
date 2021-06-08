@@ -7,6 +7,33 @@
 @inject HttpClient Http
 @inject NavigationManager NavigationManager
 
+<head>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="../css/StylesheetJimmaNeo.css">
+</head>
+
+<div class="text-center">
+    <h7>
+        Courses completed: 
+        @if (courses == null || student == null)
+        {<h7>-</h7>}
+        else
+        {<h7>@CountFinishedCourses()</h7>}
+        /
+        @if (courses == null)
+        {<h7>-</h7>}
+        else
+        {<h7>@courses.Length</h7>}
+    </h7>
+</div>
+<Progress>
+    <ProgressBar Background="Background.Success" Value="@progress" Animated=true />
+    <ProgressBar Background="Background.Dark" Value="@(100 - progress)" Animated=true />
+</Progress>
+<br />
+<br />
+
 <div class="text-center">
     <h3>Courses</h3>
 </div>
@@ -21,27 +48,74 @@ else
 {
     @foreach (CourseDto course in courses)
     {
-        <p class="text-center">
-            <Button Color="Color.Light" Clicked="(() => SelectCourse(course.CourseId))">
-                <h4>@course.Title</h4>
-                @course.Description
-            </Button>
-        </p>
-        <br />
+        @if (IsCourseFinished(course))
+        {
+            <p class="text-center">
+                <Button Color="Color.Success" Clicked="(() => SelectCourse(course.CourseId))">
+                    <h4>@course.Title</h4>
+                    @course.Description
+                </Button>
+            </p>
+            <br />
+        }
+        else
+        {
+            <p class="text-center">
+                <Button Color="Color.Light" Clicked="(() => SelectCourse(course.CourseId))">
+                    <h4>@course.Title</h4>
+                    @course.Description
+                </Button>
+            </p>
+            <br />
+        }
     }
 }
 
 @code {
     private CourseDto[] courses;
+    private StudentDto student;
+    private int progressFactor;
+    private int progress = 0;
 
     protected override async Task OnInitializedAsync()
     {
         courses = await Http.GetFromJsonAsync<CourseDto[]>("api/Courses");
+        student = await Http.GetFromJsonAsync<StudentDto>($"api/Students/{1}");
+        progressFactor = 100 / courses.Length;
     }
 
     private void SelectCourse(int courseId)
     {
         string uri = $"/courses/{courseId}";
         NavigationManager.NavigateTo(uri);
+    }
+
+    private bool IsCourseFinished(CourseDto course)
+    {
+        foreach (FinishedCourseDto finishedCourse in student.FinishedCourses)
+        {
+            if (finishedCourse.CourseId == course.CourseId)
+            {
+                progress += progressFactor;
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private int CountFinishedCourses()
+    {
+        int finishedCourses = 0;
+        foreach (CourseDto course in courses)
+        {
+            foreach (FinishedCourseDto finishedCourse in student.FinishedCourses)
+            {
+                if (finishedCourse.CourseId == course.CourseId)
+                {
+                    finishedCourses++;
+                }
+            }
+        }
+        return finishedCourses;
     }
 }
