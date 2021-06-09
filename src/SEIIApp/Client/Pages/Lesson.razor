@@ -35,7 +35,7 @@
 <br />
 
 <div class="text-center">
-    <h3>@(lesson?.Title ?? "Loading Lesson Title")</h3>
+    <h2 style="font-weight:bold">@(lesson?.Title ?? "Loading Lesson Title")</h2>
 </div>
 <div class="text-center">
     <h4>@(lesson?.Description ?? "Loading Lesson Description")</h4>
@@ -44,7 +44,7 @@
 <br />
 
 <div class="text-center">
-    <h4>Documents</h4>
+    <h3 style="font-weight:bold">Documents</h3>
 </div>
 @if (documents == null)
 {
@@ -55,10 +55,8 @@ else
     @foreach (DocumentContentDto document in documents)
     {
         <p class="text-center">
-            <Button Color="Color.Light">
-                <a href="@document.Location" target="_blank">
-                    <h5>@document.Title</h5>
-                </a>
+            <Button Color="Color.Secondary" Type="ButtonType.Link" To="@document.Location.ToString()" Target="Target.Blank" Block="true">
+                <h5 style="color:white">@document.Title</h5>
             </Button>
         </p>
         <br />
@@ -67,7 +65,7 @@ else
 
 <br />
 <div class="text-center">
-    <h4>Videos</h4>
+    <h3 style="font-weight:bold">Videos</h3>
 </div>
 @if (videos == null)
 {
@@ -87,7 +85,9 @@ else
                         </Heading>
                     </CollapseHeader>
                     <CollapseBody>
-                        <iframe width="560" height="315" src="@video.Location" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                        <div class="video-wrapper">
+                            <iframe width="560" height="315" src="@video.Location" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                        </div>
                     </CollapseBody>
                 </Collapse>
             }
@@ -96,9 +96,28 @@ else
     <br />
 }
 
+<style>
+    .video-wrapper iframe,
+    .video-wrapper object,
+    .video-wrapper embed {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+    }
+    .video-wrapper {
+        position: relative;
+        padding-bottom: 56.25%;
+        padding-top: 30px;
+        height: 0;
+        overflow: hidden;
+    }
+</style>
+
 <br />
 <div class="text-center">
-    <h4>Quizzes</h4>
+    <h3 style="font-weight:bold">Quizzes</h3>
 </div>
 @if (quizzes == null)
 {
@@ -111,8 +130,8 @@ else
         @if (IsQuizFinished(quiz))
         {
             <p class="text-center">
-                <Button Color="Color.Success" Clicked="@(() => SelectQuiz(quiz.QuizId))">
-                    <h5>@quiz.Title</h5>
+                <Button Color="Color.Success" Clicked="@(() => SelectQuiz(quiz.QuizId))" Block="true">
+                    <h5 style="color:white">@quiz.Title</h5>
                 </Button>
             </p>
             <br />
@@ -120,8 +139,8 @@ else
         else
         {
             <p class="text-center">
-                <Button Color="Color.Light" Clicked="@(() => SelectQuiz(quiz.QuizId))">
-                    <h5>@quiz.Title</h5>
+                <Button Color="Color.Secondary" Clicked="@(() => SelectQuiz(quiz.QuizId))" Block="true">
+                    <h5 style="color:white">@quiz.Title</h5>
                 </Button>
             </p>
             <br />

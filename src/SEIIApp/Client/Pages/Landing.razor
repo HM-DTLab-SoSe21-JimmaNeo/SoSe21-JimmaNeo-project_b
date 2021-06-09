@@ -10,7 +10,7 @@
 <head>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
 
-    <link rel="stylesheet" href="../css/StylesheetJimmaNeo.css">
+    <link rel="stylesheet" href="./css/StylesheetJimmaNeo.css">
 </head>
 
 <div class="text-center">
@@ -35,7 +35,7 @@
 <br />
 
 <div class="text-center">
-    <h3>Courses</h3>
+    <h1 style="font-weight:bold">Courses</h1>
 </div>
 <br />
 <br />
@@ -51,8 +51,8 @@ else
         @if (IsCourseFinished(course))
         {
             <p class="text-center">
-                <Button Color="Color.Success" Clicked="(() => SelectCourse(course.CourseId))">
-                    <h4>@course.Title</h4>
+                <Button Color="Color.Success" Clicked="(() => SelectCourse(course.CourseId))" Block="true">
+                    <h4 style="color:white">@course.Title</h4>
                     @course.Description
                 </Button>
             </p>
@@ -61,8 +61,8 @@ else
         else
         {
             <p class="text-center">
-                <Button Color="Color.Light" Clicked="(() => SelectCourse(course.CourseId))">
-                    <h4>@course.Title</h4>
+                <Button Color="Color.Secondary" Clicked="(() => SelectCourse(course.CourseId))" Block="true">
+                    <h4 style="color:white">@course.Title</h4>
                     @course.Description
                 </Button>
             </p>
@@ -72,6 +72,7 @@ else
 }
 
 @code {
+
     private CourseDto[] courses;
     private StudentDto student;
     private int progressFactor;

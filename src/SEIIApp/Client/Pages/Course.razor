@@ -35,7 +35,7 @@
 <br />
 
 <div class="text-center">
-    <h3>@(course?.Title ?? "Loading Course Title")</h3>
+    <h2 style="font-weight:bold">@(course?.Title ?? "Loading Course Title")</h2>
 </div>
 <div class="text-center">
     <h4>@(course?.Description ?? "Loading Course Description")</h4>
@@ -54,8 +54,8 @@ else
         @if (IsLessonFinished(lesson))
         {
             <p class="text-center">
-                <Button Color="Color.Success" Clicked="@(() => SelectLesson(lesson.LessonId))">
-                    <h4>@lesson.Title</h4>
+                <Button Color="Color.Success" Clicked="@(() => SelectLesson(lesson.LessonId))" Block="true">
+                    <h4 style="color:white">@lesson.Title</h4>
                     @lesson.Description
                 </Button>
             </p>
@@ -64,8 +64,8 @@ else
         else
         {
             <p class="text-center">
-                <Button Color="Color.Light" Clicked="@(() => SelectLesson(lesson.LessonId))">
-                    <h4>@lesson.Title</h4>
+                <Button Color="Color.Secondary" Clicked="@(() => SelectLesson(lesson.LessonId))" Block="true">
+                    <h4 style="color:white">@lesson.Title</h4>
                     @lesson.Description
                 </Button>
             </p>
