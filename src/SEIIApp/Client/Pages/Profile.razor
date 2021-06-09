@@ -25,6 +25,7 @@
                 <TextEdit Placeholder=@("Name: " + profile.Name) ReadOnly="true" class="text-center" />
                 <TextEdit Placeholder=@("Description: " + profile.Description) ReadOnly="true" class="text-center" />
                 <TextEdit Placeholder=@("Experience: " + xp) ReadOnly="true" class="text-center" />
+                <TextEdit Placeholder=@("Level: 5") ReadOnly="true" class="text-center" />
             </Alert>
         </Container>
 
@@ -70,7 +71,7 @@
                             string locationItem = allItems[i].SourceButton;
                             int itemId = allItems[i].ItemId;
                             <Column ColumnSize="ColumnSize.Is2" class="text-center">
-                                <Button Active=@itemActivatedActive(itemId) Color="Color.Secondary" Outline="true" class="text-center" @onclick="@(() => clickItemButton(itemId) )">
+                                <Button Active=@itemActivatedActive(itemId) Color="Color.Success" Outline="true" class="text-center" @onclick="@(() => clickItemButton(itemId) )">
                                     <img src=@locationItem width="60" />
                                 </Button>
                             </Column>

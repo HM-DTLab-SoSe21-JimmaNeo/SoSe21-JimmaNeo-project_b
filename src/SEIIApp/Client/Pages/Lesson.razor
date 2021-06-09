@@ -7,10 +7,29 @@
 @inject HttpClient Http
 @inject NavigationManager NavigationManager
 
-<TextEdit Placeholder="Quizzes completed: 1/1" ReadOnly="true" class="text-center" />
+<head>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="../css/StylesheetJimmaNeo.css">
+</head>
+
+<div class="text-center">
+    <h7>
+        Quizzes completed: 
+        @if (quizArray == null || student == null)
+        {<h7>-</h7>}
+        else
+        {<h7>@CountFinishedQuizzes() </h7>}
+        /
+        @if (quizArray == null)
+        {<h7>-</h7>}
+        else
+        {<h7>@quizArray.Length</h7>}
+    </h7>
+</div>
 <Progress>
-    <ProgressBar Background="Background.Success" Value="99" Animated=true />
-    <ProgressBar Background="Background.Dark" Value="100" Animated=true />
+    <ProgressBar Background="Background.Success" Value="@progress" Animated=true />
+    <ProgressBar Background="Background.Dark" Value="@(100 - progress)" Animated=true />
 </Progress>
 <br />
 <br />
@@ -89,12 +108,25 @@ else
 {
     @foreach (QuizDto quiz in quizzes)
     {
-        <p class="text-center">
-            <Button Color="Color.Light" Clicked="@(() => SelectQuiz(quiz.QuizId))">
-                <h5>@quiz.Title</h5>
-            </Button>
-        </p>
-        <br />
+        @if (IsQuizFinished(quiz))
+        {
+            <p class="text-center">
+                <Button Color="Color.Success" Clicked="@(() => SelectQuiz(quiz.QuizId))">
+                    <h5>@quiz.Title</h5>
+                </Button>
+            </p>
+            <br />
+        }
+        else
+        {
+            <p class="text-center">
+                <Button Color="Color.Light" Clicked="@(() => SelectQuiz(quiz.QuizId))">
+                    <h5>@quiz.Title</h5>
+                </Button>
+            </p>
+            <br />
+        }
+
     }
 }
 
@@ -109,6 +141,9 @@ else
     private List<VideoContentDto> videos;
     private List<QuizDto> quizzes;
     private QuizDto[] quizArray;
+    private StudentDto student;
+    private int progressFactor;
+    private int progress = 0;
 
     protected override async Task OnInitializedAsync()
     {
@@ -118,11 +153,42 @@ else
         videos = lesson.VideoContents;
         quizzes = lesson.Quizzes;
         quizArray = quizzes.ToArray();
+        student = await Http.GetFromJsonAsync<StudentDto>($"api/Students/{1}");
+        progressFactor = 100 / quizArray.Length;
     }
 
     private void SelectQuiz(int quizId)
     {
         string uri = $"courses/{CourseId}/{LessonId}/{quizId}";
         NavigationManager.NavigateTo(uri);
+    }
+
+    private bool IsQuizFinished(QuizDto quiz)
+    {
+        foreach (FinishedQuizDto finishedQuiz in student.FinishedQuizzes)
+        {
+            if (quiz.QuizId == finishedQuiz.QuizId)
+            {
+                progress += progressFactor;
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private int CountFinishedQuizzes()
+    {
+        int finishedQuizzes = 0;
+        foreach (QuizDto quiz in quizzes)
+        {
+            foreach (FinishedQuizDto finishedQuiz in student.FinishedQuizzes)
+            {
+                if (finishedQuiz.QuizId == quiz.QuizId)
+                {
+                    finishedQuizzes++;
+                }
+            }
+        }
+        return finishedQuizzes;
     }
 }
