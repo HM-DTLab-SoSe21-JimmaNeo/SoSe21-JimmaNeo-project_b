@@ -66,7 +66,9 @@ namespace SEIIApp.Server.DataAccess
             Lesson lesson2 = new Lesson();
             lesson2.Title = "Support of transition of infants at birth";
             lesson2.Description = "Step by step introduction";
-
+            lesson2.VideoContents = GenerateVideoContents(rnd.Next(1, 2), lesson2);
+            lesson2.DocumentContents = GenerateDocumentsContents(rnd.Next(1, 2), lesson2);
+            lesson2.Quizzes = GenerateQuizzes(rnd.Next(1, 5));
             lessons.Add(lesson2);
 
             return lessons;
