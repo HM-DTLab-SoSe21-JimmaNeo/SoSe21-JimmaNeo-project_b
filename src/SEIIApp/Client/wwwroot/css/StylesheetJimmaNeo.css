@@ -380,3 +380,86 @@
     font-weight: bold;
     color: black;
 }
+
+
+
+
+/* Lesson specific style */
+
+.accordion-video > input[type="checkbox"] {
+    position: absolute;
+    left: -100vw;
+}
+
+.accordion-video .content {
+    overflow-y: hidden;
+    height: 0;
+    transition: height 0.3s ease;
+    text-align: left;
+}
+
+.accordion-video > input[type="checkbox"]:checked ~ .content {
+    height: auto;
+    overflow: visible;
+}
+
+.accordion-video label {
+    display: block;
+    text-align: left;
+}
+
+.accordion-video {
+    margin-bottom: 1em;
+}
+
+    .accordion-video > input[type="checkbox"]:checked ~ .content {
+        padding: 15px;
+        border: 1px solid #e8e8e8;
+        border-top: 0;
+    }
+
+    .accordion-video .handle {
+        margin: 0;
+        font-size: 1.125em;
+        line-height: 1.2em;
+    }
+
+    .accordion-video label {
+        cursor: pointer;
+        font-family: Helvetica Neue;
+        font-weight: 500;
+        font-size: 20px;
+        padding: 15px;
+        text-align: center;
+        background-color: #6C767D;
+        color: white;
+        border-radius: 4px;
+    }
+
+        .accordion-video label:hover,
+        .accordion-video label:focus {
+            background-color: #596368;
+        }
+
+    .accordion-video .handle label:before {
+        font-family: "Font Awesome 5 Free";
+        content: '\f054';
+        font-weight: bold;
+        font-size: 22px;
+        display: inline-block;
+        margin-right: 10px;
+        font-size: .58em;
+        line-height: 1.556em;
+        vertical-align: middle;
+    }
+
+    .accordion-video > input[type="checkbox"]:checked ~ .handle label:before {
+        content: "\f078";
+    }
+
+
+
+
+    .accordion-video p:last-child {
+        margin-bottom: 0;
+    }
