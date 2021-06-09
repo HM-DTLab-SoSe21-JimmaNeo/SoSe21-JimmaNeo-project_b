@@ -28,6 +28,10 @@
 
             <h2>Quiz: @quiz.Title</h2>
 
+            <br />
+
+            <h4>Number of questions: @questions.Length</h4>
+
             <br /> <br />
 
             @if (inFinishedQuizzes)
@@ -38,10 +42,6 @@
             {
                 <h4>You have not successfully completed this Quiz yet</h4>
             }
-
-            <br /> <br />
-
-            <h4>Number of questions: @questions.Length</h4>
 
             <br /> <br />
 
@@ -59,7 +59,7 @@
 
                 <Progress>
                     <ProgressBar Background="Background.Success" Value="@progress" Animated=true />
-                    <ProgressBar Background="Background.Secondary" Value=@(100 - progress) Animated=true />
+                    <ProgressBar Background="Background.Dark" Value=@(100 - progress) Animated=true />
                 </Progress>
 
                 <br /> 
