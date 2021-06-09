@@ -26,11 +26,3 @@
 .header-left {
     float: left;
 }
-
-.header a.active {
-    background-color: #aefa9a;
-}
-
-.header a:hover {
-    background-color: #aefa9a;
-}
