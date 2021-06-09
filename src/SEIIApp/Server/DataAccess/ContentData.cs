@@ -28,6 +28,7 @@ namespace SEIIApp.Server.DataAccess
             Course course1 = new Course();
             course1.Title = "Neonatal Nutrition and Maternal Factors";
             course1.Description = "Effects of nutritional factors related to infant growth and development, especially related to human milk.";
+            course1.Lessons = GenerateLessons(rnd.Next(2, 8));
             db.Courses.Add(course1);
 
             Course course = new Course();
@@ -39,11 +40,13 @@ namespace SEIIApp.Server.DataAccess
             Course course2 = new Course();
             course2.Title = "Extremely Premature Infant Care";
             course2.Description = "Measures, treatments and medication";
+            course2.Lessons = GenerateLessons(rnd.Next(2, 8));
             db.Courses.Add(course2);
 
             Course course3 = new Course();
             course3.Title = "Feeding Disorders";
             course3.Description = "Tipps and techniques to cure or prevent feeding disorders";
+            course3.Lessons = GenerateLessons(rnd.Next(2, 8));
             db.Courses.Add(course3);
 
         }
@@ -333,6 +336,94 @@ namespace SEIIApp.Server.DataAccess
 
             return answers;
 
+        }
+        private static List<Lesson> GenerateLessons(int noOfLessons)
+        {
+            List<Lesson> lessons = new List<Lesson>();
+            for (int i = 1; i <= noOfLessons; i++)
+            {
+                Lesson lesson = new Lesson();
+                lesson.Title = i + ". Lesson title";
+                lesson.Description = "Hier könnte Ihre Werbung stehen (lessons.description).";
+                //lesson.videoContents = GenerateVideoContents(rnd.Next(1, 3), lesson);
+                lesson.VideoContents = GenerateVideoContents(rnd.Next(1, 2), lesson);
+                lesson.DocumentContents = GenerateDocumentsContents(rnd.Next(1, 2), lesson);
+                lesson.Quizzes = GenerateQuizzes(rnd.Next(1, 5));
+                lessons.Add(lesson);
+            }
+            return lessons;
+        }
+
+
+        private static List<VideoContent> GenerateVideoContents(int noOfVideoContent, Lesson lesson)
+        {
+            List<VideoContent> videoContents = new List<VideoContent>();
+            for (int i = 1; i <= noOfVideoContent; i++)
+            {
+                VideoContent videoContent = new VideoContent();
+                videoContent.Title = "Neonatal Resuscitation - Demonstration";
+                videoContent.Lessons = new List<Lesson>();
+                videoContent.Lessons.Add(lesson);
+                videoContent.Location = new Uri("https://www.youtube.com/embed/0WhEtCygUJM");
+                videoContents.Add(videoContent);
+            }
+            return videoContents;
+        }
+
+        private static List<DocumentContent> GenerateDocumentsContents(int noOfDocumentContent, Lesson lesson)
+        {
+            List<DocumentContent> DocumentContents = new List<DocumentContent>();
+            for (int i = 1; i <= noOfDocumentContent; i++)
+            {
+                DocumentContent DocumentContent = new DocumentContent();
+                DocumentContent.Title = "Newborn resuscitation and support of transition of infants at birth";
+                DocumentContent.Lessons = new List<Lesson>();
+                DocumentContent.Lessons.Add(lesson);
+                DocumentContent.Location = new Uri("https://cprguidelines.eu/assets/guidelines/RESUS-8907-NLS.pdf");
+                DocumentContents.Add(DocumentContent);
+            }
+            return DocumentContents;
+        }
+
+        private static List<Quiz> GenerateQuizzes(int noOfQuizzes)
+        {
+            List<Quiz> quizzes = new List<Quiz>();
+            for (int i = 1; i <= noOfQuizzes; i++)
+            {
+                Quiz quiz = new Quiz();
+                quiz.Title = i + ". quiz title";
+                quiz.Questions = GenerateQuestions(rnd.Next(1, 10));
+                quizzes.Add(quiz);
+            }
+            return quizzes;
+        }
+
+        private static List<Question> GenerateQuestions(int noOfQuestions)
+        {
+            List<Question> questions = new List<Question>();
+            for (int i = 1; i <= noOfQuestions; i++)
+            {
+                Question question = new Question();
+                question.QuestionText = i + ". question";
+                question.CreationDateTime = DateTime.Now;
+                question.Answers = GenerateAnswers(rnd.Next(2, 6));
+                questions.Add(question);
+            }
+            return questions;
+        }
+
+        private static List<Answer> GenerateAnswers(int noOfAnswers)
+        {
+            List<Answer> answers = new List<Answer>();
+            for (int i = 1; i <= noOfAnswers; i++)
+            {
+                Answer answer = new Answer();
+                answer.AnswerText = i + ". answer of " + noOfAnswers + " answers.";
+                if (i == 1) answer.Correct = true;
+                else answer.Correct = false;
+                answers.Add(answer);
+            }
+            return answers;
         }
     }
 }
