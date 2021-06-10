@@ -114,8 +114,8 @@ namespace SEIIApp.Server.DataAccess
         {
             StudentProfile profile = new StudentProfile();
             profile.Name = "Simon";
-            profile.Description = "Student in medicine in Jitta";
-            profile.Experience = 0;
+            profile.Description = "Student in medicine in Jimma";
+            profile.Experience = 300;
             return profile;
         }
 
