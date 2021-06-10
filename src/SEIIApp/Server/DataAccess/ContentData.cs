@@ -105,6 +105,7 @@ namespace SEIIApp.Server.DataAccess
             student.EmailAddress = "test@test.test";
             student.Profile = GenerateProfile();
             student.Avatar = GenerateAvatar();
+            student.FinishedCourses = GenerateFinishedCourse();
             student.CorrectQuestions = new List<CorrectQuestion>();
             db.Students.Add(student);
         }
@@ -113,21 +114,36 @@ namespace SEIIApp.Server.DataAccess
         {
             StudentProfile profile = new StudentProfile();
             profile.Name = "Simon";
-            profile.Description = "Beschreibung des Typen";
+            profile.Description = "Student in medicine in Jitta";
             profile.Experience = 0;
             return profile;
         }
 
         private static Avatar GenerateAvatar()
         {
+            int[] itemsAlreadyEquipped = { 1, 2 };
             Avatar avatar = new Avatar();
             avatar.Location = "/images/avatar.png";
+            avatar.UsedItems = new List<EquippedItem>();
+            EquippedItem item1 = new EquippedItem();
+            EquippedItem item2 = new EquippedItem();
+            item1.AvatarItemId = 1;
+            item2.AvatarItemId = 2;
+            avatar.UsedItems.Add(item1);
+            avatar.UsedItems.Add(item2);
             return avatar;
         }
 
-
-
-
+        private static List<FinishedCourse> GenerateFinishedCourse()
+        {
+            List<FinishedCourse> finishedCourses = new List<FinishedCourse>();
+            var date1 = new DateTime(2008, 5, 1, 8, 30, 52);
+            FinishedCourse course1 = new FinishedCourse(1, date1);
+            FinishedCourse course3 = new FinishedCourse(3, date1);
+            finishedCourses.Add(course1);
+            finishedCourses.Add(course3);
+            return finishedCourses;
+        }
 
         private static List<DocumentContent> GenerateDocumentsContents1(Lesson lesson)
         {
