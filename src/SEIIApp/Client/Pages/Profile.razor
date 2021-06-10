@@ -13,21 +13,17 @@
 <center>
     @if (student == null)
     {
-        <div class="text-center">
-            <h1>Loading</h1>
-        </div>
+            <h1>Loading profile...</h1>
     }
 
     else if (profile != null)
     {
-        <Container Fluid="true">
-            <Alert Color="Color.Primary" Visible="true">
-                <TextEdit Placeholder=@("Name: " + profile.Name) ReadOnly="true" class="text-center" />
-                <TextEdit Placeholder=@("Description: " + profile.Description) ReadOnly="true" class="text-center" />
-                <TextEdit Placeholder=@("Experience: " + xp) ReadOnly="true" class="text-center" />
-                <TextEdit Placeholder=@("Level: 5") ReadOnly="true" class="text-center" />
-            </Alert>
-        </Container>
+        <div>
+                    <TextEdit Placeholder=@("Name: " + profile.Name) ReadOnly="true" class="text-center" />
+                    <TextEdit Placeholder=@("Description: " + profile.Description) ReadOnly="true" class="text-center" />
+                    <TextEdit Placeholder=@("Experience: " + xp) ReadOnly="true" class="text-center" />
+                    <TextEdit Placeholder=@("Level: 5") ReadOnly="true" class="text-center" />
+        </div>
 
         if (avatar != null)
         {
@@ -83,7 +79,6 @@
             }
         }
     }
-
 </center>
 
 
