@@ -16,10 +16,10 @@
 <div class="text-center">
     <h7>
         Quizzes completed:
-        @if (quizArray == null || student == null)
+        @if (quizzes == null || student == null)
         {<h7>-</h7>}
         else
-        {<h7>@CountFinishedQuizzes() </h7>}
+        {<h7>@CountFinishedQuizzes()</h7>}
         /
         @if (quizArray == null)
         {<h7>-</h7>}
@@ -62,8 +62,8 @@ else
         <br />
     }
 }
-
 <br />
+
 <div class="text-center">
     <h3 style="font-weight:bold">Videos</h3>
 </div>
@@ -73,49 +73,26 @@ else
 }
 else
 {
-
-        <p class="text-center">
-            @foreach (VideoContentDto video in videos)
-            {
-                <section class="accordion-video">
-                    <input type="checkbox" name="collapse" id="handle1">
-                    <h2 class="handle">
-                        <label for="handle1">@video.Title</label>
-                    </h2>
-                    <div class="content">
-                        <div class="video-wrapper">
-                            <iframe width="560" height="315" src="@video.Location" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                        </div>
+    <p class="text-center">
+        @foreach (VideoContentDto video in videos)
+        {
+            <section class="accordion-video">
+                <input type="checkbox" name="collapse" id="handle1">
+                <h2 class="handle">
+                    <label for="handle1">@video.Title</label>
+                </h2>
+                <div class="content">
+                    <div class="video-wrapper">
+                        <iframe width="560" height="315" src="@video.Location" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                     </div>
-                </section>
-
-            }
-            </p>
-
+                </div>
+            </section>
+        }
+    </p>
     <br />
 }
-
-<style>
-    .video-wrapper iframe,
-    .video-wrapper object,
-    .video-wrapper embed {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-    }
-
-    .video-wrapper {
-        position: relative;
-        padding-bottom: 56.25%;
-        padding-top: 30px;
-        height: 0;
-        overflow: hidden;
-    }
-</style>
-
 <br />
+
 <div class="text-center">
     <h3 style="font-weight:bold">Quizzes</h3>
 </div>
@@ -145,7 +122,6 @@ else
             </p>
             <br />
         }
-
     }
 }
 
