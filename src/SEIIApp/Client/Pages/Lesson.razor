@@ -107,7 +107,7 @@ else
         @if (IsQuizFinished(quiz))
         {
             <p class="text-center">
-                <Button Color="Color.Success" Clicked="@(() => SelectQuiz(quiz.QuizId))" Block="true">
+                <Button Color="Color.Success" Clicked="@(() => NavigateToQuiz(quiz.QuizId))" Block="true">
                     <h5 style="color:white">@quiz.Title</h5>
                 </Button>
             </p>
@@ -116,7 +116,7 @@ else
         else
         {
             <p class="text-center">
-                <Button Color="Color.Secondary" Clicked="@(() => SelectQuiz(quiz.QuizId))" Block="true">
+                <Button Color="Color.Secondary" Clicked="@(() => NavigateToQuiz(quiz.QuizId))" Block="true">
                     <h5 style="color:white">@quiz.Title</h5>
                 </Button>
             </p>
@@ -152,7 +152,7 @@ else
         progressFactor = 100 / quizArray.Length;
     }
 
-    private void SelectQuiz(int quizId)
+    private void NavigateToQuiz(int quizId)
     {
         string uri = $"courses/{CourseId}/{LessonId}/{quizId}";
         NavigationManager.NavigateTo(uri);

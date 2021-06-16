@@ -54,7 +54,7 @@ else
         @if (IsLessonFinished(lesson))
         {
             <p class="text-center">
-                <Button Color="Color.Success" Clicked="@(() => SelectLesson(lesson.LessonId))" Block="true">
+                <Button Color="Color.Success" Clicked="@(() => NavigateToLesson(lesson.LessonId))" Block="true">
                     <h4 style="color:white">@lesson.Title</h4>
                     @lesson.Description
                 </Button>
@@ -64,7 +64,7 @@ else
         else
         {
             <p class="text-center">
-                <Button Color="Color.Secondary" Clicked="@(() => SelectLesson(lesson.LessonId))" Block="true">
+                <Button Color="Color.Secondary" Clicked="@(() => NavigateToLesson(lesson.LessonId))" Block="true">
                     <h4 style="color:white">@lesson.Title</h4>
                     @lesson.Description
                 </Button>
@@ -95,7 +95,7 @@ else
         progressFactor = 100 / lessonArray.Length;
     }
 
-    private void SelectLesson(int lessonId)
+    private void NavigateToLesson(int lessonId)
     {
         string uri = $"/courses/{CourseId}/{lessonId}";
         NavigationManager.NavigateTo(uri);
