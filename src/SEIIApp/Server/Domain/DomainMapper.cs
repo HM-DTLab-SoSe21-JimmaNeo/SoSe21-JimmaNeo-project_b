@@ -3,8 +3,14 @@ using SEIIApp.Shared.DomainDTOs;
 
 namespace SEIIApp.Server.Domain
 {
+    /// <summary>
+    /// Mapper profiles.
+    /// </summary>
     public class DomainMapper : Profile
     {
+        /// <summary>
+        /// Conrstructor with all profiles.
+        /// </summary>
         public DomainMapper()
         {
             CreateMap<Course, CourseDto>();

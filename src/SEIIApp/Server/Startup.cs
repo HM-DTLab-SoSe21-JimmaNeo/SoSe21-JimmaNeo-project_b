@@ -14,7 +14,14 @@ using Blazorise.Icons.FontAwesome;
 
 
 namespace SEIIApp.Server {
+    /// <summary>
+    /// Startup of the webapp.
+    /// </summary>
     public class Startup {
+        /// <summary>
+        /// Constructor.
+        /// </summary>
+        /// <param name="configuration"></param>
         public Startup(IConfiguration configuration) {
             Configuration = configuration;
         }

@@ -3,8 +3,15 @@ using SEIIApp.Server.Domain;
 
 namespace SEIIApp.Server.DataAccess
 {
+    /// <summary>
+    /// Database Context.
+    /// </summary>
     public class DatabaseContext : DbContext
     {
+        /// <summary>
+        /// Contructor.
+        /// </summary>
+        /// <param name="options"></param>
         public DatabaseContext(DbContextOptions<DatabaseContext> options) : base(options)
         {
 

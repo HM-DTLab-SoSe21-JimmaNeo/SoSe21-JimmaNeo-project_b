@@ -30,7 +30,7 @@ namespace SEIIApp.Server.Services
         /// <summary>
         /// Returns the quiz with the given quizId.
         /// </summary>
-        /// <param name="id">Id of the quiz</param>
+        /// <param name="quizId">Id of the quiz</param>
         /// <returns>Quiz with the given quizId</returns>
         public Quiz GetQuizWithId(int quizId){
             return GetQueryableForQuizzes()

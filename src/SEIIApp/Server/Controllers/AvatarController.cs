@@ -21,7 +21,7 @@ namespace SEIIApp.Server.Controllers
         /// <summary>
         /// Constructor.
         /// </summary>
-        /// <param name="avatarService">Service for Avatars/param>
+        /// <param name="avatarService">Service for Avatars</param>
         /// <param name="mapper">Mapper</param>
         public AvatarController(AvatarService avatarService, IMapper mapper)
         {
