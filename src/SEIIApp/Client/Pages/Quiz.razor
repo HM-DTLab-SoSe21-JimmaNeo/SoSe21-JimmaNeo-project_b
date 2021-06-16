@@ -88,7 +88,7 @@
 
                                    <li class="answer-list-item">
                                        <div class="answer-list-content">
-                                           <button class="@answer.Color" @onclick="@(() => Questions[QuestionCounter].AnythingSelected(answer) )">@answer.Text</button>
+                                           <button class="@answer.Color" @onclick="@(() => Questions[QuestionCounter].SelectAndCheckReadiness(answer) )">@answer.Text</button>
                                        </div>
                                    </li>
 
@@ -186,7 +186,7 @@
 
 @code {
 
-    // Parameters for current path
+    // Parameters for current path.
     [Parameter]
     public int CourseId { get; set; }
     [Parameter]
@@ -194,46 +194,46 @@
     [Parameter]
     public int QuizId { get; set; }
 
-    // Current quiz
-    public QuizDto CurrentQuiz;
+    // Current and active quiz.
+    private QuizDto CurrentQuiz;
 
-    // Wrapped questionset of current quiz
-    public QuestionPackage[] Questions;
+    // Wrapped questionset of current quiz.
+    private QuestionPackage[] Questions;
 
-    // Reference to currently active student
-    public StudentDto Student;
+    // Reference to currently active student.
+    private StudentDto Student;
 
-    // Counter indicating the current question in quiz
-    public int QuestionCounter = 0;
+    // Counter indicating the current question in quiz.
+    private int QuestionCounter = 0;
 
-    // Value by which the progress bar increases
-    public int ProgressFactor = 0;
+    // Value by which the progress bar increases after each question.
+    private int ProgressFactor = 0;
 
-    // Current progress of progress bar
-    public int Progress = 0;
+    // Current progress of progress bar.
+    private int Progress = 0;
 
-    // Protocolling of users answers/results
-    public bool[] Results;
-    public string[] SelectedAnswerTexts;
-    public string[] CorrectAnswerTexts;
+    // Protocolling of users answers/results.
+    private bool[] Results;
+    private string[] SelectedAnswerTexts;
+    private string[] CorrectAnswerTexts;
 
-    // Status to check if current quiz has already been completed
-    public bool QuizAlreadyCompleted = false;
+    // Status to check if current quiz has already been completed.
+    private bool QuizAlreadyCompleted = false;
 
-    // UI-status indicators
-    public bool StartedQuiz = false;
-    public bool FinishedQuiz = false;
-    public String ExpStatus = "ExpInvisible";
+    // UI-status indicators.
+    private bool StartedQuiz = false;
+    private bool FinishedQuiz = false;
 
-    // Status of Level-Up Alert visibility
-    public bool ShowLevelUpAlert = false;
+    // Visibility indicators for EXP and Level-Up UI-elements.
+    private String ExpStatus = "ExpInvisible";
+    private bool ShowLevelUpAlert = false;
 
 
     protected override async Task OnInitializedAsync()
     {
         QuizDto[] allQuizzes = await Http.GetFromJsonAsync<QuizDto[]>("api/Quizzes");
 
-        // Get requested quiz out of all quizzes
+        // Get requested quiz out of all quizzes.
         foreach (QuizDto quiz in allQuizzes)
         {
             if (quiz.QuizId == QuizId)
@@ -250,26 +250,36 @@
         SelectedAnswerTexts = new string[Questions.Length];
         CorrectAnswerTexts = new string[Questions.Length];
 
-        // Get currently active student
+        // Get currently active student.
         Student = await Http.GetFromJsonAsync<StudentDto>($"api/Students/{1}");
 
-        // Check at Startup Page if quiz has already been completed
+        // Check at Startup Page if quiz has already been completed.
         QuizAlreadyCompleted = CheckIfAlreadyCompleted();
 
     }
 
 
+    /// <summary>
+    /// Starts quiz after Start button was pressed.
+    /// </summary>
     public void StartQuiz()
     {
         StartedQuiz = true;
     }
 
+
+    /// <summary>
+    /// Finishes quiz and directs to correction page after last question was answered.
+    /// </summary>
     public void FinishQuiz()
     {
         FinishedQuiz = true;
     }
 
-    // Return from Quiz to associated lesson
+
+    /// <summary>
+    /// Returns from Quiz to associated lesson.
+    /// </summary>
     public void ReturnToLesson()
     {
         string uri = $"courses/{CourseId}/{LessonId}";
@@ -277,7 +287,12 @@
     }
 
 
-    // Check if Quiz has already been completed by student
+    /// <summary>
+    /// Checks if Quiz has already been completed by student.
+    /// </summary>
+    /// <returns>
+    /// Completion status of quiz.
+    /// </returns>
     public bool CheckIfAlreadyCompleted()
     {
         bool status = false;
@@ -294,7 +309,12 @@
     }
 
 
-    // Check if all questions have been answered correctly
+    /// <summary>
+    /// Checks if all questions of current quiz have been answered correctly.
+    /// </summary>
+    /// <returns>
+    /// Confirmation that current quiz was completed (un-) successfully.
+    /// </returns>
     public bool EverythingCorrect()
     {
         bool status = true;
@@ -312,25 +332,24 @@
 
 
     /// <summary>
-    /// Interaction with Check Button in different modes
+    /// Interaction with Check Button in different modes.
     /// </summary>
-    /// <param name="activeQuestion">Current question</param>
-    /// <returns></returns>
+    /// <param name="activeQuestion"> Current question. </param>
     public async void CheckMe(QuestionPackage activeQuestion)
     {
-        // Mode: question has been requested to check
+        // Mode 1: question has been requested for evaluation by pressed Check button.
         if (activeQuestion.Check.Color == "checkReady")
         {
             evaluateAnswer(activeQuestion);
         }
 
-        // Mode: student wants get next question or end quiz after previous evaluation
+        // Mode 2: student wants to continue to next question or to end the quiz after previous evaluation.
         else if (activeQuestion.Check.Color == "checkCorrect" || activeQuestion.Check.Color == "checkIncorrect")
         {
-            // Hide EXP-Notification for next question
+            // Hide EXP-Notification for next question.
             ExpStatus = "ExpInvisible";
 
-            // Hide Level-Up Alert
+            // Hide Level-Up Alert.
             ShowLevelUpAlert = false;
 
             if (QuestionCounter < Questions.Length - 1)
@@ -344,7 +363,7 @@
             {
                 Progress = 100;
 
-                // Delay process to finish final progress bar animation
+                // Delay process to finish final progress bar animation.
                 await Task.Delay(1000).ContinueWith(t =>
                 {
                     FinishQuiz();
@@ -358,20 +377,19 @@
 
 
     /// <summary>
-    /// Evaluation of selected answer for current question
+    /// Evaluation of selected answer for current question.
     /// </summary>
-    /// <param name="activeQuestion">Current question</param>
-    /// <returns></returns>
+    /// <param name="activeQuestion"> Current question. </param>
     public async void evaluateAnswer(QuestionPackage activeQuestion)
     {
-        // Action if current question was answered correctly
+        // Action if current question was answered correctly.
         if (activeQuestion.CheckSelection() == "correct")
         {
             activeQuestion.Check.Text = "Correct, Continue";
             activeQuestion.Check.Color = "checkCorrect";
             Results[QuestionCounter] = true;
 
-            // Sets color of correct answer to green
+            // Sets color of correct answer to green.
             foreach (AnswerPackage answer in activeQuestion.Answers)
             {
                 if (answer.Correct)
@@ -382,8 +400,6 @@
                     SelectedAnswerTexts[QuestionCounter] = answer.Text;
                 }
             }
-
-            // Save new correct Questions to Student's profile
 
             bool studentAlreadyAnsweredCorrectly = false;
 
@@ -401,27 +417,29 @@
                 newCorrect.QuestionsId = activeQuestion.ID;
                 Student.CorrectQuestions.Add(newCorrect);
 
+                // Show Alert for gained EXP after correct answer.
                 ExpStatus = "ExpVisible";
 
-                // Level-Up currently set to the penultimate question of a quiz
+                // Level-Up currently set to the penultimate question of a quiz.
                 if (Questions.Length > 1 && QuestionCounter == Questions.Length - 2)
                 {
                     ShowLevelUpAlert = true;
                 }
 
+                // Save new correct Questions to Student's profile.
                 await Http.PutAsJsonAsync<CorrectQuestionDto>($"api/CorrectQuestions/{Student.UserId}", newCorrect);
             }
 
         }
 
-        // Action if current question was not answered correctly
+        // Action if current question was not answered correctly.
         else if (activeQuestion.CheckSelection() == "incorrect")
         {
             activeQuestion.Check.Text = "Incorrect, Continue";
             activeQuestion.Check.Color = "checkIncorrect";
             Results[QuestionCounter] = false;
 
-            // Set Colors for wrong and correct answer buttons
+            // Set Colors for wrong and correct answer buttons.
             foreach (AnswerPackage answer in activeQuestion.Answers)
             {
                 if (answer.Selected)
@@ -447,11 +465,13 @@
     }
 
 
-    // Save finished quiz to student if not already completed
+    /// <summary>
+    /// Saves finished quiz to student if not already completed.
+    /// </summary>
     public async void SaveFinishedQuizToStudent()
     {
 
-        // Ensure that student is up-to-date (only necessary for updating finished Quizzes)
+        // Ensure that student is up-to-date (only necessary for updating finished Quizzes).
         Student = await Http.GetFromJsonAsync<StudentDto>($"api/Students/{1}");
 
         if (!CheckIfAlreadyCompleted())
@@ -466,16 +486,27 @@
     }
 
 
-    // UI-compliant wrapped Question
+    /// <summary>
+    /// This class represents a UI-compliant wrapped Question that controls the logic of a connected question in the UI.
+    /// </summary>
+    /// <remarks>
+    /// Includes all UI-compliant elements of a question, controls the logic between these components and evaluates the selected answer.
+    /// </remarks>
     public class QuestionPackage
     {
         public int ID { get; set; }
         public string Text { get; set; }
+
+        // UI-connected answer set.
         public List<AnswerPackage> Answers { get; set; }
 
-        // Connected CheckButton
+        // UI-connected CheckButton.
         public Check Check { get; set; } = new Check { Text = "Check" };
 
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="QuestionPackage"/> class.
+        /// </summary>
         public QuestionPackage(QuestionDto question)
         {
             this.ID = question.QuestionId;
@@ -484,7 +515,12 @@
         }
 
 
-        // Wrap QuestionDto set in UI-compliant QuestionPackage set
+        /// <summary>
+        /// Wraps QuestionDto set from backend in UI-compliant QuestionPackage set.
+        /// </summary>
+        /// <returns>
+        /// UI-compliant Question set.
+        /// </returns>
         public static QuestionPackage[] TransformQuestions(List<QuestionDto> questions)
         {
             List<QuestionPackage> newQuestions = new List<QuestionPackage>();
@@ -498,8 +534,11 @@
         }
 
 
-        // Interaction with answer buttons (Selecting and Unselecting answers and setting Check Button to ready/not ready)
-        public void AnythingSelected(AnswerPackage answer)
+        /// <summary>
+        /// (Un-) Selects clicked on answer button and sets Check button to ready if any answer is selected or unready if nothing is selected.
+        /// </summary>
+        /// <param name="answer"> Wrapped answer for clicked on answer button. </param>
+        public void SelectAndCheckReadiness(AnswerPackage answer)
         {
 
             // Blocks interaction with answer buttons when the question has already been checked
@@ -510,21 +549,21 @@
 
             AnswerPackage clickedAnswer = answer;
 
-            // Check if any other answers than the clicked one are selected and unchecks them
+            // Check if any other answers than the clicked one are selected and unchecks them.
             foreach (var checkedAnswer in Answers)
             {
                 if (checkedAnswer != clickedAnswer && checkedAnswer.Selected)
                 {
-                    checkedAnswer.Pressed();
+                    checkedAnswer.ChangeSelectionStatus();
                 }
             }
 
-            // (Un-) Select clicked on answer
-            clickedAnswer.Pressed();
+            // (Un-) Select clicked on answer.
+            clickedAnswer.ChangeSelectionStatus();
 
             bool selectionTest = false;
 
-            // Check if any answers have been selected
+            // Check if any answers have been selected.
             foreach (var checkedAnswer in Answers)
             {
                 if (checkedAnswer.Selected)
@@ -533,7 +572,7 @@
                 }
             }
 
-            // Set Check-Button to ready if an answer is selected or unready if no answer is selected
+            // Set Check-Button to ready if an answer is selected or unready if no answer is selected.
             if (selectionTest)
             {
                 this.Check.SetReady(true);
@@ -546,7 +585,12 @@
         }
 
 
-        // Check if selected answer is correct
+        /// <summary>
+        /// Checks if selected answer is correct.
+        /// </summary>
+        /// <returns>
+        /// Status of correctness.
+        /// </returns>
         public string CheckSelection()
         {
             AnswerPackage selectedAnswer = null;
@@ -554,7 +598,7 @@
 
             foreach (var checkedAnswer in Answers)
             {
-                // Get selected answer out of all answers
+                // Get selected answer out of all answers.
                 if (checkedAnswer.Selected)
                 {
                     selectionTest = true;
@@ -562,7 +606,7 @@
                 }
             }
 
-            // Evaluation of selected answer
+            // Evaluation of selected answer.
             if (selectionTest && selectedAnswer != null)
             {
                 if (selectedAnswer.Correct)
@@ -582,20 +626,28 @@
     }
 
 
-    // UI-compliant wrapped Answer
+    /// <summary>
+    /// This class represents a UI-compliant wrapped Answer that controls the logic of a connected answer button in the UI.
+    /// </summary>
+    /// <remarks>
+    /// Keeps track of the selection-status of the connected answer button and controls its appearance.
+    /// </remarks>
     public class AnswerPackage
     {
         public int ID { get; set; }
         public string Text { get; set; }
         public bool Correct { get; set; }
 
-        // Status of selection by student
+        // Status of selection by student.
         public bool Selected { get; set; } = false;
 
-        // Reference to active CSS class in UI
+        // Reference to active CSS class and therefore appearance in UI.
         public string Color { get; set; } = "unselected";
 
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AnswerPackage"/> class.
+        /// </summary>
         public AnswerPackage(AnswerDto answer)
         {
             this.ID = answer.Id;
@@ -603,8 +655,30 @@
             this.Correct = answer.Correct;
         }
 
-        // Set answer button color to selected or unselected
-        public void Pressed()
+
+        /// <summary>
+        /// Wraps AnswerDto set from backend in UI-compliant AnswerPackage set.
+        /// </summary>
+        /// <returns>
+        /// UI-compliant Answer set.
+        /// </returns>
+        public static List<AnswerPackage> TransformAnswers(List<AnswerDto> answers)
+        {
+            List<AnswerPackage> newAnswers = new List<AnswerPackage>();
+
+            foreach (AnswerDto originalAnswer in answers)
+            {
+                newAnswers.Add(new AnswerPackage(originalAnswer));
+            }
+
+            return newAnswers;
+        }
+
+
+        /// <summary>
+        /// Sets connected answer buttons appearance to selected or unselected.
+        /// </summary>
+        public void ChangeSelectionStatus()
         {
             this.Selected = !Selected;
 
@@ -618,34 +692,30 @@
             }
         }
 
-
-        // Wrap AnswerDto set in UI-compliant AnswerPackage set
-        public static List<AnswerPackage> TransformAnswers(List<AnswerDto> answers)
-        {
-            List<AnswerPackage> newAnswers = new List<AnswerPackage>();
-
-            foreach (AnswerDto originalAnswer in answers)
-            {
-                newAnswers.Add(new AnswerPackage(originalAnswer));
-            }
-
-            return newAnswers;
-        }
     }
 
 
-    // UI-compliant wrapped Check button
+    /// <summary>
+    /// This class is a Connection to a Check button to control its logic in the UI.
+    /// </summary>
+    /// <remarks>
+    /// Sets the readiness of the connected Check button and controls its appearance.
+    /// </remarks>
     public class Check
     {
         public string Text { get; set; }
 
-        // Status if Check Button can be clicked
+        // Status if Check Button can be clicked.
         public bool Ready { get; set; } = false;
 
-        // Reference to active CSS class in UI
+        // Reference to active CSS class and therefore appearance in UI.
         public string Color { get; set; } = "checkNotReady";
 
-        // Set Check button to ready or unready
+
+        /// <summary>
+        /// Sets appearance and interaction ability of Check button to ready or unready.
+        /// </summary>
+        /// <param name="ready"> Status for appearance and interaction ability. </param>
         public void SetReady(bool ready)
         {
             this.Ready = ready;
