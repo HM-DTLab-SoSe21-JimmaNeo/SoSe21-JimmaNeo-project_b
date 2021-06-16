@@ -14,18 +14,18 @@ namespace SEIIApp.Server.Controllers
     [Route("api/CorrectQuestions")]
     public class CorrectQuestionController : ControllerBase
     {
-        private CorrectQuestionService cqService { get; set; }
-        private IMapper mapper { get; set; }
+        private CorrectQuestionService CqService { get; set; }
+        private IMapper Mapper { get; set; }
 
         /// <summary>
         /// Constructor.
         /// </summary>
-        /// <param name="cqService"></param>
-        /// <param name="mapper"></param>
+        /// <param name="cqService">Service for CorrectQuestions</param>
+        /// <param name="mapper">Mapper</param>
         public CorrectQuestionController(CorrectQuestionService cqService, IMapper mapper)
         {
-            this.cqService = cqService;
-            this.mapper = mapper;
+            this.CqService = cqService;
+            this.Mapper = mapper;
         }
 
         /// <summary>
@@ -39,15 +39,15 @@ namespace SEIIApp.Server.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public ActionResult<CorrectQuestionDto[]> GetCorrectQuestionsOfStudent([FromRoute] int id)
         {
-            var correctQuestions = cqService.GetCorrectQuestionsOfStudent(id);
+            var correctQuestions = CqService.GetCorrectQuestionsOfStudent(id);
             if (correctQuestions == null) return StatusCode(StatusCodes.Status404NotFound);
 
-            var mappedCorrectQuestions = mapper.Map<CorrectQuestionDto[]>(correctQuestions);
+            var mappedCorrectQuestions = Mapper.Map<CorrectQuestionDto[]>(correctQuestions);
             return Ok(mappedCorrectQuestions);
         }
 
         /// <summary>
-        /// Add a correctQuestion to a student.
+        /// Add a correctQuestion to a student. The student gains experience, if a correctQuestion is added.
         /// </summary>
         /// <param name="id">UserId of the student</param>
         /// <param name="correctQuestion">CorrectQuestion to add</param>
@@ -59,8 +59,8 @@ namespace SEIIApp.Server.Controllers
         {
             if(ModelState.IsValid)
             {
-                var mappedCorrectQuestion = mapper.Map<CorrectQuestion>(correctQuestion);
-                var mappedCorrectQuestionDto = mapper.Map<CorrectQuestionDto[]>(cqService.AddCorrectQuestionToStudent(id, mappedCorrectQuestion));
+                var mappedCorrectQuestion = Mapper.Map<CorrectQuestion>(correctQuestion);
+                var mappedCorrectQuestionDto = Mapper.Map<CorrectQuestionDto[]>(CqService.AddCorrectQuestionToStudent(id, mappedCorrectQuestion));
                 return Ok(mappedCorrectQuestionDto);
             }
             return BadRequest(ModelState);

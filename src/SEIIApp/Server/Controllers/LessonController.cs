@@ -6,57 +6,56 @@ using SEIIApp.Shared.DomainDTOs;
 
 namespace SEIIApp.Server.Controllers
 {
-
+    /// <summary>
+    /// Controller for Lessons.
+    /// </summary>
     [ApiController]
     [Route("api/Lessons")]
     public class LessonController : ControllerBase
     {
+        private LessonService LessonService { get; set; }
+        private IMapper Mapper { get; set; }
 
-        private LessonService lessonService { get; set; }
-        private IMapper mapper { get; set; }
-
+        /// <summary>
+        /// Constructor.
+        /// </summary>
+        /// <param name="lessonService">Service for lessons</param>
+        /// <param name="mapper">Mapper</param>
         public LessonController(LessonService lessonService, IMapper mapper)
         {
-            this.lessonService = lessonService;
-            this.mapper = mapper;
+            this.LessonService = lessonService;
+            this.Mapper = mapper;
         }
 
         /// <summary>
         /// Return the Lesson with the given id.
         /// </summary>
         /// <param name="id"></param>
-        /// <returns></returns>
+        /// <returns>Http StatusCode, if ok LessonDto</returns>
         [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public ActionResult<Shared.DomainDTOs.LessonDto> GetLessonWithId([FromRoute] int id)
+        public ActionResult<LessonDto> GetLessonWithId([FromRoute] int id)
         {
-            var lesson = lessonService.GetLessonWithId(id);
+            var lesson = LessonService.GetLessonWithId(id);
             if (lesson == null) return StatusCode(StatusCodes.Status404NotFound);
 
-            var mappedLesson = mapper.Map<LessonDto>(lesson);
+            var mappedLesson = Mapper.Map<LessonDto>(lesson);
             return Ok(mappedLesson);
         }
 
         /// <summary>
         /// Returns all Lessons.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>>Http StatusCode, if ok LessonDto array</returns>
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public ActionResult<LessonDto[]> GetAllLesson()
         {
-            var lessons = lessonService.GetAllLesson();
-            var mappedLessons = mapper.Map<LessonDto[]>(lessons);
+            var lessons = LessonService.GetAllLesson();
+            var mappedLessons = Mapper.Map<LessonDto[]>(lessons);
             return Ok(mappedLessons);
         }
-
-
-
-
-
-
-
     }
 }

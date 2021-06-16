@@ -2,7 +2,6 @@
 using SEIIApp.Server.Domain;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
-using AutoMapper;
 using System.Collections.Generic;
 using System;
 
@@ -13,26 +12,16 @@ namespace SEIIApp.Server.Services
     /// </summary>
     public class CorrectQuestionService
     {
-        private DatabaseContext databaseContext { get; set; }
-        IMapper mapper { get; set; }
+        private DatabaseContext DatabaseContext { get; set; }
+        private const int EXPERIENCE_GAIN = 10;
 
         /// <summary>
         /// Contstructor.
         /// </summary>
         /// <param name="databaseContext"></param>
-        /// <param name="mapper"></param>
-        public CorrectQuestionService(DatabaseContext databaseContext, IMapper mapper)
+        public CorrectQuestionService(DatabaseContext databaseContext)
         {
-            this.databaseContext = databaseContext;
-            this.mapper = mapper;
-        }
-
-        private IQueryable<Student> GetQueryableForStudents()
-        {
-            return databaseContext
-                .Students
-                .Include(student => student.CorrectQuestions)
-                .Include(student => student.Profile);
+            this.DatabaseContext = databaseContext;
         }
 
         /// <summary>
@@ -57,12 +46,20 @@ namespace SEIIApp.Server.Services
         public CorrectQuestion[] AddCorrectQuestionToStudent(int userId, CorrectQuestion correctQuestion)
         {
             var toUpdateStudent = GetQueryableForStudents().Where(student => student.UserId == userId).FirstOrDefault();
-            toUpdateStudent.Profile.Experience += 10;
+            toUpdateStudent.Profile.Experience += EXPERIENCE_GAIN;
             correctQuestion.SolveDateTime = DateTime.Now;
             toUpdateStudent.CorrectQuestions.Add(correctQuestion);
-            databaseContext.Students.Update(toUpdateStudent);
-            databaseContext.SaveChanges();
+            DatabaseContext.Students.Update(toUpdateStudent);
+            DatabaseContext.SaveChanges();
             return toUpdateStudent.CorrectQuestions.ToArray();
+        }
+
+        private IQueryable<Student> GetQueryableForStudents()
+        {
+            return DatabaseContext
+                .Students
+                .Include(student => student.CorrectQuestions)
+                .Include(student => student.Profile);
         }
     }
 }

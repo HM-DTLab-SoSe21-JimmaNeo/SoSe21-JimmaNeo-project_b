@@ -4,17 +4,20 @@ using System.Linq;
 
 namespace SEIIApp.Server.Services
 {
+    /// <summary>
+    /// Service for AvatarItems.
+    /// </summary>
     public class AvatarItemService
      {
         private DatabaseContext DatabaseContext { get; set; }
+
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="db">Database Context</param>
         public AvatarItemService(DatabaseContext db)
         {
             this.DatabaseContext = db;
-        }
-
-        private IQueryable<AvatarItem> GetQueryableForAvatarItems()
-        {
-            return DatabaseContext.AvatarItems;
         }
 
         /// <summary>
@@ -23,6 +26,11 @@ namespace SEIIApp.Server.Services
         public AvatarItem[] GetAllAvatarItems()
         {
             return GetQueryableForAvatarItems().ToArray();
+        }
+
+        private IQueryable<AvatarItem> GetQueryableForAvatarItems()
+        {
+            return DatabaseContext.AvatarItems;
         }
     }
 }

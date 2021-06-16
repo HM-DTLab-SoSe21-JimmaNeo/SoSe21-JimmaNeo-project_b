@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-
 namespace SEIIApp.Server.Domain
 {
     public class DocumentContent : ILessonContent

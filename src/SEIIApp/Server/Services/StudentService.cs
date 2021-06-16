@@ -10,8 +10,8 @@ namespace SEIIApp.Server.Services
     /// Service for student.
     /// </summary>
     public class StudentService {
-        private DatabaseContext databaseContext { get; set; }
-        IMapper mapper { get; set; }
+        private DatabaseContext DatabaseContext { get; set; }
+        private IMapper Mapper { get; set; }
 
         /// <summary>
         /// Constructor.
@@ -20,20 +20,8 @@ namespace SEIIApp.Server.Services
         /// <param name="mapper"></param>
         /// <param name="cqs"></param>
         public StudentService(DatabaseContext db, IMapper mapper, CorrectQuestionService cqs) {
-            this.databaseContext = db;
-            this.mapper = mapper;
-        }
-
-        private IQueryable<Student> GetQueryableForStudents() {
-            return databaseContext
-                .Students
-                .Include(student => student.CorrectQuestions)
-                .Include(student => student.Profile)
-                .Include(student => student.Avatar)
-                .Include(student => student.Avatar.UsedItems)
-                .Include(student => student.FinishedCourses)
-                .Include(student => student.FinishedLessons)
-                .Include(student => student.FinishedQuizzes);
+            this.DatabaseContext = db;
+            this.Mapper = mapper;
         }
 
         /// <summary>
@@ -62,11 +50,24 @@ namespace SEIIApp.Server.Services
         {
             var toUpdateStudent = GetStudentWithId(student.UserId);
             if (toUpdateStudent != student) {
-                mapper.Map(student, toUpdateStudent);
-                databaseContext.Students.Update(toUpdateStudent);
-                databaseContext.SaveChanges();
+                Mapper.Map(student, toUpdateStudent);
+                DatabaseContext.Students.Update(toUpdateStudent);
+                DatabaseContext.SaveChanges();
             }
             return toUpdateStudent;
+        }
+
+        private IQueryable<Student> GetQueryableForStudents()
+        {
+            return DatabaseContext
+                .Students
+                .Include(student => student.CorrectQuestions)
+                .Include(student => student.Profile)
+                .Include(student => student.Avatar)
+                .Include(student => student.Avatar.UsedItems)
+                .Include(student => student.FinishedCourses)
+                .Include(student => student.FinishedLessons)
+                .Include(student => student.FinishedQuizzes);
         }
     }
 }

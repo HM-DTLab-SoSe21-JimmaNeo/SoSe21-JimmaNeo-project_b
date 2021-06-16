@@ -5,10 +5,8 @@ namespace SEIIApp.Server.Domain
 {
     public class DomainMapper : Profile
     {
-
         public DomainMapper()
         {
-
             CreateMap<Course, CourseDto>();
             CreateMap<CourseDto, Course>();
 
@@ -67,6 +65,5 @@ namespace SEIIApp.Server.Domain
             CreateMap<FinishedLesson, FinishedLesson>();
             CreateMap<FinishedQuiz, FinishedQuiz>();
         }
-
     }
 }

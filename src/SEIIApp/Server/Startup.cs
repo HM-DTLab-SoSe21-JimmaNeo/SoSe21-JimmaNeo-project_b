@@ -8,12 +8,10 @@ using SEIIApp.Server.DataAccess;
 using System;
 using System.IO;
 using System.Reflection;
-
 using Blazorise;
 using Blazorise.Bootstrap;
 using Blazorise.Icons.FontAwesome;
-using SEIIApp.Server.Services;
-using System.Linq;
+
 
 namespace SEIIApp.Server {
     public class Startup {
@@ -27,7 +25,6 @@ namespace SEIIApp.Server {
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-
             services.AddControllersWithViews();
             services.AddRazorPages();
 
@@ -35,8 +32,6 @@ namespace SEIIApp.Server {
             {
                 options.UseInMemoryDatabase("InMemoryDb");
             });
-
-            
 
             services.AddScoped<Services.CourseService>();
             services.AddScoped<Services.LessonService>();
@@ -54,14 +49,9 @@ namespace SEIIApp.Server {
                 var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
                 var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
 
-                //Wenn hier ein Fehler auftritt, dann aktivieren Sie in den Einstellungen des 
-                //Projektes → Rechte Maustaste auf SEIIApp.Server → Eigenschaften
-                //im Tab "Build" die Option "XML-Dokumentationsdatei" und geben dort ein:
-                //$(MSBuildProjectDirectory)\SEIIApp.Server.xml
                 options.IncludeXmlComments(xmlPath);
             });
-            //AutoMapper
-            //https://docs.automapper.org/en/latest/Getting-started.html
+
             services.AddAutoMapper(typeof(Domain.DomainMapper));
 
             services
@@ -96,9 +86,6 @@ namespace SEIIApp.Server {
                 endpoints.MapControllers();
                 endpoints.MapFallbackToFile("index.html");
 
-                //endpoints.MapBlazorHub();
-                //endpoints.MapFallbackToPage("/_Host");
-
                 app.UseSwagger();
                 app.UseSwaggerUI(options => {
                     options.SwaggerEndpoint("/swagger/v1/swagger.json", "API Spezifikation");
@@ -106,39 +93,6 @@ namespace SEIIApp.Server {
             });
 
             ContentData.GenerateData(db);
-
-            /*
-            //***************************************************************
-            //***************************************************************
-
-            //Helper function
-            //Do something in in isolated database context scope
-            void DoInIsolatedScopeWithStudentService(Action<StudentService> action) {
-                //create db scope
-                using (var scope = app.ApplicationServices.CreateScope()) {
-                    var service = scope.ServiceProvider.GetRequiredService<StudentService>();
-                    action(service);
-                }//dispose scope
-            }
-
-            DoInIsolatedScopeWithStudentService(ss => {
-                var student = ss.GetAllStudents().First();
-                student.CorrectQuestions.Add(new Domain.CorrectQuestion() {
-                    QuestionsId = 1,
-                    SolveDateTime = DateTime.Now
-                });
-                ss.UpdateStudent(student);
-            });
-
-            DoInIsolatedScopeWithStudentService(ss => {
-                var student = ss.GetAllStudents().First();
-                student.CorrectQuestions.Add(new Domain.CorrectQuestion() {
-                    QuestionsId = 1,
-                    SolveDateTime = DateTime.Now
-                });
-                ss.UpdateStudent(student);
-            });
-            */
         }
     }
 }

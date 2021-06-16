@@ -10,7 +10,7 @@ namespace SEIIApp.Server.Services
     /// </summary>
     public class AvatarService
     {
-        private DatabaseContext databaseContext { get; set; }
+        private DatabaseContext DatabaseContext { get; set; }
    
         /// <summary>
         /// Constructor.
@@ -18,22 +18,7 @@ namespace SEIIApp.Server.Services
         /// <param name="db"></param>
         public AvatarService(DatabaseContext db)
         {
-            this.databaseContext = db;
-        }
-
-        private IQueryable<Avatar> GetQueryableForAvatars()
-        {
-            return databaseContext
-                .Avatars
-                .Include(avatar => avatar.UsedItems);
-        }
-
-        private IQueryable<Student> GetQueryableForStudents()
-        {
-            return databaseContext
-                .Students
-                .Include(student => student.Avatar)
-                .ThenInclude(avatar => avatar.UsedItems);
+            this.DatabaseContext = db;
         }
 
         /// <summary>
@@ -58,9 +43,24 @@ namespace SEIIApp.Server.Services
         {
             var toUpdateStudent = GetQueryableForStudents().Where(student => student.UserId == userId).FirstOrDefault();
             toUpdateStudent.Avatar = avatar;
-            databaseContext.Avatars.Update(avatar);
-            databaseContext.SaveChanges();
+            DatabaseContext.Avatars.Update(avatar);
+            DatabaseContext.SaveChanges();
             return toUpdateStudent.Avatar;
-        }       
+        }
+
+        private IQueryable<Avatar> GetQueryableForAvatars()
+        {
+            return DatabaseContext
+                .Avatars
+                .Include(avatar => avatar.UsedItems);
+        }
+
+        private IQueryable<Student> GetQueryableForStudents()
+        {
+            return DatabaseContext
+                .Students
+                .Include(student => student.Avatar)
+                .ThenInclude(avatar => avatar.UsedItems);
+        }
     }
 }

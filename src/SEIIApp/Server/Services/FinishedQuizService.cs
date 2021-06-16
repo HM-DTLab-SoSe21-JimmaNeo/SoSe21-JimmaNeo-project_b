@@ -8,20 +8,43 @@ using System;
 namespace SEIIApp.Server.Services
 {
     /// <summary>
-    /// Service for finishedQuizzes
+    /// Service for finishedQuizzes.
     /// </summary>
     public class FinishedQuizService
     {
-        private DatabaseContext databaseContext { get; set; }
+        private DatabaseContext DatabaseContext { get; set; }
 
+        /// <summary>
+        /// Constructor.
+        /// </summary>
+        /// <param name="databaseContext">Database Context</param>
         public FinishedQuizService(DatabaseContext databaseContext)
         {
-            this.databaseContext = databaseContext;
+            this.DatabaseContext = databaseContext;
+        }
+
+        /// <summary>
+        /// Add a finished Quiz to a student and, if the lesson or, the lesson and the course, is finished too, add them also.
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="courseId"></param>
+        /// <param name="lessonId"></param>
+        /// <param name="quizId"></param>
+        /// <returns>True</returns>
+        public bool AddFinishedQuizToStudent(int userId, int courseId, int lessonId, int quizId)
+        {
+            var toUpdateStudent = GetQueryableForStudent(userId);
+            var finishedQuiz = new FinishedQuiz(quizId, DateTime.Now);
+            toUpdateStudent.FinishedQuizzes.Add(finishedQuiz);
+            finishSuperordinated(toUpdateStudent, courseId, lessonId);
+            DatabaseContext.Students.Update(toUpdateStudent);
+            DatabaseContext.SaveChanges();
+            return true;
         }
 
         private Student GetQueryableForStudent(int userId)
         {
-            return databaseContext
+            return DatabaseContext
                 .Students
                 .Where(student => student.UserId == userId)
                 .Include(student => student.FinishedQuizzes)
@@ -32,7 +55,7 @@ namespace SEIIApp.Server.Services
 
         private Course GetQueryableForCourse(int courseId)
         {
-            return databaseContext
+            return DatabaseContext
                 .Courses
                 .Where(course => course.CourseId == courseId)
                 .Include(course => course.Lessons)
@@ -41,30 +64,11 @@ namespace SEIIApp.Server.Services
 
         private Lesson GetQueryableForLesson(int lessonId)
         {
-            return databaseContext
+            return DatabaseContext
                 .Lessons
                 .Where(lesson => lesson.LessonId == lessonId)
                 .Include(lesson => lesson.Quizzes)
                 .FirstOrDefault();
-        }
-
-        /// <summary>
-        /// Add a finished Quiz to a student and if the lesson or the lesson and the course is finished too add them also.
-        /// </summary>
-        /// <param name="userId"></param>
-        /// <param name="courseId"></param>
-        /// <param name="lessonId"></param>
-        /// <param name="quizId"></param>
-        /// <returns></returns>
-        public bool AddFinishedQuizToStudent(int userId, int courseId, int lessonId, int quizId)
-        {
-            var toUpdateStudent = GetQueryableForStudent(userId);
-            var finishedQuiz = new FinishedQuiz(quizId, DateTime.Now);
-            toUpdateStudent.FinishedQuizzes.Add(finishedQuiz);
-            finishSuperordinated(toUpdateStudent, courseId, lessonId);
-            databaseContext.Students.Update(toUpdateStudent);
-            databaseContext.SaveChanges();
-            return true;
         }
 
         private void finishSuperordinated(Student toUpdateStudent, int courseId, int lessonId)

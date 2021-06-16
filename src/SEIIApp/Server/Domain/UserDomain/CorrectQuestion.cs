@@ -3,9 +3,6 @@ using System.ComponentModel.DataAnnotations;
 
 namespace SEIIApp.Server.Domain
 {
-    /// <summary>
-    /// Data object which represents correctly answered questions.
-    /// </summary>
     public class CorrectQuestion
     {
         [Key]

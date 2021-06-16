@@ -15,18 +15,18 @@ namespace SEIIApp.Server.Controllers
     public class AvatarController : ControllerBase
     {
 
-        private AvatarService avatarService { get; set; }
-        private IMapper mapper { get; set; }
+        private AvatarService AvatarService { get; set; }
+        private IMapper Mapper { get; set; }
 
         /// <summary>
         /// Constructor.
         /// </summary>
-        /// <param name="avatarService"></param>
-        /// <param name="mapper"></param>
+        /// <param name="avatarService">Service for Avatars/param>
+        /// <param name="mapper">Mapper</param>
         public AvatarController(AvatarService avatarService, IMapper mapper)
         {
-            this.avatarService = avatarService;
-            this.mapper = mapper;
+            this.AvatarService = avatarService;
+            this.Mapper = mapper;
         }
 
         /// <summary>
@@ -40,10 +40,10 @@ namespace SEIIApp.Server.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public ActionResult<AvatarDto> GetAvatarWithId([FromRoute] int id)
         {
-            var Avatar = avatarService.GetAvatarWithId(id);
+            var Avatar = AvatarService.GetAvatarWithId(id);
             if (Avatar == null) return StatusCode(StatusCodes.Status404NotFound);
 
-            var mappedAvatar = mapper.Map<AvatarDto>(Avatar);
+            var mappedAvatar = Mapper.Map<AvatarDto>(Avatar);
             return Ok(mappedAvatar);
         }
 
@@ -60,8 +60,8 @@ namespace SEIIApp.Server.Controllers
         {
             if(ModelState.IsValid)
             {
-                var mappedAvatar = mapper.Map<Avatar>(avatar);
-                var mappedAvatarDto = mapper.Map<AvatarDto>(avatarService.UpdateAvatar(id, mappedAvatar));
+                var mappedAvatar = Mapper.Map<Avatar>(avatar);
+                var mappedAvatarDto = Mapper.Map<AvatarDto>(AvatarService.UpdateAvatar(id, mappedAvatar));
                 return Ok(mappedAvatarDto);
             }
             return BadRequest(ModelState);
