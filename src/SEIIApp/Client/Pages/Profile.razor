@@ -16,6 +16,7 @@
             <h1>Loading profile...</h1>
     }
 
+    // Textfields for informations of the student
     else if (profile != null)
     {
         <div>
@@ -25,6 +26,7 @@
                     <TextEdit Placeholder=@("Level: 5") ReadOnly="true" class="text-center" />
         </div>
 
+        // Draws the avatar and the saved activated items
         if (avatar != null)
         {
             <Container Fluid="true">
@@ -56,6 +58,7 @@
 
             </Container>
 
+            // Draws the buttons for the items
             @if (allItems != null)
             {
                 <Container Fluid="true">
@@ -83,36 +86,43 @@
 
 
 @code{
+    // currently the hardcoded Id of the student
     public int UserId = 1;
 
-    public StudentDto[] students;
+    // currently active student in profile
     public StudentDto student;
+
+    // profile of the active student
     public StudentProfileDto profile;
+
+    // avatar of the active student
     public AvatarDto avatar;
+
+    // all items that can be equipped
     public AvatarItemDto[] allItems;
+
+    // equipped items of the active student
     public List<EquippedItemDto> equiptItems;
 
-
+    // current experince points of the active student
     public int xp;
 
     protected override async Task OnInitializedAsync()
     {
-        //string uri = $"api/Students/{UserId}";
         student = await Http.GetFromJsonAsync<StudentDto>("api/Students/1");
         allItems = await Http.GetFromJsonAsync<AvatarItemDto[]>("api/AvatarItems");
 
         profile = student.Profile;
-
         avatar = student.Avatar;
-
         equiptItems = avatar.UsedItems;
-
         xp = student.Profile.Experience;
-
-
     }
 
 
+    /// <summary>
+    /// Activates or deactivates item with click on button
+    /// </summary>
+    /// <param name="id"> Current itemId. </param>
     async void clickItemButton(int id)
     {
         Boolean contains = false;
@@ -137,6 +147,11 @@
         await Http.PutAsJsonAsync<AvatarDto>($"api/Avatars/{student.UserId}", avatar);
     }
 
+
+    /// <summary>
+    /// Changes button to activated if item is activated
+    /// </summary
+    /// <param name="id"> Current itemId. </param>
     Boolean itemActivatedActive(int id)
     {
         for (int i = 0; i < equiptItems.Count; i++)
@@ -147,17 +162,5 @@
             }
         }
         return false;
-    }
-
-    string itemActivatedColor(int id)
-    {
-        for (int i = 0; i < equiptItems.Count; i++)
-        {
-            if (equiptItems[i].AvatarItemId == id)
-            {
-                return "Color.Success";
-            }
-        }
-        return "Color.Primary";
     }
 }
