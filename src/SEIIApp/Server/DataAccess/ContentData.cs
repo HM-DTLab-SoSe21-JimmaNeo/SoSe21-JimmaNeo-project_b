@@ -18,51 +18,56 @@ namespace SEIIApp.Server.DataAccess
         public static void GenerateData(DatabaseContext db)
         {
             ContentData.db = db;
-            GenerateCourse1();
+            GenerateCourseWithContents();
             GenerateStudent();
             GenerateItems();
             db.SaveChanges();
         }
-        private static void GenerateCourse1()
+        private static void GenerateCourseWithContents()
         {
+            //Course 1 (random data)
             Course course1 = new Course();
             course1.Title = "Neonatal Nutrition and Maternal Factors";
             course1.Description = "Effects of nutritional factors related to infant growth and development, especially related to human milk.";
             course1.Lessons = GenerateLessons(rnd.Next(2, 8));
             db.Courses.Add(course1);
 
+            //Course 2 (real medical data)
             Course course = new Course();
             course.Title = "Newborn resuscitation and support of transition of infants at birth";
             course.Description = "Basic concepst acording to the European Resuscitation Council Guidelines 2021";
-            course.Lessons = GenerateLessons1();
+            course.Lessons = GenerateLessonsWithContents();
             db.Courses.Add(course);
 
-            Course course2 = new Course();
-            course2.Title = "Extremely Premature Infant Care";
-            course2.Description = "Measures, treatments and medication";
-            course2.Lessons = GenerateLessons(rnd.Next(2, 8));
-            db.Courses.Add(course2);
-
+            //Course 3 (random data)
             Course course3 = new Course();
-            course3.Title = "Feeding Disorders";
-            course3.Description = "Tipps and techniques to cure or prevent feeding disorders";
+            course3.Title = "Extremely Premature Infant Care";
+            course3.Description = "Measures, treatments and medication";
             course3.Lessons = GenerateLessons(rnd.Next(2, 8));
             db.Courses.Add(course3);
 
+            //Course 4 (random data)
+            Course course4 = new Course();
+            course4.Title = "Feeding Disorders";
+            course4.Description = "Tipps and techniques to cure or prevent feeding disorders";
+            course4.Lessons = GenerateLessons(rnd.Next(2, 8));
+            db.Courses.Add(course4);
+
         }
 
-        private static List<Lesson> GenerateLessons1()
+        private static List<Lesson> GenerateLessonsWithContents()
         {
             List<Lesson> lessons = new List<Lesson>();
-            // 1st Lesson
+            // 1st Lesson with real content
             Lesson lesson = new Lesson();
             lesson.Title = "Newborn resuscitation";
             lesson.Description = "Basic knowledge and techniques";
-            lesson.VideoContents = GenerateVideoContent1(lesson);
-            lesson.DocumentContents = GenerateDocumentsContents1(lesson);
-            lesson.Quizzes = GenerateQuizzes1();
+            lesson.VideoContents = GenerateVideoContent(lesson);
+            lesson.DocumentContents = GenerateDocumentContent(lesson);
+            lesson.Quizzes = GenerateQuizzesWithContent();
             lessons.Add(lesson);
-            // 2nd Lesson
+
+            // 2nd Lesson with random content
             Lesson lesson2 = new Lesson();
             lesson2.Title = "Support of transition of infants at birth";
             lesson2.Description = "Step by step introduction";
@@ -73,7 +78,7 @@ namespace SEIIApp.Server.DataAccess
 
             return lessons;
         }
-        private static List<VideoContent> GenerateVideoContent1(Lesson lesson)
+        private static List<VideoContent> GenerateVideoContent(Lesson lesson)
         {
             List<VideoContent> videoContents = new List<VideoContent>();
 
@@ -145,7 +150,7 @@ namespace SEIIApp.Server.DataAccess
             return finishedCourses;
         }
 
-        private static List<DocumentContent> GenerateDocumentsContents1(Lesson lesson)
+        private static List<DocumentContent> GenerateDocumentContent(Lesson lesson)
         {
             List<DocumentContent> DocumentContents = new List<DocumentContent>();
 
@@ -166,20 +171,20 @@ namespace SEIIApp.Server.DataAccess
             return DocumentContents;
         }
 
-        private static List<Quiz> GenerateQuizzes1()
+        private static List<Quiz> GenerateQuizzesWithContent()
         {
             List<Quiz> quizzes = new List<Quiz>();
 
 
             Quiz quiz = new Quiz();
             quiz.Title = "Newborn first aid in the delivery room";
-            quiz.Questions = GenerateQuestions1();
+            quiz.Questions = GenerateExampleQuestions();
             quizzes.Add(quiz);
 
             return quizzes;
         }
 
-        private static List<Question> GenerateQuestions1()
+        private static List<Question> GenerateExampleQuestions()
         {
             List<Question> questions = new List<Question>();
 
@@ -363,7 +368,6 @@ namespace SEIIApp.Server.DataAccess
                 Lesson lesson = new Lesson();
                 lesson.Title = i + ". Lesson title";
                 lesson.Description = "Hier könnte Ihre Werbung stehen (lessons.description).";
-                //lesson.videoContents = GenerateVideoContents(rnd.Next(1, 3), lesson);
                 lesson.VideoContents = GenerateVideoContents(rnd.Next(1, 2), lesson);
                 lesson.DocumentContents = GenerateDocumentsContents(rnd.Next(1, 2), lesson);
                 lesson.Quizzes = GenerateQuizzes(rnd.Next(1, 5));
