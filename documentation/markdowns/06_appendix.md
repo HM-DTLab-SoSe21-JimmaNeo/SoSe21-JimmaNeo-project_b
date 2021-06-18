@@ -8,7 +8,7 @@
 * [**Avatar**](../images/avatar.png)
 * [**Avatar mit Items**](../images/avatar_with_items.png)
 * [**Wireframe Landing-Page**](../images/wireframe_landing_page.png)
-* [**Wireframe Lesson-Übersicht**](../images/wireframe_lesson.png)
+* [**Wireframe Lesson-Uebersicht**](../images/wireframe_lesson.png)
 * [**Wireframe Quiz**](../images/wireframe_quiz_1.png)
 * [**Wireframe Quiz bei richtiger Antwort**](../images/wireframe_quiz_2.png)
 * [**Wireframe Profil**](../images/wireframe_profil.jpeg)
