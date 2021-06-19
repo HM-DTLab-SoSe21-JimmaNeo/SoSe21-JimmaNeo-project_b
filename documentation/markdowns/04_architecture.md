@@ -1,10 +1,10 @@
 ## Software Architecture
-JimmaNeo is implemented as ASP.NET Core web application and follows the REST design principles. Therefore, the persistence and logic is separated from the frontend and implemented in the backend, known as server-client-model. The communication between frontend and backend uses HTTP requests and resources are delivered in JavaScript Object Notation (JSON).
+JimmaNeo is implemented as an ASP.NET Core web application and follows the REST design principles. Therefore, the persistence and logic is separated from the frontend and implemented in the backend, known as server-client-model. The communication between frontend and backend uses HTTP requests and resources are delivered in JavaScript Object Notation (JSON).
 
 ![Server Client Model](../images/client_server.png)
 
 # Backend
-Backend is designed with three abstraction layers, the data access, the services, and the controllers. These three layers are not accessing each other directly, please see below.
+The backend is designed with three abstraction layers: the data access, the services and the controllers. These three layers are not accessing each other directly, please see below.
 
 **Data Access**
 
