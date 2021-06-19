@@ -13,8 +13,8 @@
             <summary>
             Constructor.
             </summary>
-            <param name="avatarService"></param>
-            <param name="mapper"></param>
+            <param name="avatarService">Service for Avatars</param>
+            <param name="mapper">Mapper</param>
         </member>
         <member name="M:SEIIApp.Server.Controllers.AvatarController.GetAvatarWithId(System.Int32)">
             <summary>
@@ -31,11 +31,23 @@
             <param name="avatar">To update avatar</param>
             <returns>Updated avatar</returns>
         </member>
+        <member name="T:SEIIApp.Server.Controllers.AvatarItemController">
+            <summary>
+            Controller for AvatarItems
+            </summary>
+        </member>
+        <member name="M:SEIIApp.Server.Controllers.AvatarItemController.#ctor(SEIIApp.Server.Services.AvatarItemService,AutoMapper.IMapper)">
+            <summary>
+            Constructor.
+            </summary>
+            <param name="avatarItemService">SServices for AvatarItems</param>
+            <param name="mapper">Mapper</param>
+        </member>
         <member name="M:SEIIApp.Server.Controllers.AvatarItemController.GetAllAvatarItems">
             <summary>
             Return all AvatarItems.
             </summary>
-            <returns></returns>
+            <returns>All AvatarItems</returns>
         </member>
         <member name="T:SEIIApp.Server.Controllers.CorrectQuestionController">
             <summary>
@@ -46,8 +58,8 @@
             <summary>
             Constructor.
             </summary>
-            <param name="cqService"></param>
-            <param name="mapper"></param>
+            <param name="cqService">Service for CorrectQuestions</param>
+            <param name="mapper">Mapper</param>
         </member>
         <member name="M:SEIIApp.Server.Controllers.CorrectQuestionController.GetCorrectQuestionsOfStudent(System.Int32)">
             <summary>
@@ -58,63 +70,132 @@
         </member>
         <member name="M:SEIIApp.Server.Controllers.CorrectQuestionController.AddCorrectQuestionToStudent(System.Int32,SEIIApp.Server.Domain.CorrectQuestion)">
             <summary>
-            Add a correctQuestion to a student.
+            Add a correctQuestion to a student. The student gains experience, if a correctQuestion is added.
             </summary>
             <param name="id">UserId of the student</param>
             <param name="correctQuestion">CorrectQuestion to add</param>
             <returns>All correctQuestion of the student</returns>
+        </member>
+        <member name="T:SEIIApp.Server.Controllers.CourseController">
+            <summary>
+            Controller for Courses
+            </summary>
+        </member>
+        <member name="M:SEIIApp.Server.Controllers.CourseController.#ctor(SEIIApp.Server.Services.CourseService,AutoMapper.IMapper)">
+            <summary>
+            Constructor
+            </summary>
+            <param name="CourseService">Service for Courses</param>
+            <param name="mapper">Mapper</param>
         </member>
         <member name="M:SEIIApp.Server.Controllers.CourseController.GetCourseWithId(System.Int32)">
             <summary>
             Return the Course with the given id.
             </summary>
             <param name="id"></param>
-            <returns></returns>
+            <returns>>Http StatusCode, if ok CourseDto</returns>
         </member>
         <member name="M:SEIIApp.Server.Controllers.CourseController.GetAllCourses">
             <summary>
             Returns all Courses.
             </summary>
-            <returns></returns>
+            <returns>>Http StatusCode, if ok CourseDto array</returns>
+        </member>
+        <member name="T:SEIIApp.Server.Controllers.LessonController">
+            <summary>
+            Controller for Lessons.
+            </summary>
+        </member>
+        <member name="M:SEIIApp.Server.Controllers.LessonController.#ctor(SEIIApp.Server.Services.LessonService,AutoMapper.IMapper)">
+            <summary>
+            Constructor.
+            </summary>
+            <param name="lessonService">Service for lessons</param>
+            <param name="mapper">Mapper</param>
         </member>
         <member name="M:SEIIApp.Server.Controllers.LessonController.GetLessonWithId(System.Int32)">
             <summary>
             Return the Lesson with the given id.
             </summary>
             <param name="id"></param>
-            <returns></returns>
+            <returns>Http StatusCode, if ok LessonDto</returns>
         </member>
         <member name="M:SEIIApp.Server.Controllers.LessonController.GetAllLesson">
             <summary>
             Returns all Lessons.
             </summary>
-            <returns></returns>
+            <returns>>Http StatusCode, if ok LessonDto array</returns>
+        </member>
+        <member name="T:SEIIApp.Server.Controllers.QuizController">
+            <summary>
+            Controller for Quizzes
+            </summary>
+        </member>
+        <member name="M:SEIIApp.Server.Controllers.QuizController.#ctor(SEIIApp.Server.Services.QuizService,SEIIApp.Server.Services.LessonService,AutoMapper.IMapper)">
+            <summary>
+            Constructor.
+            </summary>
+            <param name="quizService">Service for Quizzes</param>
+            <param name="lessonService">Service for Lessons</param>
+            <param name="mapper">Mapper</param>
         </member>
         <member name="M:SEIIApp.Server.Controllers.QuizController.GetQuizWithId(System.Int32)">
             <summary>
             Return the Quiz with the given id.
             </summary>
-            <param name="id"></param>
-            <returns></returns>
+            <param name="id">Quiz id</param>
+            <returns>Http StatusCodes, if ok QuizDto</returns>
         </member>
         <member name="M:SEIIApp.Server.Controllers.QuizController.GetAllQuizzes">
             <summary>
             Returns all Quizs.
             </summary>
-            <returns></returns>
+            <returns>Http StatusCodes, if ok QuizDto array</returns>
+        </member>
+        <member name="M:SEIIApp.Server.Controllers.QuizController.GetAllQuizzesOfLesson(System.Int32)">
+            <summary>
+            Get all Quizzes of a specific lesson.
+            </summary>
+            <param name="lessonId"></param>
+            <returns>Http StatusCodes, if ok QuizDto array</returns>
+        </member>
+        <member name="T:SEIIApp.Server.Controllers.StudentController">
+            <summary>
+            Controller for Students.
+            </summary>
+        </member>
+        <member name="M:SEIIApp.Server.Controllers.StudentController.#ctor(SEIIApp.Server.Services.StudentService,SEIIApp.Server.Services.FinishedQuizService,AutoMapper.IMapper)">
+            <summary>
+            Constructor.
+            </summary>
+            <param name="studentService">Service for Students</param>
+            <param name="finishedQuizService">Service for finished quizzes</param>
+            <param name="mapper">Mapper</param>
         </member>
         <member name="M:SEIIApp.Server.Controllers.StudentController.GetStudentWithId(System.Int32)">
             <summary>
             Return the Student with the given id.
             </summary>
-            <param name="id"></param>
-            <returns></returns>
+            <param name="id">Id of the student</param>
+            <returns>Http StatusCode, if ok the student as dto</returns>
         </member>
         <member name="M:SEIIApp.Server.Controllers.StudentController.GetAllStudents">
             <summary>
             Returns all Students.
             </summary>
-            <returns></returns>
+            <returns>Http StatusCode, if ok the students as dto array</returns>
+        </member>
+        <member name="M:SEIIApp.Server.Controllers.StudentController.AddFinishedQuizToStudent(System.Int32,System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Add a finished quiz to an student.
+            If now the lesson is finished, then the lessons is also added to the student.
+            If now the course is finished, then the cours is also added to the student.
+            </summary>
+            <param name="userId">Id of the student</param>
+            <param name="courseId">Course Id</param>
+            <param name="lessonId">Lesson Id</param>
+            <param name="quizId">Quiz Id</param>
+            <returns>Http ok</returns>
         </member>
         <member name="M:SEIIApp.Server.DataAccess.ContentData.GenerateData(SEIIApp.Server.DataAccess.DatabaseContext)">
             <summary>
@@ -122,16 +203,37 @@
             </summary>
             <param name="db">Database context</param>
         </member>
-        <member name="M:SEIIApp.Server.DataAccess.TestDataGenerator.GenerateData(SEIIApp.Server.DataAccess.DatabaseContext)">
+        <member name="T:SEIIApp.Server.DataAccess.DatabaseContext">
             <summary>
-            Initialize teast data for local-in-memory database.
+            Database Context.
             </summary>
-            <param name="db">Database context</param>
         </member>
-        <member name="T:SEIIApp.Server.Domain.CorrectQuestion">
+        <member name="M:SEIIApp.Server.DataAccess.DatabaseContext.#ctor(Microsoft.EntityFrameworkCore.DbContextOptions{SEIIApp.Server.DataAccess.DatabaseContext})">
             <summary>
-            Data object which represents correctly answered questions.
+            Contructor.
             </summary>
+            <param name="options"></param>
+        </member>
+        <member name="T:SEIIApp.Server.Domain.DomainMapper">
+            <summary>
+            Mapper profiles.
+            </summary>
+        </member>
+        <member name="M:SEIIApp.Server.Domain.DomainMapper.#ctor">
+            <summary>
+            Conrstructor with all profiles.
+            </summary>
+        </member>
+        <member name="T:SEIIApp.Server.Services.AvatarItemService">
+            <summary>
+            Service for AvatarItems.
+            </summary>
+        </member>
+        <member name="M:SEIIApp.Server.Services.AvatarItemService.#ctor(SEIIApp.Server.DataAccess.DatabaseContext)">
+            <summary>
+            Constructor
+            </summary>
+            <param name="db">Database Context</param>
         </member>
         <member name="M:SEIIApp.Server.Services.AvatarItemService.GetAllAvatarItems">
             <summary>
@@ -169,12 +271,11 @@
             Service for correctQuestions.
             </summary>
         </member>
-        <member name="M:SEIIApp.Server.Services.CorrectQuestionService.#ctor(SEIIApp.Server.DataAccess.DatabaseContext,AutoMapper.IMapper)">
+        <member name="M:SEIIApp.Server.Services.CorrectQuestionService.#ctor(SEIIApp.Server.DataAccess.DatabaseContext)">
             <summary>
             Contstructor.
             </summary>
             <param name="databaseContext"></param>
-            <param name="mapper"></param>
         </member>
         <member name="M:SEIIApp.Server.Services.CorrectQuestionService.GetCorrectQuestionsOfStudent(System.Int32)">
             <summary>
@@ -191,6 +292,17 @@
             <param name="correctQuestion">The correctQuestion to add</param>
             <returns>All correctQuestion of the student</returns>
         </member>
+        <member name="T:SEIIApp.Server.Services.CourseService">
+            <summary>
+            Service for Courses.
+            </summary>
+        </member>
+        <member name="M:SEIIApp.Server.Services.CourseService.#ctor(SEIIApp.Server.DataAccess.DatabaseContext)">
+            <summary>
+            Constructor
+            </summary>
+            <param name="db">Database Context</param>
+        </member>
         <member name="M:SEIIApp.Server.Services.CourseService.GetAllCourses">
             <summary>
             Returns all courses.
@@ -203,18 +315,35 @@
         </member>
         <member name="T:SEIIApp.Server.Services.FinishedQuizService">
             <summary>
-            Service for finishedQuizzes
+            Service for finishedQuizzes.
             </summary>
+        </member>
+        <member name="M:SEIIApp.Server.Services.FinishedQuizService.#ctor(SEIIApp.Server.DataAccess.DatabaseContext)">
+            <summary>
+            Constructor.
+            </summary>
+            <param name="databaseContext">Database Context</param>
         </member>
         <member name="M:SEIIApp.Server.Services.FinishedQuizService.AddFinishedQuizToStudent(System.Int32,System.Int32,System.Int32,System.Int32)">
             <summary>
-            Add a finished Quiz to a student and if the lesson or the lesson and the course is finished too add them also.
+            Add a finished Quiz to a student and, if the lesson or, the lesson and the course, is finished too, add them also.
             </summary>
             <param name="userId"></param>
             <param name="courseId"></param>
             <param name="lessonId"></param>
             <param name="quizId"></param>
-            <returns></returns>
+            <returns>True</returns>
+        </member>
+        <member name="T:SEIIApp.Server.Services.LessonService">
+            <summary>
+            Service for Lessons.
+            </summary>
+        </member>
+        <member name="M:SEIIApp.Server.Services.LessonService.#ctor(SEIIApp.Server.DataAccess.DatabaseContext)">
+            <summary>
+            Constructor.
+            </summary>
+            <param name="db">Database Context</param>
         </member>
         <member name="M:SEIIApp.Server.Services.LessonService.GetAllLesson">
             <summary>
@@ -226,6 +355,17 @@
             Returns the lesson with the given id.
             </summary>
         </member>
+        <member name="T:SEIIApp.Server.Services.QuizService">
+            <summary>
+            Service for Quizzes.
+            </summary>
+        </member>
+        <member name="M:SEIIApp.Server.Services.QuizService.#ctor(SEIIApp.Server.DataAccess.DatabaseContext)">
+            <summary>
+            Constructor.
+            </summary>
+            <param name="db">Database Context</param>
+        </member>
         <member name="M:SEIIApp.Server.Services.QuizService.GetAllQuizzes">
             <summary>
             Returns all quizzes.
@@ -236,7 +376,7 @@
             <summary>
             Returns the quiz with the given quizId.
             </summary>
-            <param name="id">Id of the quiz</param>
+            <param name="quizId">Id of the quiz</param>
             <returns>Quiz with the given quizId</returns>
         </member>
         <member name="T:SEIIApp.Server.Services.StudentService">
@@ -271,6 +411,17 @@
             </summary>
             <param name="student">To update student</param>
             <returns>Updated student</returns>
+        </member>
+        <member name="T:SEIIApp.Server.Startup">
+            <summary>
+            Startup of the webapp.
+            </summary>
+        </member>
+        <member name="M:SEIIApp.Server.Startup.#ctor(Microsoft.Extensions.Configuration.IConfiguration)">
+            <summary>
+            Constructor.
+            </summary>
+            <param name="configuration"></param>
         </member>
     </members>
 </doc>
