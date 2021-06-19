@@ -1,15 +1,17 @@
-# Team und Ansprechpartner
+# Team and Contact Person
 
-#### Ansprechpartner: Ronja Meier (rmeier@hm.edu)
+#### Contact Person: Ronja Meier (rmeier@hm.edu)
 
-**Lars Kriese:** Backend (Services, Datenbank)
+**Lars Kriese:** Backend
 
-**Tim Hoehenleitner:** Backend (Controller)
+**Tim Hoehenleitner:** Backend
 
-**Robert Wiechmann:** Frontend (Quiz)
+**Robert Wiechmann:** Frontend
 
-**Simon Imhof:** Frontend (Profil)
+**Simon Imhof:** Frontend
 
-**Ronja Meier:** Frontend (Landing-Page, Course-Uebersicht, Lesson-Uebersicht)
+**Ronja Meier:** Frontend
 
-**Maximilian Schmitz:** Frontend (Header)
+**Maximilian Schmitz:** Frontend
+
+[Group photo](../images/group_photo_team_b.jpeg)
