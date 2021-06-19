@@ -1,6 +1,8 @@
 ## Software Architecture
 JimmaNeo is implemented as ASP.NET Core web application and follows the REST design principles. Therefore, the persistence and logic is separated from the frontend and implemented in the backend, known as server-client-model. The communication between frontend and backend uses HTTP requests and resources are delivered in JavaScript Object Notation (JSON).
-![Server Client Model](../images/server_client.png)
+
+![Server Client Model](../images/client_server.png)
+
 # Backend
 Backend is designed with three abstraction layers, the data access, the services, and the controllers. These three layers are not accessing each other directly, please see below.
 
@@ -11,7 +13,9 @@ Data is stored as domain objects via Microsoft [Entity Framework Core](https://d
 **Services**
 
 The services are providing all backend features and logic and get passed the database context. They are registered in the built-in Inversion of Control (IoC)-Container and on account of this, all classes, which need the functions of these service, can get the service injected. Hence, it is possible to observe the single-responsibility-principle, while creating the dependencies at a central component, the `Startup.cs`. Simplified representation of dependency injection:
+
 ![Simplified representation of dependency injection](../images/dependency_injection.png)
+
 All self-implemented services are `AddScoped`, which means an instance of the service is created once per scope. A scope is created on every request to the application.
 Registered self-implemented services:
 * CourseService
@@ -72,4 +76,5 @@ The frontend consists of Razor pages containing Blazorise items with no abstract
 **Shared**
 
 Contains the data transfer objects, which are shared resources between front- and backend.
+
 ![Data Transfer Object Model](../images/data_transfer_object_model.png)
