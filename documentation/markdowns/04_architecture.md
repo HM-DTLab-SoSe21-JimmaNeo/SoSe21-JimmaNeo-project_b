@@ -1,5 +1,5 @@
 ## Software Architecture
-JimmaNeo is implemented as an ASP.NET Core web application and follows the REST design principles. Therefore, the persistence and logic is separated from the frontend and implemented in the backend, known as server-client-model. The communication between frontend and backend uses HTTP requests and resources are delivered in JavaScript Object Notation (JSON).
+JimmaNeo is implemented as an ASP.NET Core web application and follows the REST design principles. Therefore, the persistence and logic is separated from the frontend and implemented in the backend, known as client-server-model. The communication between frontend and backend uses HTTP requests and resources are delivered in JavaScript Object Notation (JSON).
 
 ![Server Client Model](../images/client_server.png)
 
@@ -12,7 +12,7 @@ Data is stored as domain objects via Microsoft [Entity Framework Core](https://d
 
 **Services**
 
-The services are providing all backend features and logic and get passed the database context. They are registered in the built-in Inversion of Control (IoC)-Container and on account of this, all classes, which need the functions of these service, can get the service injected. Hence, it is possible to observe the single-responsibility-principle, while creating the dependencies at a central component, the `Startup.cs`. Simplified representation of dependency injection:
+The services are providing all backend features and logic and get passed the database context. They are registered in the built-in Inversion of Control (IoC)-Container and on account of this, all classes, which need the functions of these service, can get the service injected. This helps creating a loosley coupled system, while creating the dependencies at a central component, the `Startup.cs`. A further advantage is the segration of interfaces, that no client has to depend on methods it does not use. Simplified representation of dependency injection:
 
 ![Simplified representation of dependency injection](../images/dependency_injection.png)
 
@@ -71,7 +71,7 @@ Implemented backend server API:
 
 
 # Frontend
-The frontend consists of Razor pages containing Blazorise items with no abstraction layer between the pages and the called backend services. Style items are pulled out to common style file.
+The frontend consists of Razor components containing Blazorise items with no abstraction layer between the pages and the called backend services. Style items are pulled out to common style file.
 
 **Shared**
 
