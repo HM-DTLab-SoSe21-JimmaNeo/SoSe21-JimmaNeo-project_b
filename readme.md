@@ -52,15 +52,22 @@ The materials in the documents section are usually PDFs or links to literature t
 
 <br/>
 
-*Pictures from left to right: Landing Page, Course Page, Lesson Page, Video in Lesson*
+*Pictures from left to right:*
+<br/>
+*Row 1: Landing Page, Course Page*
+<br/>
+*Row 2: Lesson Page, Video in Lesson*
 
-<kbd><img src="/documentation/images/screenshots/01_LandingPage.png" alt="landing" width="230"/></kbd>
+<kbd><img src="/documentation/images/screenshots/01_LandingPage.png" alt="landing" width="270"/></kbd>
 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
-<kbd><img src="/documentation/images/screenshots/02_CoursePage.png" alt="course" width="230"/></kbd>
+<kbd><img src="/documentation/images/screenshots/02_CoursePage.png" alt="course" width="270"/></kbd>
 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
-<kbd><img src="/documentation/images/screenshots/03_LessonPage.png" alt="lesson" width="230"/></kbd>
+
+<br/>
+
+<kbd><img src="/documentation/images/screenshots/03_LessonPage.png" alt="lesson" width="270"/></kbd>
 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
-<kbd><img src="/documentation/images/screenshots/04_VideoInLesson.png" alt="video" width="230"/></kbd>
+<kbd><img src="/documentation/images/screenshots/04_VideoInLesson.png" alt="video" width="270"/></kbd>
 
 <br/>
 
@@ -85,23 +92,29 @@ When the student answers any answer correctly for the first time he will gain 10
 
 *Pictures from left to right:*
 <br/>
-*Row 1: Quiz Starting Page, Quiz Question, Selected Answer*
+*Row 1: Quiz Starting Page, Quiz Question*
 <br/>
-*Row 2: Correct Answer with earned EXP, Wrong Answer with correction, Level Up*
+*Row 2: Selected Answer, Correct Answer with earned EXP*
+<br/>
+*Row 3: Wrong Answer with correction, Level Up*
 
-<kbd><img src="/documentation/images/screenshots/05_QuizStartingPage.png" alt="quizStart" width="250"/></kbd>
+<kbd><img src="/documentation/images/screenshots/05_QuizStartingPage.png" alt="quizStart" width="270"/></kbd>
 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-<kbd><img src="/documentation/images/screenshots/06_QuestionInQuiz.png" alt="question" width="250"/></kbd>
-&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-<kbd><img src="/documentation/images/screenshots/07_SelectedAnswerInQuiz.png" alt="selected" width="250"/></kbd>
+<kbd><img src="/documentation/images/screenshots/06_QuestionInQuiz.png" alt="question" width="270"/></kbd>
 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
 
 <br/>
-<kbd><img src="/documentation/images/screenshots/08_CorrectAnswerInQuiz.png" alt="correct" width="250"/></kbd>
+
+<kbd><img src="/documentation/images/screenshots/07_SelectedAnswerInQuiz.png" alt="selected" width="270"/></kbd>
 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-<kbd><img src="/documentation/images/screenshots/09_WrongAnswerInQuiz.png" alt="course" width="250"/></kbd>
+<kbd><img src="/documentation/images/screenshots/08_CorrectAnswerInQuiz.png" alt="correct" width="270"/></kbd>
 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-<kbd><img src="/documentation/images/screenshots/10_LevelUp.png" alt="levelUp" width="250"/></kbd>
+
+<br/>
+
+<kbd><img src="/documentation/images/screenshots/09_WrongAnswerInQuiz.png" alt="course" width="270"/></kbd>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+<kbd><img src="/documentation/images/screenshots/10_LevelUp.png" alt="levelUp" width="270"/></kbd>
 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
 
 <br/> <br/>
@@ -112,13 +125,20 @@ When the quiz has been finished, the student will be provided an overview of his
 
 <br/>
 
-*Pictures from left to right: Correction Page, Correction Answers, Correction Completed Quiz*
+*Pictures from left to right:*
+<br/>
+*Row 1: Correction Page, Correction Answers*
+<br/>
+*Row 2: Correction Completed Quiz*
 
-<kbd><img src="/documentation/images/screenshots/11_CorrectionPage1.png" alt="correction1" width="250"/></kbd>
+<kbd><img src="/documentation/images/screenshots/11_CorrectionPage1.png" alt="correction1" width="270"/></kbd>
 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-<kbd><img src="/documentation/images/screenshots/12_CorrectionPage2.png" alt="correction2" width="250"/></kbd>
+<kbd><img src="/documentation/images/screenshots/12_CorrectionPage2.png" alt="correction2" width="270"/></kbd>
 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-<kbd><img src="/documentation/images/screenshots/13_CorrectionPage3.png" alt="correction3" width="250"/></kbd>
+
+<br/>
+
+<kbd><img src="/documentation/images/screenshots/13_CorrectionPage3.png" alt="correction3" width="270"/></kbd>
 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
 
 <br/> <br/>
@@ -129,13 +149,20 @@ After successfully finishing the (only) quiz in the shown lesson, its button is 
 
 <br/>
 
-*Pictures from left to right: Completed Quiz in Lesson, Progress Bar of completed Lesson, Completed Lesson on Course Page*
+*Pictures from left to right:*
+<br/>
+*Row 1: Completed Quiz in Lesson, Progress Bar of completed Lesson*
+<br/>
+*Row 2: Completed Lesson on Course Page*
 
-<kbd><img src="/documentation/images/screenshots/14_CompletedQuiz.png" alt="completedQuiz" width="250"/></kbd>
+<kbd><img src="/documentation/images/screenshots/14_CompletedQuiz.png" alt="completedQuiz" width="270"/></kbd>
 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-<kbd><img src="/documentation/images/screenshots/15_ProgressInLesson.png" alt="lessonProgress" width="250"/></kbd>
+<kbd><img src="/documentation/images/screenshots/15_ProgressInLesson.png" alt="lessonProgress" width="270"/></kbd>
 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-<kbd><img src="/documentation/images/screenshots/16_CompletedLesson.png" alt="completedLesson" width="250"/></kbd>
+
+<br/>
+
+<kbd><img src="/documentation/images/screenshots/16_CompletedLesson.png" alt="completedLesson" width="270"/></kbd>
 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
 
 <br/> <br/>
@@ -150,9 +177,9 @@ The avatar represents the students unique character. The Profile page shows deta
 
 *Pictures from left to right: Profile Page, Avatar with new equipped item*
 
-<kbd><img src="/documentation/images/screenshots/17_AvatarPage.png" alt="avatar1" width="250"/></kbd>
+<kbd><img src="/documentation/images/screenshots/17_AvatarPage.png" alt="avatar1" width="270"/></kbd>
 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-<kbd><img src="/documentation/images/screenshots/18_AvatarWithNewAccessory.png" alt="avatar2" width="250"/></kbd>
+<kbd><img src="/documentation/images/screenshots/18_AvatarWithNewAccessory.png" alt="avatar2" width="270"/></kbd>
 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
 
 <br/> <br/>
