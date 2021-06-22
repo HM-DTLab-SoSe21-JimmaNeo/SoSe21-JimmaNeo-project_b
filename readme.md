@@ -16,7 +16,6 @@ The focus is on motivating the users by allowing them to have their own avatar a
     - [Mode of operation](#Mode-of-operation)
   - [Appendix](#appendix)
 
-<small><i><a href='http://ecotrust-canada.github.io/markdown-toc/'>Table of contents generated with markdown-toc</a></i></small>
 
 
 ## Press-Release
