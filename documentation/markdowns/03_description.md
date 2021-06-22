@@ -1,192 +1,138 @@
-# Dillinger
-## _The Last Markdown Editor, Ever_
+# Application Description
+Our JimmaNeo application is designed to provide an enjoyable way of learning with the aspect of gamification at its center to motivate and encourage students to hang on and continue their learning efforts while also trying to focus on methods to provide an optimized learning effect with instant feedback and correction. 
 
-[![N|Solid](https://cldup.com/dTxpPi9lDf.thumb.png)](https://nodesource.com/products/nsolid)
+To provide an idea of how our platform is looking to achieve these goals, the user interaction will be explained and backed up with corresponding screenshots along its logical procedural order.
 
-[![Build Status](https://travis-ci.org/joemccann/dillinger.svg?branch=master)](https://travis-ci.org/joemccann/dillinger)
+## Landing Page, Courses and Lessons
+The learning experience starts out at the **landing page** where an overview of all accessible courses as well as a general progress display regarding completed courses are shown to the student. A finished course will be displayed with a green background. If a student decides to work on a specific course, he can do so by clicking the associated button. 
 
-Dillinger is a cloud-enabled, mobile-ready, offline-storage compatible,
-AngularJS-powered HTML5 Markdown editor.
+By doing so, the student enters the **course page**. A course consists of one or multiple lessons which, as can be seen on the course page progress bar, all have to be completed before a course is marked as successfully finished. By using the navigation options in the header, the student is always able to go back one step or reach his profile with a single click.
 
-- Type some Markdown on the left
-- See HTML in the right
-- ✨Magic ✨
+When clicking the button of a specific lesson, the student enters the **lesson page** where an overview  of all the materials and components of a lesson is provided. A lesson usually consists of **documents, videos and quizzes**. The teachers have free choice over which, how many and if any of the specific components are part of a lesson. 
 
-## Features
+The materials in the documents section are usually PDFs or links to literature that require the student to actively familiarize themselves with the topic. By clicking on a document button, it will appear in a new browser tab. Videos from teachers or external tutors provide a passive learning method. Each video is capsuled in a collapsible element which can be opened and closed to keep a clean overview. The video itself can be directly played in the lesson page. Quizzes give students the opportunity to test their acquired knowledge. Each quiz can be accessed over its own button which will be highlighted in green when completed. 
 
-- Import a HTML file and watch it magically convert to Markdown
-- Drag and drop images (requires your Dropbox account be linked)
-- Import and save files from GitHub, Dropbox, Google Drive and One Drive
-- Drag and drop markdown and HTML files into Dillinger
-- Export documents as Markdown, HTML and PDF
+<br/>
 
-Markdown is a lightweight markup language based on the formatting conventions
-that people naturally use in email.
-As [John Gruber] writes on the [Markdown site][df1]
+*Pictures from left to right: Landing Page, Course Page, Lesson Page, Video in Lesson*
 
-> The overriding design goal for Markdown's
-> formatting syntax is to make it as readable
-> as possible. The idea is that a
-> Markdown-formatted document should be
-> publishable as-is, as plain text, without
-> looking like it's been marked up with tags
-> or formatting instructions.
+<kbd><img src="../screenshots/01_LandingPage.png" alt="landing" width="230"/></kbd>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+<kbd><img src="../screenshots/02_CoursePage.png" alt="course" width="230"/></kbd>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
+<kbd><img src="../screenshots/03_LessonPage.png" alt="lesson" width="230"/></kbd>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
+<kbd><img src="../screenshots/04_VideoInLesson.png" alt="video" width="230"/></kbd>
 
-This text you see here is *actually- written in Markdown! To get a feel
-for Markdown's syntax, type some text into the left window and
-watch the results in the right.
+<br/>
 
-## Tech
+## Quizzes
 
-Dillinger uses a number of open source projects to work properly:
+Quizzes represent an essential part of the learning experience. They are the foundation of the progress control of our platform. A lesson is marked as completed when all of its quizzes have been done successfully.
 
-- [AngularJS] - HTML enhanced for web apps!
-- [Ace Editor] - awesome web-based text editor
-- [markdown-it] - Markdown parser done right. Fast and easy to extend.
-- [Twitter Bootstrap] - great UI boilerplate for modern web apps
-- [node.js] - evented I/O for the backend
-- [Express] - fast node.js network app framework [@tjholowaychuk]
-- [Gulp] - the streaming build system
-- [Breakdance](https://breakdance.github.io/breakdance/) - HTML
-to Markdown converter
-- [jQuery] - duh
+<br/>
 
-And of course Dillinger itself is open source with a [public repository][dill]
- on GitHub.
+**Quiz Procedure**
 
-## Installation
+A Quiz begins on its starting page where the number of upcoming questions and a status if the student has already completed the quiz are shown. The starting of the quiz is initiated by clicking the "Start Quiz" button.
 
-Dillinger requires [Node.js](https://nodejs.org/) v10+ to run.
+While in the quiz, the progress bar on top shows which question the student is on. Each question has its own answer set. The "Check" button at the bottom of the question evaluates the chosen answer and can only be clicked when the student hast selected an answer, indicating it is ready when glowing green. The selected answer will be highlighted in blue.
 
-Install the dependencies and devDependencies and start the server.
+When the student decides to check his answer, the quiz will give instant feedback on whether the question was answered correctly or not to provide an optimal learning and memory effect. In case of a correct answer the corresponding answer button as well as the Check Button  will be highlighted in green.  If the answer was wrong, its button and the Check button will be highlighted in red with the correct answer blinking in green to show the student what would have been correct. By Clicking on the Continue button the next answer will be shown or when already on the last question the quiz will be finished.
 
-```sh
-cd dillinger
-npm i
-node app
-```
+When the student answers any answer correctly for the first time he will gain 10 Experience Points (EXP). If enough EXP have been earned, the student will level up. With increasing level the student can unlock new accessibles for his character (more on that in the next section). This is the main functionality and motivation of our gamification aspect.
 
-For production environments...
 
-```sh
-npm install --production
-NODE_ENV=production node app
-```
+<br/>
 
-## Plugins
+*Pictures from left to right:*
+<br/>
+*Row 1: Quiz Starting Page, Quiz Question, Selected Answer*
+<br/>
+*Row 2: Correct Answer with earned EXP, Wrong Answer with correction, Level Up*
 
-Dillinger is currently extended with the following plugins.
-Instructions on how to use them in your own application are linked below.
+<kbd><img src="../screenshots/05_QuizStartingPage.png" alt="quizStart" width="250"/></kbd>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+<kbd><img src="../screenshots/06_QuestionInQuiz.png" alt="question" width="250"/></kbd>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
+<kbd><img src="../screenshots/07_SelectedAnswerInQuiz.png" alt="selected" width="250"/></kbd>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
 
-| Plugin | README |
-| ------ | ------ |
-| Dropbox | [plugins/dropbox/README.md][PlDb] |
-| GitHub | [plugins/github/README.md][PlGh] |
-| Google Drive | [plugins/googledrive/README.md][PlGd] |
-| OneDrive | [plugins/onedrive/README.md][PlOd] |
-| Medium | [plugins/medium/README.md][PlMe] |
-| Google Analytics | [plugins/googleanalytics/README.md][PlGa] |
+<br/>
+<kbd><img src="../screenshots/08_CorrectAnswerInQuiz.png" alt="correct" width="250"/></kbd>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+<kbd><img src="../screenshots/09_WrongAnswerInQuiz.png" alt="course" width="250"/></kbd>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
+<kbd><img src="../screenshots/10_LevelUp.png" alt="levelUp" width="250"/></kbd>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
 
-## Development
+<br/> <br/>
 
-Want to contribute? Great!
+**Quiz Correction**
 
-Dillinger uses Gulp + Webpack for fast developing.
-Make a change in your file and instantaneously see your updates!
+When the quiz has been finished, the student will be provided an overview of his performance. A message at the top tells whether the quiz was successfully completed or not. Below that a collapsible for each question will apper indicating if it was answered correctly. If clicked the collapsible will open and show the question title and correct answer as well as the students wrong answer if answered incorrectly. This overlooking correction method enables the student to reflect on his answers and make out potential difficulties and successes in his learning progress. He can return to the lesson with the given button at the bottom.
 
-Open your favorite Terminal and run these commands.
+<br/>
 
-First Tab:
+*Pictures from left to right: Correction Page, Correction Answers, Correction Completed Quiz*
 
-```sh
-node app
-```
+<kbd><img src="../screenshots/11_CorrectionPage1.png" alt="correction1" width="250"/></kbd>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+<kbd><img src="../screenshots/12_CorrectionPage2.png" alt="correction2" width="250"/></kbd>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
+<kbd><img src="../screenshots/13_CorrectionPage3.png" alt="correction3" width="250"/></kbd>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
 
-Second Tab:
+<br/> <br/>
 
-```sh
-gulp watch
-```
+**Progress Update**
 
-(optional) Third:
+After successfully finishing the (only) quiz in the shown lesson, its button is highlighted in green and the lesson is now completed which can be seen at the progress bar in the lesson and the green highlighting of the lesson in the corresponding course page.
 
-```sh
-karma test
-```
+<br/>
 
-#### Building for source
+*Pictures from left to right: Completed Quiz in Lesson, Progress Bar of completed Lesson, Completed Lesson on Course Page*
 
-For production release:
+<kbd><img src="../screenshots/14_CompletedQuiz.png" alt="completedQuiz" width="250"/></kbd>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+<kbd><img src="../screenshots/15_ProgressInLesson.png" alt="lessonProgress" width="250"/></kbd>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
+<kbd><img src="../screenshots/16_CompletedLesson.png" alt="completedLesson" width="250"/></kbd>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
 
-```sh
-gulp build --prod
-```
+<br/> <br/>
 
-Generating pre-built zip archives for distribution:
 
-```sh
-gulp build dist --prod
-```
+## Avatar
 
-## Docker
+The avatar represents the students unique character. The Profile page shows details about the students profile such as username, description, collected EXP and current level. The avatar with its equipped and accessible accessories is shown below. As previously stated, the student can level up his avatar by correctly answering questions and earning EXP. By doing so, new accessories can be unlocked to equip which motivates the student to keep learning. By clicking on any accessory button, the specific item will be equipped or unequipped. With the level up in the shown quiz, the character can now eqip his new item (face mask). 
 
-Dillinger is very easy to install and deploy in a Docker container.
 
-By default, the Docker will expose port 8080, so change this within the
-Dockerfile if necessary. When ready, simply use the Dockerfile to
-build the image.
+<br/>
 
-```sh
-cd dillinger
-docker build -t <youruser>/dillinger:${package.json.version} .
-```
+*Pictures from left to right: Profile Page, Avatar with new equipped item*
 
-This will create the dillinger image and pull in the necessary dependencies.
-Be sure to swap out `${package.json.version}` with the actual
-version of Dillinger.
+<kbd><img src="../screenshots/17_AvatarPage.png" alt="avatar1" width="250"/></kbd>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+<kbd><img src="../screenshots/18_AvatarWithNewAccessory.png" alt="avatar2" width="250"/></kbd>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
 
-Once done, run the Docker image and map the port to whatever you wish on
-your host. In this example, we simply map port 8000 of the host to
-port 8080 of the Docker (or whatever port was exposed in the Dockerfile):
+<br/> <br/>
 
-```sh
-docker run -d -p 8000:8080 --restart=always --cap-add=SYS_ADMIN --name=dillinger <youruser>/dillinger:${package.json.version}
-```
 
-> Note: `--capt-add=SYS-ADMIN` is required for PDF rendering.
+## Responsive Layout
 
-Verify the deployment by navigating to your server address in
-your preferred browser.
+Due to the fact that the majority of students in Jimma will be using the platform via a mobile device, our application has been designed to fit perfectly to mobile screen sizes (as seen in the previous screenshots). With the goal to provide an accessible and user friendly solution, the app has been designed to be hardware independent though and can responsively adapt desktop browsers as well.
 
-```sh
-127.0.0.1:8000
-```
 
-## License
+<br/>
 
-MIT
+*Picture: JimmaNeo application on desktop browser*
 
-**Free Software, Hell Yeah!**
+<kbd><img src="../screenshots/19_BrowserView.png" alt="browser" width="750"/></kbd>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
 
-[//]: # (These are reference links used in the body of this note and get stripped out when the markdown processor does its job. There is no need to format nicely because it shouldn't be seen. Thanks SO - http://stackoverflow.com/questions/4823468/store-comments-in-markdown-syntax)
+<br/> <br/>
 
-   [dill]: <https://github.com/joemccann/dillinger>
-   [git-repo-url]: <https://github.com/joemccann/dillinger.git>
-   [john gruber]: <http://daringfireball.net>
-   [df1]: <http://daringfireball.net/projects/markdown/>
-   [markdown-it]: <https://github.com/markdown-it/markdown-it>
-   [Ace Editor]: <http://ace.ajax.org>
-   [node.js]: <http://nodejs.org>
-   [Twitter Bootstrap]: <http://twitter.github.com/bootstrap/>
-   [jQuery]: <http://jquery.com>
-   [@tjholowaychuk]: <http://twitter.com/tjholowaychuk>
-   [express]: <http://expressjs.com>
-   [AngularJS]: <http://angularjs.org>
-   [Gulp]: <http://gulpjs.com>
 
-   [PlDb]: <https://github.com/joemccann/dillinger/tree/master/plugins/dropbox/README.md>
-   [PlGh]: <https://github.com/joemccann/dillinger/tree/master/plugins/github/README.md>
-   [PlGd]: <https://github.com/joemccann/dillinger/tree/master/plugins/googledrive/README.md>
-   [PlOd]: <https://github.com/joemccann/dillinger/tree/master/plugins/onedrive/README.md>
-   [PlMe]: <https://github.com/joemccann/dillinger/tree/master/plugins/medium/README.md>
-   [PlGa]: <https://github.com/RahulHP/dillinger/blob/master/plugins/googleanalytics/README.md>
+
