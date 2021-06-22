@@ -16,13 +16,13 @@ The materials in the documents section are usually PDFs or links to literature t
 
 *Pictures from left to right: Landing Page, Course Page, Lesson Page, Video in Lesson*
 
-<kbd><img src="../screenshots/01_LandingPage.png" alt="landing" width="230"/></kbd>
+<kbd><img src="../images/screenshots/01_LandingPage.png" alt="landing" width="230"/></kbd>
 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
-<kbd><img src="../screenshots/02_CoursePage.png" alt="course" width="230"/></kbd>
+<kbd><img src="../images/screenshots/02_CoursePage.png" alt="course" width="230"/></kbd>
 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
-<kbd><img src="../screenshots/03_LessonPage.png" alt="lesson" width="230"/></kbd>
+<kbd><img src="../images/screenshots/03_LessonPage.png" alt="lesson" width="230"/></kbd>
 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
-<kbd><img src="../screenshots/04_VideoInLesson.png" alt="video" width="230"/></kbd>
+<kbd><img src="../images/screenshots/04_VideoInLesson.png" alt="video" width="230"/></kbd>
 
 <br/>
 
@@ -51,19 +51,19 @@ When the student answers any answer correctly for the first time he will gain 10
 <br/>
 *Row 2: Correct Answer with earned EXP, Wrong Answer with correction, Level Up*
 
-<kbd><img src="../screenshots/05_QuizStartingPage.png" alt="quizStart" width="250"/></kbd>
+<kbd><img src="../images/screenshots/05_QuizStartingPage.png" alt="quizStart" width="250"/></kbd>
 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-<kbd><img src="../screenshots/06_QuestionInQuiz.png" alt="question" width="250"/></kbd>
+<kbd><img src="../images/screenshots/06_QuestionInQuiz.png" alt="question" width="250"/></kbd>
 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-<kbd><img src="../screenshots/07_SelectedAnswerInQuiz.png" alt="selected" width="250"/></kbd>
+<kbd><img src="../images/screenshots/07_SelectedAnswerInQuiz.png" alt="selected" width="250"/></kbd>
 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
 
 <br/>
-<kbd><img src="../screenshots/08_CorrectAnswerInQuiz.png" alt="correct" width="250"/></kbd>
+<kbd><img src="../images/screenshots/08_CorrectAnswerInQuiz.png" alt="correct" width="250"/></kbd>
 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-<kbd><img src="../screenshots/09_WrongAnswerInQuiz.png" alt="course" width="250"/></kbd>
+<kbd><img src="../images/screenshots/09_WrongAnswerInQuiz.png" alt="course" width="250"/></kbd>
 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-<kbd><img src="../screenshots/10_LevelUp.png" alt="levelUp" width="250"/></kbd>
+<kbd><img src="../images/screenshots/10_LevelUp.png" alt="levelUp" width="250"/></kbd>
 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
 
 <br/> <br/>
@@ -76,11 +76,11 @@ When the quiz has been finished, the student will be provided an overview of his
 
 *Pictures from left to right: Correction Page, Correction Answers, Correction Completed Quiz*
 
-<kbd><img src="../screenshots/11_CorrectionPage1.png" alt="correction1" width="250"/></kbd>
+<kbd><img src="../images/screenshots/11_CorrectionPage1.png" alt="correction1" width="250"/></kbd>
 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-<kbd><img src="../screenshots/12_CorrectionPage2.png" alt="correction2" width="250"/></kbd>
+<kbd><img src="../images/screenshots/12_CorrectionPage2.png" alt="correction2" width="250"/></kbd>
 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-<kbd><img src="../screenshots/13_CorrectionPage3.png" alt="correction3" width="250"/></kbd>
+<kbd><img src="../images/screenshots/13_CorrectionPage3.png" alt="correction3" width="250"/></kbd>
 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
 
 <br/> <br/>
@@ -93,11 +93,11 @@ After successfully finishing the (only) quiz in the shown lesson, its button is 
 
 *Pictures from left to right: Completed Quiz in Lesson, Progress Bar of completed Lesson, Completed Lesson on Course Page*
 
-<kbd><img src="../screenshots/14_CompletedQuiz.png" alt="completedQuiz" width="250"/></kbd>
+<kbd><img src="../images/screenshots/14_CompletedQuiz.png" alt="completedQuiz" width="250"/></kbd>
 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-<kbd><img src="../screenshots/15_ProgressInLesson.png" alt="lessonProgress" width="250"/></kbd>
+<kbd><img src="../images/screenshots/15_ProgressInLesson.png" alt="lessonProgress" width="250"/></kbd>
 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-<kbd><img src="../screenshots/16_CompletedLesson.png" alt="completedLesson" width="250"/></kbd>
+<kbd><img src="../images/screenshots/16_CompletedLesson.png" alt="completedLesson" width="250"/></kbd>
 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
 
 <br/> <br/>
@@ -112,9 +112,9 @@ The avatar represents the students unique character. The Profile page shows deta
 
 *Pictures from left to right: Profile Page, Avatar with new equipped item*
 
-<kbd><img src="../screenshots/17_AvatarPage.png" alt="avatar1" width="250"/></kbd>
+<kbd><img src="../images/screenshots/17_AvatarPage.png" alt="avatar1" width="250"/></kbd>
 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-<kbd><img src="../screenshots/18_AvatarWithNewAccessory.png" alt="avatar2" width="250"/></kbd>
+<kbd><img src="../images/screenshots/18_AvatarWithNewAccessory.png" alt="avatar2" width="250"/></kbd>
 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
 
 <br/> <br/>
@@ -122,14 +122,14 @@ The avatar represents the students unique character. The Profile page shows deta
 
 ## Responsive Layout
 
-Due to the fact that the majority of students in Jimma will be using the platform via a mobile device, our application has been designed to fit perfectly to mobile screen sizes (as seen in the previous screenshots). With the goal to provide an accessible and user friendly solution, the app has been designed to be hardware independent though and can responsively adapt desktop browsers as well.
+Due to the fact that the majority of students in Jimma will be using the platform via a mobile device, our application has been designed to fit perfectly to mobile screen sizes (as seen in the previous screenshots). With the goal to provide an accessible and user friendly solution, the app has been designed to be hardware independent though and can responsively adapt to desktop browsers as well.
 
 
 <br/>
 
 *Picture: JimmaNeo application on desktop browser*
 
-<kbd><img src="../screenshots/19_BrowserView.png" alt="browser" width="750"/></kbd>
+<kbd><img src="../images/screenshots/19_BrowserView.png" alt="browser" width="750"/></kbd>
 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
 
 <br/> <br/>
