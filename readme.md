@@ -13,7 +13,7 @@ The focus is on motivating the users by allowing them to have their own avatar a
     - [Backend](#backend)
     - [Frontend](#frontend)
   - [Team and Contact Person](#team-and-contact-person)
-    - [Mode of operation](#Mode-of-operation)
+    - [Mode of operation](#mode-of-operation)
   - [Appendix](#appendix)
 
 
