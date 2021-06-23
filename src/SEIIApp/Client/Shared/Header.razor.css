@@ -1,0 +1,32 @@
+﻿.header {
+    overflow: hidden;
+    background-color: #28A745;
+    padding: 10px;
+    position: fixed;
+    top: 0;
+    width: 100%
+}
+
+.header a {
+    color: white;
+    padding: 12px;
+}
+
+.header a.logo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-basis: 10%;
+}
+
+.button-pointer { 
+    cursor: pointer 
+}
+
+.header-right {
+    float: right;
+}
+
+.header-left {
+    float: left;
+}

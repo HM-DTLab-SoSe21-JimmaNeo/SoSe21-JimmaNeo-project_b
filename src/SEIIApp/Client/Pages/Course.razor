@@ -1,0 +1,132 @@
+﻿@page "/{CourseId:int}"
+@page "/courses/{CourseId:int}"
+
+@using Blazorise
+@using SEIIApp.Shared.DomainDTOs
+
+@inject HttpClient Http
+@inject NavigationManager NavigationManager
+
+<head>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="../css/StylesheetJimmaNeo.css">
+</head>
+
+<div class="text-center">
+    <h7>
+        Lessons completed: 
+        @if (lessonArray == null || student == null)
+        {<h7>-</h7>}
+        else
+        {<h7>@CountFinishedLessons()</h7>}
+        /
+        @if (lessonArray == null)
+        {<h7>-</h7>}
+        else
+        {<h7>@lessonArray.Length</h7>}
+    </h7>
+</div>
+<Progress>
+    <ProgressBar Background="Background.Success" Value="@progress" Animated=true />
+    <ProgressBar Background="Background.Dark" Value="@(100 - progress)" Animated=true />
+</Progress>
+<br />
+<br />
+
+<div class="text-center">
+    <h2 style="font-weight:bold">@(course?.Title ?? "Loading Course Title")</h2>
+</div>
+<div class="text-center">
+    <h4>@(course?.Description ?? "Loading Course Description")</h4>
+</div>
+<br />
+<br />
+
+@if (lessons == null)
+{
+    <p class="text-center"><em>Loading...</em></p>
+}
+else
+{
+    @foreach (LessonDto lesson in lessons)
+    {
+        @if (IsLessonFinished(lesson))
+        {
+            <p class="text-center">
+                <Button Color="Color.Success" Clicked="@(() => NavigateToLesson(lesson.LessonId))" Block="true">
+                    <h4 style="color:white">@lesson.Title</h4>
+                    @lesson.Description
+                </Button>
+            </p>
+            <br />
+        }
+        else
+        {
+            <p class="text-center">
+                <Button Color="Color.Secondary" Clicked="@(() => NavigateToLesson(lesson.LessonId))" Block="true">
+                    <h4 style="color:white">@lesson.Title</h4>
+                    @lesson.Description
+                </Button>
+            </p>
+            <br />
+        }
+    }
+}
+
+@code {
+    [Parameter]
+    public int CourseId { get; set; }
+
+    private CourseDto course;
+    private List<LessonDto> lessons;
+    private LessonDto[] lessonArray;
+    private StudentDto student;
+    private int progressFactor;
+    private int progress = 0;
+
+    protected override async Task OnInitializedAsync()
+    {
+        string uri = $"api/Courses/{CourseId}";
+        course = await Http.GetFromJsonAsync<CourseDto>(uri);
+        lessons = course.Lessons;
+        lessonArray = lessons.ToArray();
+        student = await Http.GetFromJsonAsync<StudentDto>($"api/Students/{1}");
+        progressFactor = 100 / lessonArray.Length;
+    }
+
+    private void NavigateToLesson(int lessonId)
+    {
+        string uri = $"/courses/{CourseId}/{lessonId}";
+        NavigationManager.NavigateTo(uri);
+    }
+
+    private bool IsLessonFinished(LessonDto lesson)
+    {
+        foreach (FinishedLessonDto finishedLesson in student.FinishedLessons)
+        {
+            if (lesson.LessonId == finishedLesson.LessonId)
+            {
+                progress += progressFactor;
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private int CountFinishedLessons()
+    {
+        int finishedLessons = 0;
+        foreach (LessonDto lesson in lessons)
+        {
+            foreach (FinishedLessonDto finishedLesson in student.FinishedLessons)
+            {
+                if (finishedLesson.LessonId == lesson.LessonId)
+                {
+                    finishedLessons++;
+                }
+            }
+        }
+        return finishedLessons;
+    }
+}

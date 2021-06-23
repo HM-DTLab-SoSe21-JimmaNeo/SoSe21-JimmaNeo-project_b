@@ -1,0 +1,189 @@
+﻿@page "/{CourseId:int}/{LessonId:int}"
+@page "/courses/{CourseId:int}/{LessonId:int}"
+
+@using Blazorise
+@using SEIIApp.Shared.DomainDTOs
+
+@inject HttpClient Http
+@inject NavigationManager NavigationManager
+
+<head>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="../css/StylesheetJimmaNeo.css">
+</head>
+
+<div class="text-center">
+    <h7>
+        Quizzes completed:
+        @if (quizzes == null || student == null)
+        {<h7>-</h7>}
+        else
+        {<h7>@CountFinishedQuizzes()</h7>}
+        /
+        @if (quizArray == null)
+        {<h7>-</h7>}
+        else
+        {<h7>@quizArray.Length</h7>}
+    </h7>
+</div>
+<Progress>
+    <ProgressBar Background="Background.Success" Value="@progress" Animated=true />
+    <ProgressBar Background="Background.Dark" Value="@(100 - progress)" Animated=true />
+</Progress>
+<br />
+<br />
+
+<div class="text-center">
+    <h2 style="font-weight:bold">@(lesson?.Title ?? "Loading Lesson Title")</h2>
+</div>
+<div class="text-center">
+    <h4>@(lesson?.Description ?? "Loading Lesson Description")</h4>
+</div>
+<br />
+<br />
+
+<div class="text-center">
+    <h3 style="font-weight:bold">Documents</h3>
+</div>
+@if (documents == null)
+{
+    <p class="text-center"><em>Loading...</em></p>
+}
+else
+{
+    @foreach (DocumentContentDto document in documents)
+    {
+        <p class="text-center">
+            <Button Color="Color.Secondary" Type="ButtonType.Link" To="@document.Location.ToString()" Target="Target.Blank" Block="true">
+                <h5 style="color:white">@document.Title</h5>
+            </Button>
+        </p>
+        <br />
+    }
+}
+<br />
+
+<div class="text-center">
+    <h3 style="font-weight:bold">Videos</h3>
+</div>
+@if (videos == null)
+{
+    <p class="text-center"><em>Loading...</em></p>
+}
+else
+{
+    <p class="text-center">
+        @foreach (VideoContentDto video in videos)
+        {
+            <section class="accordion-video">
+                <input type="checkbox" name="collapse" id="handle1">
+                <h2 class="handle">
+                    <label for="handle1">@video.Title</label>
+                </h2>
+                <div class="content">
+                    <div class="video-wrapper">
+                        <iframe width="560" height="315" src="@video.Location" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    </div>
+                </div>
+            </section>
+        }
+    </p>
+    <br />
+}
+<br />
+
+<div class="text-center">
+    <h3 style="font-weight:bold">Quizzes</h3>
+</div>
+@if (quizzes == null)
+{
+    <p class="text-center"><em>Loading...</em></p>
+}
+else
+{
+    @foreach (QuizDto quiz in quizzes)
+    {
+        @if (IsQuizFinished(quiz))
+        {
+            <p class="text-center">
+                <Button Color="Color.Success" Clicked="@(() => NavigateToQuiz(quiz.QuizId))" Block="true">
+                    <h5 style="color:white">@quiz.Title</h5>
+                </Button>
+            </p>
+            <br />
+        }
+        else
+        {
+            <p class="text-center">
+                <Button Color="Color.Secondary" Clicked="@(() => NavigateToQuiz(quiz.QuizId))" Block="true">
+                    <h5 style="color:white">@quiz.Title</h5>
+                </Button>
+            </p>
+            <br />
+        }
+    }
+}
+
+@code {
+    [Parameter]
+    public int CourseId { get; set; }
+    [Parameter]
+    public int LessonId { get; set; }
+
+    private LessonDto lesson;
+    private List<DocumentContentDto> documents;
+    private List<VideoContentDto> videos;
+    private List<QuizDto> quizzes;
+    private QuizDto[] quizArray;
+    private StudentDto student;
+    private int progressFactor;
+    private int progress = 0;
+
+    protected override async Task OnInitializedAsync()
+    {
+        string uri = $"api/Lessons/{LessonId}";
+        lesson = await Http.GetFromJsonAsync<LessonDto>(uri);
+        documents = lesson.DocumentContents;
+        videos = lesson.VideoContents;
+        quizzes = lesson.Quizzes;
+        quizArray = quizzes.ToArray();
+        student = await Http.GetFromJsonAsync<StudentDto>($"api/Students/{1}");
+        progressFactor = 100 / quizArray.Length;
+    }
+
+    private void NavigateToQuiz(int quizId)
+    {
+        string uri = $"courses/{CourseId}/{LessonId}/{quizId}";
+        NavigationManager.NavigateTo(uri);
+    }
+
+    private bool IsQuizFinished(QuizDto quiz)
+    {
+        foreach (FinishedQuizDto finishedQuiz in student.FinishedQuizzes)
+        {
+            if (quiz.QuizId == finishedQuiz.QuizId)
+            {
+                progress += progressFactor;
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private int CountFinishedQuizzes()
+    {
+        int finishedQuizzes = 0;
+        foreach (QuizDto quiz in quizzes)
+        {
+            foreach (FinishedQuizDto finishedQuiz in student.FinishedQuizzes)
+            {
+                if (finishedQuiz.QuizId == quiz.QuizId)
+                {
+                    finishedQuizzes++;
+                }
+            }
+        }
+        return finishedQuizzes;
+    }
+}
