@@ -1,0 +1,166 @@
+﻿@page "/profile"
+
+@using Blazorise
+@using SEIIApp.Shared.DomainDTOs
+
+@inject HttpClient Http
+@inject NavigationManager NavigationManager
+
+    <head>
+        <link rel="stylesheet" href="./css/StylesheetJimmaNeo.css">
+    </head>
+
+<center>
+    @if (student == null)
+    {
+            <h1>Loading profile...</h1>
+    }
+
+    // Textfields for informations of the student
+    else if (profile != null)
+    {
+        <div>
+            <TextEdit Placeholder=@("Name: " + profile.Name) ReadOnly="true" class="text-center" />
+            <TextEdit Placeholder=@("Description: " + profile.Description) ReadOnly="true" class="text-center" />
+            <TextEdit Placeholder=@("Experience: " + xp) ReadOnly="true" class="text-center" />
+            <TextEdit Placeholder=@("Level: 5") ReadOnly="true" class="text-center" />
+        </div>
+
+        // Draws the avatar and the saved activated items
+        if (avatar != null)
+        {
+            <Container Fluid="true">
+                <div class="avatarContainer">
+                    <div style=" z-index: 1">
+                        <img src=@avatar.Location />
+                    </div>
+
+                    @if (equiptItems.Count > 0)
+                    {
+                        for (int i = 0; i < equiptItems.Count; i++)
+                        {
+                            string source = "not found";
+                            for (int j = 0; j < allItems.Length; j++)
+                            {
+                                if (equiptItems[i].AvatarItemId == allItems[j].ItemId)
+                                {
+                                    source = allItems[j].Source;
+                                    break;
+                                }
+                            }
+                            <div style=" z-index: 3">
+                                <img src=@source />
+                            </div>
+                        }
+
+                    }
+                </div>
+
+            </Container>
+
+            // Draws the buttons for the items
+            @if (allItems != null)
+            {
+                <Container Fluid="true">
+                    <Row>
+                        <Column ColumnSize="ColumnSize.Is3" class="text-center">
+                        </Column>
+                        @for (int i = 0; i < allItems.Length; i++)
+                        {
+                            string locationItem = allItems[i].SourceButton;
+                            int itemId = allItems[i].ItemId;
+                            <Column ColumnSize="ColumnSize.Is2" class="text-center">
+                                <Button Active=@itemActivatedActive(itemId) Color="Color.Success" Outline="true" class="text-center" @onclick="@(() => clickItemButton(itemId) )">
+                                    <img src=@locationItem width="60" />
+                                </Button>
+                            </Column>
+                        }
+                        <Column ColumnSize="ColumnSize.Is3" class="text-center">
+                        </Column>
+                    </Row>
+                </Container>
+            }
+        }
+    }
+</center>
+
+
+@code{
+    // currently the hardcoded Id of the student
+    public int UserId = 1;
+
+    // currently active student in profile
+    public StudentDto student;
+
+    // profile of the active student
+    public StudentProfileDto profile;
+
+    // avatar of the active student
+    public AvatarDto avatar;
+
+    // all items that can be equipped
+    public AvatarItemDto[] allItems;
+
+    // equipped items of the active student
+    public List<EquippedItemDto> equiptItems;
+
+    // current experince points of the active student
+    public int xp;
+
+    protected override async Task OnInitializedAsync()
+    {
+        student = await Http.GetFromJsonAsync<StudentDto>("api/Students/1");
+        allItems = await Http.GetFromJsonAsync<AvatarItemDto[]>("api/AvatarItems");
+
+        profile = student.Profile;
+        avatar = student.Avatar;
+        equiptItems = avatar.UsedItems;
+        xp = student.Profile.Experience;
+    }
+
+
+    /// <summary>
+    /// Activates or deactivates item with click on button
+    /// </summary>
+    /// <param name="id"> Current itemId. </param>
+    async void clickItemButton(int id)
+    {
+        Boolean contains = false;
+
+        for (int i = 0; i < equiptItems.Count; i++)
+        {
+            if (equiptItems[i].AvatarItemId == id)
+            {
+                equiptItems.RemoveAt(i);
+                contains = true;
+                break;
+            }
+        }
+
+        if (!contains)
+        {
+            EquippedItemDto newItem = new EquippedItemDto();
+            newItem.AvatarItemId = id;
+            equiptItems.Add(newItem);
+        }
+        avatar.UsedItems = equiptItems;
+        await Http.PutAsJsonAsync<AvatarDto>($"api/Avatars/{student.UserId}", avatar);
+    }
+
+
+    /// <summary>
+    /// Changes button to activated if item is activated
+    /// </summary
+    /// <param name="id"> Current itemId. </param>
+    Boolean itemActivatedActive(int id)
+    {
+        for (int i = 0; i < equiptItems.Count; i++)
+        {
+            if (equiptItems[i].AvatarItemId == id)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+}
