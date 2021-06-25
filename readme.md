@@ -281,10 +281,10 @@ always on a high level.
 
 ## Appendix
 
-* [**Press Release**](../pdfs/press_release.pdf)
-* [**Storyboard**](../pdfs/storyboard.pdf)
-* [**FAQs Costumer**](../pdfs/faq_customers.pdf)
-* [**FAQs Stakeholder**](../pdfs/faq_stakeholders.pdf)
+* [**Press Release**](/documentation/pdfs/press_release.pdf)
+* [**Storyboard**](/documentation/pdfs/storyboard.pdf)
+* [**FAQs Costumer**](/documentation/pdfs/faq_customers.pdf)
+* [**FAQs Stakeholder**](/documentation/pdfs/faq_stakeholders.pdf)
 * [**Group photo**](/documentation/images/group_photo_team_b.jpeg)
 * [**Avatar**](/documentation/images/avatar.png)
 * [**Avatar with Items**](/documentation/images/avatar_with_items.png)
