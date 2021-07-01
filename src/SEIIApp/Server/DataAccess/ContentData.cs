@@ -29,7 +29,7 @@ namespace SEIIApp.Server.DataAccess
             Course course1 = new Course();
             course1.Title = "Neonatal Nutrition and Maternal Factors";
             course1.Description = "Effects of nutritional factors related to infant growth and development, especially related to human milk.";
-            course1.Lessons = GenerateLessons(rnd.Next(2, 8));
+            course1.Lessons = GenerateLessons(2);
             db.Courses.Add(course1);
 
             //Course 2 (real medical data)
@@ -43,14 +43,14 @@ namespace SEIIApp.Server.DataAccess
             Course course3 = new Course();
             course3.Title = "Extremely Premature Infant Care";
             course3.Description = "Measures, treatments and medication";
-            course3.Lessons = GenerateLessons(rnd.Next(2, 8));
+            course3.Lessons = GenerateLessons(2);
             db.Courses.Add(course3);
 
             //Course 4 (random data)
             Course course4 = new Course();
             course4.Title = "Feeding Disorders";
             course4.Description = "Tipps and techniques to cure or prevent feeding disorders";
-            course4.Lessons = GenerateLessons(rnd.Next(2, 8));
+            course4.Lessons = GenerateLessons(2);
             db.Courses.Add(course4);
 
         }
@@ -370,7 +370,7 @@ namespace SEIIApp.Server.DataAccess
                 lesson.Description = "Hier könnte Ihre Werbung stehen (lessons.description).";
                 lesson.VideoContents = GenerateVideoContents(rnd.Next(1, 2), lesson);
                 lesson.DocumentContents = GenerateDocumentsContents(rnd.Next(1, 2), lesson);
-                lesson.Quizzes = GenerateQuizzes(rnd.Next(1, 5));
+                lesson.Quizzes = GenerateQuizzes(2);
                 lessons.Add(lesson);
             }
             return lessons;
@@ -414,7 +414,7 @@ namespace SEIIApp.Server.DataAccess
             {
                 Quiz quiz = new Quiz();
                 quiz.Title = i + ". quiz title";
-                quiz.Questions = GenerateQuestions(rnd.Next(1, 10));
+                quiz.Questions = GenerateQuestions(1);
                 quizzes.Add(quiz);
             }
             return quizzes;

@@ -41,11 +41,14 @@ namespace SEIIApp.Server.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public ActionResult<StudentDto> GetStudentWithId([FromRoute] int id)
         {
-            var student = StudentService.GetStudentWithId(id);
-            if (student == null) return StatusCode(StatusCodes.Status404NotFound);
-
-            var mappedStudent = Mapper.Map<StudentDto>(student);
-            return Ok(mappedStudent);
+            if (ModelState.IsValid)
+            {
+                var student = StudentService.GetStudentWithId(id);
+                if (student == null) return StatusCode(StatusCodes.Status404NotFound);             
+                var mappedStudent = Mapper.Map<StudentDto>(student);
+                return Ok(mappedStudent);
+            }
+            return StatusCode(StatusCodes.Status400BadRequest);
         }
 
         /// <summary>
@@ -54,11 +57,18 @@ namespace SEIIApp.Server.Controllers
         /// <returns>Http StatusCode, if ok the students as dto array</returns>
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public ActionResult<StudentDto[]> GetAllStudents()
         {
-            var students = StudentService.GetAllStudents();
-            var mappedStudents = Mapper.Map<StudentDto[]>(students);
-            return Ok(mappedStudents);
+            if (ModelState.IsValid)
+            {
+                var students = StudentService.GetAllStudents();
+                if (students == null) return StatusCode(StatusCodes.Status404NotFound);
+                var mappedStudents = Mapper.Map<StudentDto[]>(students);
+                return Ok(mappedStudents);
+            }
+            return StatusCode(StatusCodes.Status400BadRequest);
         }
 
         /// <summary>
@@ -73,10 +83,17 @@ namespace SEIIApp.Server.Controllers
         /// <returns>Http ok</returns>
         [HttpPut("{userId}/finishQuiz/{courseId}/{lessonId}/{quizId}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public ActionResult AddFinishedQuizToStudent([FromRoute] int userId, [FromRoute] int courseId, [FromRoute] int lessonId, [FromRoute] int quizId)
         {
-            FinishedQuizService.AddFinishedQuizToStudent(userId, courseId, lessonId, quizId);
-            return Ok();
+            if (ModelState.IsValid)
+            {
+                if (FinishedQuizService.AddFinishedQuizToStudent(userId, courseId, lessonId, quizId))
+                    return Ok();
+                else
+                    return StatusCode(StatusCodes.Status500InternalServerError);
+            }
+            return StatusCode(StatusCodes.Status400BadRequest);
         }
     }
 }

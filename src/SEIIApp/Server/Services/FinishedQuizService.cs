@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Collections.Generic;
 using System;
+using System.Diagnostics;
 
 namespace SEIIApp.Server.Services
 {
@@ -33,13 +34,21 @@ namespace SEIIApp.Server.Services
         /// <returns>True</returns>
         public bool AddFinishedQuizToStudent(int userId, int courseId, int lessonId, int quizId)
         {
-            var toUpdateStudent = GetQueryableForStudent(userId);
-            var finishedQuiz = new FinishedQuiz(quizId, DateTime.Now);
-            toUpdateStudent.FinishedQuizzes.Add(finishedQuiz);
-            finishSuperordinated(toUpdateStudent, courseId, lessonId);
-            DatabaseContext.Students.Update(toUpdateStudent);
-            DatabaseContext.SaveChanges();
-            return true;
+            try
+            {
+                var toUpdateStudent = GetQueryableForStudent(userId);
+                var finishedQuiz = new FinishedQuiz(quizId, DateTime.Now);
+                toUpdateStudent.FinishedQuizzes.Add(finishedQuiz);
+                finishSuperordinated(toUpdateStudent, courseId, lessonId);
+                DatabaseContext.Students.Update(toUpdateStudent);
+                DatabaseContext.SaveChanges();
+                return true;
+            }
+            catch(Exception e)
+            {
+                Debug.WriteLine(e.StackTrace);
+                return false;
+            }
         }
 
         private Student GetQueryableForStudent(int userId)
@@ -73,7 +82,7 @@ namespace SEIIApp.Server.Services
 
         private void finishSuperordinated(Student toUpdateStudent, int courseId, int lessonId)
         {
-            if(isLessonFinished(lessonId, toUpdateStudent.FinishedQuizzes))
+            if (isLessonFinished(lessonId, toUpdateStudent.FinishedQuizzes))
             {
                 FinishedLesson finishedLesson = new FinishedLesson(lessonId, DateTime.Now);
                 toUpdateStudent.FinishedLessons.Add(finishedLesson);
@@ -85,44 +94,23 @@ namespace SEIIApp.Server.Services
             }
         }
 
-        private bool isLessonFinished(int lessonId, List<FinishedQuiz> allfinishedQuizzesOfStudent)
+        private bool isLessonFinished(int lessonId, List<FinishedQuiz> allFinishedQuizzesOfStudent)
         {
-            var allQuizzesOfLesson = GetQueryableForLesson(lessonId).Quizzes;
-            for(int i = 0; i < allQuizzesOfLesson.Count; i++)
-            {
-                bool quizFinishedByStudent = false;
-                for(int j = 0; j < allfinishedQuizzesOfStudent.Count; j++)
-                {
-                    if(allQuizzesOfLesson[i].QuizId == allfinishedQuizzesOfStudent[j].QuizId)
-                    {
-                        quizFinishedByStudent = true;
-                        break;
-                    }
-                }
-                if (!quizFinishedByStudent)
-                    return false;
-            }
-            return true;
+            var finishedQuizIDsOfStudent = allFinishedQuizzesOfStudent.Select(q => new { id = q.QuizId });
+            var allQuizIDsOfLesson = GetQueryableForLesson(lessonId).Quizzes.Select(q => new { id = q.QuizId });
+            return isASubsetOfB(allQuizIDsOfLesson, finishedQuizIDsOfStudent);
         }
 
         private bool isCourseFinished(int courseId, List<FinishedLesson> allFinishedLessonsOfStudent)
         {
-            var allLessonsOfCourse = GetQueryableForCourse(courseId).Lessons;
-            for (int i = 0; i < allLessonsOfCourse.Count; i++)
-            {
-                bool quizFinishedByStudent = false;
-                for (int j = 0; j < allFinishedLessonsOfStudent.Count; j++)
-                {
-                    if (allLessonsOfCourse[i].LessonId == allFinishedLessonsOfStudent[j].LessonId)
-                    {
-                        quizFinishedByStudent = true;
-                        break;
-                    }
-                }
-                if (!quizFinishedByStudent)
-                    return false;
-            }
-            return true;
+            var finishedLessonIDsOfStudent = allFinishedLessonsOfStudent.Select(q => new { id = q.LessonId });
+            var allLessonIDsOfCourse = GetQueryableForCourse(courseId).Lessons.Select(q => new { id = q.LessonId });
+            return isASubsetOfB(allLessonIDsOfCourse, finishedLessonIDsOfStudent);
+        }
+
+        private bool isASubsetOfB<T>(IEnumerable<T> a, IEnumerable<T> b)
+        {
+            return a.Where(x => b.Contains(x)).Count() == a.Count();
         }
     }
 }
