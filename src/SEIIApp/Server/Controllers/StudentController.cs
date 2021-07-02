@@ -83,17 +83,13 @@ namespace SEIIApp.Server.Controllers
         /// <returns>Http ok</returns>
         [HttpPut("{userId}/finishQuiz/{courseId}/{lessonId}/{quizId}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public ActionResult AddFinishedQuizToStudent([FromRoute] int userId, [FromRoute] int courseId, [FromRoute] int lessonId, [FromRoute] int quizId)
         {
-            if (ModelState.IsValid)
-            {
-                if (FinishedQuizService.AddFinishedQuizToStudent(userId, courseId, lessonId, quizId))
-                    return Ok();
-                else
-                    return StatusCode(StatusCodes.Status500InternalServerError);
-            }
-            return StatusCode(StatusCodes.Status400BadRequest);
+            if (FinishedQuizService.AddFinishedQuizToStudent(userId, courseId, lessonId, quizId))
+                return Ok();
+            else
+                return StatusCode(StatusCodes.Status500InternalServerError);
         }
     }
 }
